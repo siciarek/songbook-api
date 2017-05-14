@@ -6,6 +6,7 @@ imports:
     - { resource: nelmio/cors-bundle.yml }
     - { resource: friendsofsymfony/user-bundle.yml }
     - { resource: friendsofsymfony/rest-bundle.yml }
+    - { resource: jms/serializer-bundle.yml }
 
     - { resource: ../../vendor/knplabs/doctrine-behaviors/config/orm-services.yml }
     - { resource: knplabs/knp-snappy-bundle.yml }

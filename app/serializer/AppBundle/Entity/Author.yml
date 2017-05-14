@@ -1,0 +1,17 @@
+AppBundle\Entity\Author:
+    exclusion_policy: all
+    properties:
+        id:
+            expose: true
+        name:
+            expose: true
+        description:
+            expose: true
+        info:
+            expose: true
+        firstName:
+            expose: true
+            serialized_name: firstName
+        lastName:
+            expose: true
+            serialized_name: lastName

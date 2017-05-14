@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as Serializer;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
@@ -12,7 +11,6 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
  * @ORM\Entity
  * @ORM\Table(name="artist")
  * @ORM\Entity(repositoryClass="ArtistRepository")
- * @Serializer\ExclusionPolicy("none")
  */
 class Artist
 {
@@ -52,13 +50,11 @@ class Artist
 
     /**
      * @ORM\Column()
-     * @Serializer\SerializedName("firstName")
      */
     private $firstName;
 
     /**
      * @ORM\Column(nullable=true)
-     * @Serializer\SerializedName("lastName")
      */
     private $lastName;
 
@@ -73,19 +69,16 @@ class Artist
     private $info;
     /**
      * @ORM\ManyToMany(targetEntity="Song", mappedBy="artists")
-     * @Serializer\Exclude()
      */
     private $songs;
 
     /**
      * @ORM\ManyToMany(targetEntity="Video", mappedBy="artists")
-     * @Serializer\Exclude()
      */
     private $videos;
 
     /**
      * @ORM\ManyToMany(targetEntity="Audio", mappedBy="artists")
-     * @Serializer\Exclude()
      */
     private $audio;
 

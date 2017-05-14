@@ -1,0 +1,7 @@
+UserBundle\Entity\User:
+    exclusion_policy: all
+    properties:
+        firstName:
+            expose: true
+        lastName:
+            expose: true

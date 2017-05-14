@@ -1,0 +1,11 @@
+AppBundle\Entity\Genre:
+    exclusion_policy: all
+    properties:
+        id:
+            expose: true
+        name:
+            expose: true
+        description:
+            expose: true
+        info:
+            expose: true

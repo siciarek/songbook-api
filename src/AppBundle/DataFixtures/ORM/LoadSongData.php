@@ -76,7 +76,7 @@ class LoadSongData extends BasicFixture
                     }
                     $a->setDescription($oa['description']);
                     if ($a->getName() === null) {
-                        $a->setName($oa['description']);
+//                        $a->setName($oa['description']);
                     }
                     $a->setInfo($oa['info']);
 

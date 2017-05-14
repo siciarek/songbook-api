@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as Serializer;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
@@ -50,13 +49,11 @@ class Author {
 
     /**
      * @ORM\Column()
-     * @Serializer\SerializedName("firstName")
      */
     private $firstName;
 
     /**
      * @ORM\Column(nullable=true)
-     * @Serializer\SerializedName("lasstName")
      */
     private $lastName;
 
@@ -72,7 +69,6 @@ class Author {
 
     /**
      * @ORM\ManyToMany(targetEntity="Song", mappedBy="authors")
-     * @Serializer\Exclude()
      */
     private $songs;
 
