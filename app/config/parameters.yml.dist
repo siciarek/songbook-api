@@ -1,0 +1,30 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    app_name: Application
+    app_description: 'Application That Makes Evertything'
+    app_email: siciarek@gmail.com
+
+    database_type: mysql # msql, pgsql, sqlite
+    database_driver: pdo_%database_type%
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     songbook
+    database_user:     root
+    database_password: pass
+    # You should uncomment this if you want to use pdo_sqlite
+    database_path: null # '%kernel.root_dir%/../var/data/data.sqlite'
+
+    mailer_transport: smtp
+    mailer_encryption: null
+    mailer_auth_mode: login
+    mailer_host: 127.0.0.1
+    mailer_port: null
+    mailer_user: ~
+    mailer_password: ~
+
+    # A secret key that's used to generate certain security-related tokens
+    secret: ThisTokenIsNotSoSecretChangeIt
+
+    paginator_limit: 3

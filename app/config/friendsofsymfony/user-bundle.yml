@@ -1,0 +1,11 @@
+fos_user:
+    db_driver:      orm
+    firewall_name:  main
+    user_class:     UserBundle\Entity\User
+
+    from_email:
+        sender_name: %app_name%
+        address: %app_email%
+
+    group:
+        group_class:   UserBundle\Entity\Group

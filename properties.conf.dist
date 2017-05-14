@@ -1,0 +1,4 @@
+php=php
+composer=composer
+sphinx.build=sphinx-build
+
