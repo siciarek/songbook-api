@@ -16,16 +16,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
  */
 class AuthorController extends FOSRestController implements ClassResourceInterface
 {
-    /**
-     * List of authors.
-     *
-     * @QueryParam(name="page", nullable=true, requirements="[1-9]\d*")
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns list of Authors",
-     * )
-     */
     public function cgetAction(Request $request)
     {
         $builder = $this
@@ -42,14 +32,6 @@ class AuthorController extends FOSRestController implements ClassResourceInterfa
         return $paginator->getItems();
     }
 
-    /**
-     * Returns specific author data.
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns specific Author data.",
-     * )
-     */
     public function getAction($id)
     {
         $item = $this

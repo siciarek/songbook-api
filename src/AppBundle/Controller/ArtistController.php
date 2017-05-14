@@ -16,16 +16,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
  */
 class ArtistController extends FOSRestController implements ClassResourceInterface
 {
-    /**
-     * List of artists.
-     *
-     * @QueryParam(name="page", nullable=true, requirements="[1-9]\d*")
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns list of Artists",
-     * )
-     */
     public function cgetAction(Request $request)
     {
         $builder = $this
@@ -42,14 +32,6 @@ class ArtistController extends FOSRestController implements ClassResourceInterfa
         return $paginator->getItems();
     }
 
-    /**
-     * Returns specific artist data.
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns specific Artist data.",
-     * )
-     */
     public function getAction($id)
     {
         $item = $this

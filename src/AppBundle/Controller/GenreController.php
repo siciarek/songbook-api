@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Genre;
+use Doctrine\Common\Collections\Criteria;
+use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcher;
@@ -17,21 +19,24 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class GenreController extends FOSRestController implements ClassResourceInterface
 {
     /**
-     * List of genres.
+     * Returns a list of available music genres.
      *
      * @QueryParam(name="page", nullable=true, requirements="[1-9]\d*")
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Returns list of Genres",
+     *  description="Returns a list of available music genres.",
      * )
      */
     public function cgetAction(Request $request)
     {
-        $builder = $this
-            ->get('doctrine')
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        $builder = $em
             ->getRepository(Genre::class)
-            ->createQueryBuilder('a');
+            ->createQueryBuilder('a')
+            ->andWhere('a.deletedAt IS NULL')
+            ->addOrderBy('a.name', 'ASC');
 
         $paginator = $this->get('knp_paginator')->paginate(
             $builder,
@@ -43,20 +48,123 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * Returns specific genre data.
+     * Returns data of music genre identified by id.
      *
      * @ApiDoc(
      *  resource=true,
-     *  description="Returns specific Genre data.",
+     *  description="Returns data of music genre identified by id.",
      * )
      */
     public function getAction($id)
     {
-        $item = $this
-            ->get('doctrine')
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        $item = $em
             ->getRepository(Genre::class)
-            ->findOneById($id);
+            ->findOneBy(['id' => $id]);
+
+        if(false === ($item instanceof Genre) or true === $item->isDeleted()) {
+            throw $this->createNotFoundException('Invalid id.');
+        }
 
         return $item;
+    }
+
+    /**
+     * Creates new music genre.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Creates new music genre.",
+     * )
+     */
+    public function postAction(Request $request)
+    {
+        $json = $request->getContent();
+        $data = json_decode($json, true);
+
+        $em = $this->get('doctrine.orm.entity_manager');
+
+        $item = new Genre();
+        $fields = [
+            'name' => function ($value) use ($item) {
+                $item->setName($value);
+            },
+            'description' => function ($value) use ($item) {
+                $item->setDescription($value);
+            },
+            'info' => function ($value) use ($item) {
+                $item->setInfo($value);
+            },
+        ];
+
+        foreach ($fields as $field => $func) {
+            $func($data[$field]);
+        }
+
+        $em->persist($item);
+        $em->flush();
+
+        return $item;
+    }
+
+    /**
+     * Modifies data of music genre identified by id.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Modifies data of music genre identified by id.",
+     * )
+     */
+    public function putAction(Request $request, $id)
+    {
+        $json = $request->getContent();
+        $data = json_decode($json, true);
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $item = $em->getRepository(Genre::class)->find($id);
+
+        if(!$item instanceof Genre) {
+            throw $this->createNotFoundException('Invalid id.');
+        }
+
+        $fields = [
+            'name' => function ($value) use ($item) {
+                $item->setName($value);
+            },
+            'description' => function ($value) use ($item) {
+                $item->setDescription($value);
+            },
+            'info' => function ($value) use ($item) {
+                $item->setInfo($value);
+            },
+        ];
+
+        foreach ($fields as $field => $func) {
+            $func($data[$field]);
+        }
+
+        $em->persist($item);
+        $em->flush();
+
+        return $item;
+    }
+
+
+    /**
+     * Removes music genre identified by id.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Removes music genre identified by id.",
+     * )
+     */
+    public function deleteAction($id)
+    {
+        $em = $this->get('doctrine.orm.entity_manager');
+        $item = $em->getRepository(Genre::class)->find($id);
+
+        $em->remove($item);
+        $em->flush();
     }
 }

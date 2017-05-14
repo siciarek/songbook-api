@@ -1,2 +1,7 @@
 parameters:
     knp.doctrine_behaviors.blameable_subscriber.user_entity: UserBundle\Entity\User
+
+knp_doctrine_behaviors:
+    timestampable:      true
+    blameable:      true
+    soft_deletable: true
