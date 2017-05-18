@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * AppBundle\Entity\Song
@@ -18,6 +19,14 @@ class Song
     use ORMBehaviors\Blameable\Blameable,
         ORMBehaviors\Timestampable\Timestampable,
         ORMBehaviors\SoftDeletable\SoftDeletable;
+
+    public function getAudioCount() {
+        return $this->getAudio()->count();
+    }
+
+    public function getVideoCount() {
+        return $this->getVideos()->count();
+    }
 
     public function __toString()
     {

@@ -102,7 +102,7 @@ $song = [
 $songs = [
     [
         'id' => 110,
-        'genre' => 'Rock',
+        'genre' => 691,
         'createdAt' => '1972-01-01 00:00:00',
         'title' => 'Smoke on the Water',
         'lyrics' => "We all came out to Montreux
@@ -153,7 +153,7 @@ Smoke on the water",
     ],
     [
         'id' => 103,
-        'genre' => 'Rock',
+        'genre' => 691,
         'createdAt' => '1979-10-11 15:10:00',
         'title' => 'Highway To Hell',
         'lyrics' => "Living easy, living free
@@ -206,7 +206,7 @@ I'm on the highway to hell",
     ],
     [
         'id' => 102,
-        'genre' => 'Ballad',
+        'genre' => 202,
         'createdAt' => '1979-10-11 15:10:00',
         'title' => 'Imagine',
         'lyrics' => "Imagine there's no heaven
@@ -247,12 +247,20 @@ I hope someday you'll join us
 And the world will live as one",
         'authors' => [],
         'artists' => [],
-        [],
-        'videos' => []
+        'audio' => [],
+        'videos' => [
+            [
+                'id' => 600,
+                'source' => 'youtube',
+                'url' => 'https://www.youtube.com/watch?v=VOgFZfRVaww',
+                'artists' => [$people['lennon']],
+                'info' => 'Official video',
+            ],
+        ]
     ],
     [
         'id' => 101,
-        'genre' => 'Rock',
+        'genre' => 691,
         'createdAt' => '2017-01-01 00:00:00',
         'title' => 'Satisfaction',
         'lyrics' => "I can't get no satisfaction, I can't get no satisfaction
@@ -297,20 +305,12 @@ No satisfaction, no satisfaction",
             $people['jagger'],
         ],
         'audio' => [],
-        'videos' => [
-            [
-                'id' => 600,
-                'source' => 'youtube',
-                'url' => 'https://www.youtube.com/watch?v=VOgFZfRVaww',
-                'artists' => [$people['lennon']],
-                'info' => 'Official video',
-            ],
-        ]
+        'videos' => [],
     ],
     [
         'id' => 100,
         'createdAt' => '2016-10-21 00:00:00',
-        'genre' => 'Ballad',
+        'genre' => 202,
         'title' => 'Yesterday',
         'authors' => [
             $people['lennon'],
@@ -365,7 +365,7 @@ Mm mm mm mm mm mm mm",
     [
         'id' => 1,
         'createdAt' => '2016-10-21 00:00:00',
-        'genre' => 'Ballad',
+        'genre' => 202,
         'title' => 'My Way',
         'authors' => [
             $people['paulanka'],
@@ -434,7 +434,7 @@ Yes, it was my way",
     [
         'id' => 2,
         'createdAt' => '2016-10-21 00:00:00',
-        'genre' => 'Jazz',
+        'genre' => 494,
         'title' => 'Fly Me To The Moon',
         'authors' => [
             $people['paulanka'],
@@ -460,7 +460,7 @@ In other words, I love you',
     [
         'id' => 3,
         'createdAt' => '2016-10-21 00:00:00',
-        'genre' => 'Jazz',
+        'genre' => 494,
         'title' => 'New York, New York',
         'authors' => [
             $people['paulanka'],

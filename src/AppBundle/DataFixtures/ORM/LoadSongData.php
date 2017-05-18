@@ -20,7 +20,7 @@ class LoadSongData extends BasicFixture
     /**
      * @var int
      */
-    protected $order = 3;
+    protected $order = 4;
 
     /**
      * {@inheritDoc}
@@ -45,10 +45,8 @@ class LoadSongData extends BasicFixture
         foreach ($data as $o) {
 
             if (!array_key_exists($o['genre'], $genres)) {
-                $g = new Genre();
-                $g->setName($o['genre']);
-                $manager->persist($g);
-                $manager->flush();
+
+                $g = $manager->getRepository(Genre::class)->find($o['genre']);
                 $genres[$o['genre']] = $g;
             }
 

@@ -1,0 +1,33 @@
+AppBundle\Entity\Song:
+    exclusion_policy: all
+    properties:
+        prop:
+            expose: true
+        id:
+            expose: true
+        title:
+            expose: true
+        lyrics:
+            expose: true
+        description:
+            expose: true
+        info:
+            expose: true
+        genre:
+            expose: true
+        audio:
+            expose: true
+        videos:
+            expose: true
+            serialized_name: video
+        createdAt:
+            expose: true
+            serialized_name: createdAt
+            type: DateTime<'Y-m-d 00:00:00'>
+    virtual_properties:
+        getAudioCount:
+            expose: true
+            serialized_name: audioCount
+        getVideoCount:
+            expose: true
+            serialized_name: videoCount

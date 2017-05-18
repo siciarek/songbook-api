@@ -3,20 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
  * AppBundle\Entity\Country
  *
  * @ORM\Entity
- * @ORM\Table(name="genre")
- * @ORM\Entity(repositoryClass="GenreRepository")
+ * @ORM\Table(name="genre_category")
+ * @ORM\Entity(repositoryClass="GenreCategoryRepository")
  */
-class Genre {
-
-    use ORMBehaviors\Blameable\Blameable,
-        ORMBehaviors\Timestampable\Timestampable,
-        ORMBehaviors\SoftDeletable\SoftDeletable;
+class GenreCategory {
 
     /**
      * @ORM\Id
@@ -26,17 +21,12 @@ class Genre {
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GenreCategory", inversedBy="genres")
+     * @ORM\OneToMany(targetEntity="Genre", mappedBy="category")
      */
-    private $category;
+    private $genres;
 
     /**
-     * @ORM\OneToMany(targetEntity="Song", mappedBy="genre")
-     */
-    private $songs;
-
-    /**
-     * @ORM\Column()
+     * @ORM\Column(unique=true)
      */
     private $name;
 
@@ -55,7 +45,7 @@ class Genre {
      */
     public function __construct()
     {
-        $this->songs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->genres = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -73,7 +63,7 @@ class Genre {
      *
      * @param string $name
      *
-     * @return Genre
+     * @return GenreCategory
      */
     public function setName($name)
     {
@@ -97,7 +87,7 @@ class Genre {
      *
      * @param string $description
      *
-     * @return Genre
+     * @return GenreCategory
      */
     public function setDescription($description)
     {
@@ -121,7 +111,7 @@ class Genre {
      *
      * @param string $info
      *
-     * @return Genre
+     * @return GenreCategory
      */
     public function setInfo($info)
     {
@@ -141,60 +131,36 @@ class Genre {
     }
 
     /**
-     * Add song
+     * Add genre
      *
-     * @param \AppBundle\Entity\Song $song
+     * @param \AppBundle\Entity\Genre $genre
      *
-     * @return Genre
+     * @return GenreCategory
      */
-    public function addSong(\AppBundle\Entity\Song $song)
+    public function addGenre(\AppBundle\Entity\Genre $genre)
     {
-        $this->songs[] = $song;
+        $this->genres[] = $genre;
 
         return $this;
     }
 
     /**
-     * Remove song
+     * Remove genre
      *
-     * @param \AppBundle\Entity\Song $song
+     * @param \AppBundle\Entity\Genre $genre
      */
-    public function removeSong(\AppBundle\Entity\Song $song)
+    public function removeGenre(\AppBundle\Entity\Genre $genre)
     {
-        $this->songs->removeElement($song);
+        $this->genres->removeElement($genre);
     }
 
     /**
-     * Get songs
+     * Get genres
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSongs()
+    public function getGenres()
     {
-        return $this->songs;
-    }
-
-    /**
-     * Set category
-     *
-     * @param \AppBundle\Entity\GenreCategory $category
-     *
-     * @return Genre
-     */
-    public function setCategory(\AppBundle\Entity\GenreCategory $category = null)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return \AppBundle\Entity\GenreCategory
-     */
-    public function getCategory()
-    {
-        return $this->category;
+        return $this->genres;
     }
 }
