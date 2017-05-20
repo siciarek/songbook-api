@@ -36,7 +36,7 @@ class SongController extends FOSRestController implements ClassResourceInterface
 
         $item = new Song();
 
-        $genre = $em->getRepository(Genre::class)->findOneByName($data['genre']);
+        $genre = $em->getRepository(Genre::class)->findOneById($data['genre']['id']);
 
         $fields = [
             'genre' => function($value) use ($item, $genre) {
@@ -80,7 +80,7 @@ class SongController extends FOSRestController implements ClassResourceInterface
             throw $this->createNotFoundException('Invalid id.');
         }
 
-        $genre = $em->getRepository(Genre::class)->findOneByName($data['genre']);
+        $genre = $em->getRepository(Genre::class)->findOneById($data['genre']['id']);
 
         $fields = [
             'genre' => function($value) use ($item, $genre) {
