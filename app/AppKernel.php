@@ -9,6 +9,7 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = [
+//            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
             new FOS\RestBundle\FOSRestBundle(),

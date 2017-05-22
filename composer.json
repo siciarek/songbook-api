@@ -20,6 +20,7 @@
         ]
     },
     "require": {
+        "lexik/jwt-authentication-bundle": "dev-master",
         "nelmio/cors-bundle": "dev-master",
         "nelmio/api-doc-bundle": "dev-master",
         "jms/serializer-bundle": "^1.5",

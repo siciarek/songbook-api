@@ -30,6 +30,10 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
      */
     public function cgetAction(Request $request)
     {
+        $temp = $request->get('enabled', false);
+        $temp = mb_convert_case($temp, MB_CASE_LOWER);
+        $enabled = in_array($temp, ['1', 'true', 't']);
+
         $em = $this->get('doctrine.orm.entity_manager');
 
         $builder = $em
@@ -37,6 +41,10 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
             ->createQueryBuilder('a')
             ->andWhere('a.deletedAt IS NULL')
             ->addOrderBy('a.name', 'ASC');
+
+        if($enabled === true) {
+            $builder->andWhere('a.enabled = true');
+        }
 
         $paginator = $this->get('knp_paginator')->paginate(
             $builder,

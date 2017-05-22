@@ -46,6 +46,7 @@ class LoadGenresData extends BasicFixture
             $manager->flush();
 
             $g = new Genre();
+            $g->setEnabled();
             $g->setName($category);
             $g->setCategory($o);
             $manager->persist($g);

@@ -26,6 +26,11 @@ class Genre {
     private $id;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled = false;
+
+    /**
      * @ORM\ManyToOne(targetEntity="GenreCategory", inversedBy="genres")
      */
     private $category;
@@ -66,6 +71,30 @@ class Genre {
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     *
+     * @return Genre
+     */
+    public function setEnabled($enabled = true)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
     }
 
     /**
@@ -141,6 +170,30 @@ class Genre {
     }
 
     /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\GenreCategory $category
+     *
+     * @return Genre
+     */
+    public function setCategory(\AppBundle\Entity\GenreCategory $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\GenreCategory
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
      * Add song
      *
      * @param \AppBundle\Entity\Song $song
@@ -172,29 +225,5 @@ class Genre {
     public function getSongs()
     {
         return $this->songs;
-    }
-
-    /**
-     * Set category
-     *
-     * @param \AppBundle\Entity\GenreCategory $category
-     *
-     * @return Genre
-     */
-    public function setCategory(\AppBundle\Entity\GenreCategory $category = null)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return \AppBundle\Entity\GenreCategory
-     */
-    public function getCategory()
-    {
-        return $this->category;
     }
 }
