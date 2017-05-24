@@ -1,14 +1,11 @@
 api:
     type: rest
     resource: '@AppBundle/Controller/'
-#    prefix: /api
+    prefix: /api
 
-#auth:
-#    resource: '@UserBundle/Controller/'
-#    prefix: /api
-
-#api_login_check:
-#    path: /api/login_check
+acme_api:
+    resource: "@AcmeApiBundle/Resources/config/routing.yml"
+    prefix:   /api
 
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"

@@ -1,0 +1,15 @@
+# MISC
+
+login_check:
+    path: /login_check
+
+acme_api_ping:
+    path: /ping
+    defaults: { _controller: 'AcmeApiBundle:Authentication:ping' }
+    methods: HEAD|GET
+
+# REST
+
+acme_api_page:
+    type:           rest
+    resource:       Acme\Bundle\ApiBundle\Controller\Rest\PageController
