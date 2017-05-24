@@ -1,7 +1,7 @@
 parameters:
-    acme_api.event.jwt_response_listener.class: Acme\Bundle\ApiBundle\EventListener\JWTResponseListener
-    acme_api.event.jwt_created_listener.class: Acme\Bundle\ApiBundle\EventListener\JWTCreatedListener
-    acme_api.event.jwt_decoded_listener.class: Acme\Bundle\ApiBundle\EventListener\JWTDecodedListener
+    acme_api.event.jwt_response_listener.class: AuthBundle\EventListener\JWTResponseListener
+    acme_api.event.jwt_created_listener.class: AuthBundle\EventListener\JWTCreatedListener
+    acme_api.event.jwt_decoded_listener.class: AuthBundle\EventListener\JWTDecodedListener
 
 services:
     acme_api.event.jwt_response_listener:

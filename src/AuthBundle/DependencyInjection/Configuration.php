@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\Bundle\ApiBundle\DependencyInjection;
+namespace AuthBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

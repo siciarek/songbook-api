@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\Bundle\ApiBundle\EventListener;
+namespace AuthBundle\EventListener;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Component\Security\Core\User\UserInterface;

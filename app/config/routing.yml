@@ -3,8 +3,8 @@ api:
     resource: '@AppBundle/Controller/'
     prefix: /api
 
-acme_api:
-    resource: "@AcmeApiBundle/Resources/config/routing.yml"
+auth:
+    resource: "@AuthBundle/Resources/config/routing.yml"
     prefix:   /api
 
 NelmioApiDocBundle:
