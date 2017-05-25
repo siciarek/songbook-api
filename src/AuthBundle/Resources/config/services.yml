@@ -1,18 +1,29 @@
 parameters:
-    acme_api.event.jwt_response_listener.class: AuthBundle\EventListener\JWTResponseListener
-    acme_api.event.jwt_created_listener.class: AuthBundle\EventListener\JWTCreatedListener
-    acme_api.event.jwt_decoded_listener.class: AuthBundle\EventListener\JWTDecodedListener
+    auth.event.jwt_response_listener.class: AuthBundle\EventListener\JWTResponseListener
+    auth.event.jwt_created_listener.class: AuthBundle\EventListener\JWTCreatedListener
+    auth.event.jwt_decoded_listener.class: AuthBundle\EventListener\JWTDecodedListener
 
 services:
-    acme_api.event.jwt_response_listener:
-        class: %acme_api.event.jwt_response_listener.class%
+    auth.event.jwt_response_listener:
+        class: %auth.event.jwt_response_listener.class%
         tags:
-            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
-    acme_api.event.jwt_created_listener:
-        class: %acme_api.event.jwt_created_listener.class%
+            -
+                name: kernel.event_listener
+                event: lexik_jwt_authentication.on_authentication_success
+                method: onAuthenticationSuccessResponse
+
+    auth.event.jwt_created_listener:
+        class: %auth.event.jwt_created_listener.class%
         tags:
-            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
-    acme_api.event.jwt_decoded_listener:
-        class: %acme_api.event.jwt_decoded_listener.class%
+            -
+                name: kernel.event_listener
+                event: lexik_jwt_authentication.on_jwt_created
+                method: onJWTCreated
+
+    auth.event.jwt_decoded_listener:
+        class: %auth.event.jwt_decoded_listener.class%
         tags:
-            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_decoded, method: onJWTDecoded }
+            -
+                name: kernel.event_listener
+                event: lexik_jwt_authentication.on_jwt_decoded
+                method: onJWTDecoded

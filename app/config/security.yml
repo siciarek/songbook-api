@@ -32,7 +32,7 @@ security:
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
-        api:
+        api_writable:
             pattern:   ^/api
             stateless: true
             methods:
@@ -46,6 +46,22 @@ security:
                 query_parameter:
                     enabled: true
                     name:    bearer
+        api_private:
+            pattern:   ^/api/user/(profile|dashboard)|/api/author
+            stateless: true
+            methods:
+                - GET
+            lexik_jwt:
+                authorization_header:
+                    enabled: true
+                    prefix:  Bearer
+                    # Send extra http header:
+                    # Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInVzZXJuYW1lIjoiY29sYWsiLCJpcCI6IjEyNy4wLjAuMSIsImlhdCI6MTQ5NTczMjc3MSwiZXhwIjoxNDk1NzM2MzcxfQ.dOEBAMDmgvz5nOi1iDw6Ke_ifv1Rbta_mu-1vRT4SNlxfmPcB63uLHS-7wDGeoWYo65_1GHzv0ISiyFhLHI7dvsxd-ugjonDIcj03o8EnRmvRzFhx8m90D4a-alULiAaLlODQheIAeev2Eygl5aKEjG8bbi2D_-D7uix6iHOK0s7qGDQn6uhodeuBMKAdJmwtSFF7v_T6Fn-XOXAr-ao8PRCbDChmVWn6cyxb3YrVAexUKvlylDA8gRP6xNec3x8Lm0hUyp8ilEFpyD4lCciqygdMhc3eebYDI_vWWmVzRwRywRNn2NunUeyQkziO1kc9H8ShhgoYYI1BSvG3iaEPZc03u-B5bEvLS8YKU8bdwN7WEsvSLYeqtnbX3SFHfXrBhMUq4HHN543IJOoZELAXvlV68-jqJtTSkNY0AOQMsP_y2u5NO-iqh781hVRQodkExYWcOjMFXGg0_SwRO5TYgT3trFIDkod7dt5ombLJ53NOLlX_0p_dyS3y9Ik20rZYZ2QDJiT0eovAT8BzegHP1x8PG4UMPDY1zVFcjL0UgOltF3V3wY6JpQ0e46hSTdqTncnzl6yZpaWv0O3eCRM9ZQw6QsLjrlzk5SmdYVtwPVPJg7hZoH9WKQ_agQfqLX5DtKm-XsV-26C3iapiP95DSeRJf0mwBJyJ_qW0XorVWo
+                query_parameter:
+                    enabled: true
+                    name:    bearer
+                    # Add parameter to url:
+                    # ?bearer=eyJhbGciOiJSUzI1NiJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sInVzZXJuYW1lIjoiY29sYWsiLCJpcCI6IjEyNy4wLjAuMSIsImlhdCI6MTQ5NTczMjc3MSwiZXhwIjoxNDk1NzM2MzcxfQ.dOEBAMDmgvz5nOi1iDw6Ke_ifv1Rbta_mu-1vRT4SNlxfmPcB63uLHS-7wDGeoWYo65_1GHzv0ISiyFhLHI7dvsxd-ugjonDIcj03o8EnRmvRzFhx8m90D4a-alULiAaLlODQheIAeev2Eygl5aKEjG8bbi2D_-D7uix6iHOK0s7qGDQn6uhodeuBMKAdJmwtSFF7v_T6Fn-XOXAr-ao8PRCbDChmVWn6cyxb3YrVAexUKvlylDA8gRP6xNec3x8Lm0hUyp8ilEFpyD4lCciqygdMhc3eebYDI_vWWmVzRwRywRNn2NunUeyQkziO1kc9H8ShhgoYYI1BSvG3iaEPZc03u-B5bEvLS8YKU8bdwN7WEsvSLYeqtnbX3SFHfXrBhMUq4HHN543IJOoZELAXvlV68-jqJtTSkNY0AOQMsP_y2u5NO-iqh781hVRQodkExYWcOjMFXGg0_SwRO5TYgT3trFIDkod7dt5ombLJ53NOLlX_0p_dyS3y9Ik20rZYZ2QDJiT0eovAT8BzegHP1x8PG4UMPDY1zVFcjL0UgOltF3V3wY6JpQ0e46hSTdqTncnzl6yZpaWv0O3eCRM9ZQw6QsLjrlzk5SmdYVtwPVPJg7hZoH9WKQ_agQfqLX5DtKm-XsV-26C3iapiP95DSeRJf0mwBJyJ_qW0XorVWo
 
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -3,6 +3,10 @@ api:
     resource: '@AppBundle/Controller/'
     prefix: /api
 
+user:
+    resource: '@UserBundle/Controller/'
+    prefix: /api
+
 auth:
     resource: "@AuthBundle/Resources/config/routing.yml"
     prefix:   /api

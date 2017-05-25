@@ -1,5 +1,13 @@
 AppBundle\Entity\Artist:
     exclusion_policy: all
+    accessor_order: custom
+    custom_accessor_order:
+        - id
+        - name
+        - firstName
+        - lastName
+        - description
+        - info
     properties:
         id:
             expose: true
