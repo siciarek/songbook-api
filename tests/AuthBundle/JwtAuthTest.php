@@ -6,6 +6,36 @@ use PHPUnit\Framework\TestCase;
 
 class JwtAuthTest extends TestCase
 {
+    public function testResctirctedAccess()
+    {
+        $securedPageUrl = $this->getBasicUrl() . '/user/dashboard';
+
+        # Access should be forbiden:
+        list($resp, $info) = $this->getResponse('GET', $securedPageUrl);
+        $data = json_decode($resp, true);
+        $this->assertEquals($data, ['code' => 401, 'message' => 'Bad credentials']);
+        $this->assertEquals(401, $info['http_code']);
+
+
+        # Authentication:
+        $authData = $this->getAuthData();
+        $headers = [
+            'Content-Type: application/x-www-form-urlencoded',
+        ];
+        $authUrl = $this->getBasicUrl() . '/auth';
+
+        list($resp, $info) = $this->getResponse('POST', $authUrl, $authData, $headers);
+        $data = json_decode($resp, true);
+
+        $headers = [
+            sprintf('Authorization: Bearer %s', $data['token']),
+        ];
+
+
+        list($resp, $info) = $this->getResponse('GET', $securedPageUrl, null, $headers);
+        $this->assertEquals(200, $info['http_code']);
+    }
+
     public function testAuthFailure()
     {
         $authData = $this->getAuthData();
@@ -25,7 +55,7 @@ class JwtAuthTest extends TestCase
         $this->assertEquals(401, $info['http_code']);
 
         # Invalid auth protocol:
-        foreach(['GET', 'PUT', 'DELETE'] as $method) {
+        foreach (['GET', 'PUT', 'DELETE'] as $method) {
             list($resp, $info) = $this->getResponse($method, $url);
             $this->assertEquals(404, $info['http_code']);
         }
@@ -63,6 +93,8 @@ class JwtAuthTest extends TestCase
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         }
 
+        curl_setopt($ch, CURLOPT_VERBOSE, false);
+
         switch ($method) {
             case 'POST':
                 $data = http_build_query($data);
@@ -84,7 +116,8 @@ class JwtAuthTest extends TestCase
         return [$resp, $info];
     }
 
-    public function getBasicUrl() {
+    public function getBasicUrl()
+    {
         return 'http://localhost:8000/api';
     }
 
