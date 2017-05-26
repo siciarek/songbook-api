@@ -1,4 +1,2 @@
-# MISC
-
-login_check:
-    path: /login_check
+auth_check:
+    path: /auth
