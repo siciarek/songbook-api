@@ -12,7 +12,7 @@ class JwtAuthTest extends TestCase
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded',
         ];
-        $url = 'http://localhost:8000/api/auth';
+        $url = $this->getBasicUrl() . '/auth';
 
         $authData['username'] .= 'broken';
 
@@ -37,7 +37,7 @@ class JwtAuthTest extends TestCase
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded',
         ];
-        $url = 'http://localhost:8000/api/auth';
+        $url = $this->getBasicUrl() . '/auth';
 
         list($resp, $info) = $this->getResponse('POST', $url, $authData, $headers);
 
@@ -80,6 +80,10 @@ class JwtAuthTest extends TestCase
         curl_close($ch);
 
         return [$resp, $info];
+    }
+
+    public function getBasicUrl() {
+        return 'http://localhost:8000/api';
     }
 
     public function getAuthData()
