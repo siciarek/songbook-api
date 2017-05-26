@@ -10,12 +10,11 @@ class JwtAuthTest extends TestCase
     {
         $securedPageUrl = $this->getBasicUrl() . '/user/dashboard';
 
-        # Access should be forbiden:
+        # Unauthenticated users should have no access to secured resource:
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl);
         $data = json_decode($resp, true);
         $this->assertEquals($data, ['code' => 401, 'message' => 'Bad credentials']);
         $this->assertEquals(401, $info['http_code']);
-
 
         # Authentication:
         $authData = $this->getAuthData();
@@ -27,13 +26,21 @@ class JwtAuthTest extends TestCase
         list($resp, $info) = $this->getResponse('POST', $authUrl, $authData, $headers);
         $data = json_decode($resp, true);
 
+        # Valid token:
+        $token = $data['token'];
         $headers = [
-            sprintf('Authorization: Bearer %s', $data['token']),
+            sprintf('Authorization: Bearer %s', $token),
         ];
-
-
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl, null, $headers);
         $this->assertEquals(200, $info['http_code']);
+
+        # Ivalid token:
+        $token = str_replace('A', 'C', $data['token']);
+        $headers = [
+            sprintf('Authorization: Bearer %s', $token),
+        ];
+        list($resp, $info) = $this->getResponse('GET', $securedPageUrl, null, $headers);
+        $this->assertEquals(401, $info['http_code']);
     }
 
     public function testAuthFailure()
