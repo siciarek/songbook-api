@@ -88,7 +88,7 @@ class JwtAuthTest extends TestCase
             'password' => $password,
         ];
         $headers = [
-            'Content-Type' => 'application/x-www-form-urlencoded',
+            'Content-Type: application/x-www-form-urlencoded',
         ];
 
         $authData['username'] .= 'broken';
@@ -127,14 +127,13 @@ class JwtAuthTest extends TestCase
 
         list($resp, $info) = $this->getResponse('POST', $url, $authData, $headers);
 
-
         # Check if data has all the required elements:
         $data = json_decode($resp, true);
         $this->assertInternalType('array', $data);
         $this->assertArrayHasKey('token', $data);
         $this->assertRegExp('/^[\w+\-\.]+$/', $data['token']);
 
-        $this->assertArrayHasKey('data', $data);
+        $this->assertArrayHasKey('data', $data, $resp);
         $this->assertArrayHasKey('username', $data['data']);
         $this->assertNotNull($data['data']['username']);
 

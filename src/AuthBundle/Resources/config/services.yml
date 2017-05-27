@@ -1,7 +1,7 @@
 parameters:
-    auth.event.jwt_response_listener.class: AuthBundle\EventListener\JWTResponseListener
-    auth.event.jwt_created_listener.class: AuthBundle\EventListener\JWTCreatedListener
-    auth.event.jwt_decoded_listener.class: AuthBundle\EventListener\JWTDecodedListener
+    auth.event.jwt_response_listener.class: AuthBundle\EventListener\TokenResponseListener
+    auth.event.jwt_created_listener.class: AuthBundle\EventListener\TokenCreatedListener
+    auth.event.jwt_decoded_listener.class: AuthBundle\EventListener\TokenDecodedListener
 
 services:
     auth.event.jwt_response_listener:
@@ -18,7 +18,7 @@ services:
             -
                 name: kernel.event_listener
                 event: lexik_jwt_authentication.on_jwt_created
-                method: onJWTCreated
+                method: onCreated
 
     auth.event.jwt_decoded_listener:
         class: %auth.event.jwt_decoded_listener.class%
@@ -26,4 +26,4 @@ services:
             -
                 name: kernel.event_listener
                 event: lexik_jwt_authentication.on_jwt_decoded
-                method: onJWTDecoded
+                method: onDecoded

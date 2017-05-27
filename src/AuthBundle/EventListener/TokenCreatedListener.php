@@ -2,16 +2,16 @@
 
 namespace AuthBundle\EventListener;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTDecodedEvent;
+use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * JWTDecodedListener
+ * JWTCreatedListener
  *
  * @author Nicolas Cabot <n.cabot@lexik.fr>
  */
-class JWTDecodedListener implements ContainerAwareInterface
+class TokenCreatedListener implements ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -19,20 +19,24 @@ class JWTDecodedListener implements ContainerAwareInterface
     private $container;
 
     /**
-     * @param JWTDecodedEvent $event
+     * @param JWTCreatedEvent $event
      *
      * @return void
      */
-    public function onJWTDecoded(JWTDecodedEvent $event)
+    public function onCreated(JWTCreatedEvent $event)
     {
-        $payload = $event->getPayload();
-
-        # TODO - pobrać prawdziwe IP
+        # TODO - wydobyć prawdziwe IP
         $ip = '127.0.0.1';
 
-        if (!isset($payload['ip']) || $payload['ip'] !== $ip) {
-            $event->markAsInvalid();
+        if (!($request = $event->getData())) {
+            return;
         }
+
+        $payload       = $event->getData();
+
+        $payload['ip'] = $ip;
+
+        $event->setData($payload);
     }
 
     public function __construct(ContainerInterface $container = null)
