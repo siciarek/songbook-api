@@ -107,7 +107,7 @@ class JwtAuthTest extends TestCase
             $data = json_decode($resp, true);
             $this->assertEquals(404, $info['http_code']);
 
-            # TODO: fully JSON app
+            # TODO: set output fro entire application to JSON, now it returns html when some error occurs
             # $this->assertNotNull($data);
         }
     }

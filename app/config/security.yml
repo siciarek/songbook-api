@@ -17,15 +17,15 @@ security:
 
     firewalls:
         dev:
-            pattern:  ^/api/(_(profiler|wdt|doc))/
+            pattern:  ^/(_(profiler|wdt|doc))/
             security: false
 
         login:
-            pattern:  ^/api/auth
+            pattern:  ^/auth
             stateless: true
             anonymous: true
             form_login:
-                check_path: /api/auth
+                check_path: /auth
                 require_previous_session: false
                 username_parameter: username
                 password_parameter: password
@@ -33,7 +33,7 @@ security:
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
         api_mutable:
-            pattern:   ^/api
+            pattern:   ^/
             stateless: true
             methods:
                 - DELETE
@@ -41,11 +41,11 @@ security:
                 - PUT
             lexik_jwt: ~
         api_private:
-            pattern:   ^/api/user/(profile|dashboard)|/api/author
+            pattern:   ^/user/(profile|dashboard)
             stateless: true
             methods:
                 - GET
             lexik_jwt: ~
 
     access_control:
-        - { path: ^/api/auth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/auth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
