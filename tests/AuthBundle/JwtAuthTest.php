@@ -1,15 +1,66 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace Tests\AuthBundle;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class JwtAuthTest extends TestCase
 {
-    public function testResctirctedAccess()
+    public static function authDataProvider()
     {
-        $securedPageUrl = $this->getBasicUrl() . '/user/dashboard';
+        $authUrl = 'http://localhost:8000/api/auth';
 
+        return [
+            [
+                $authUrl,
+                'jsiciarek',
+                'pass',
+            ],
+            [
+                $authUrl,
+                'colak',
+                'pass',
+            ],
+            [
+                $authUrl,
+                'molak',
+                'pass',
+            ],
+        ];
+    }
+
+    public static function securedPageDataProvider()
+    {
+        $authUrl = 'http://localhost:8000/api/auth';
+        $securedPageUrl = 'http://localhost:8000/api/user/dashboard';
+
+        return [
+            [
+                $securedPageUrl,
+                $authUrl,
+                'jsiciarek',
+                'pass',
+            ],
+            [
+                $securedPageUrl,
+                $authUrl,
+                'colak',
+                'pass',
+            ],
+            [
+                $securedPageUrl,
+                $authUrl,
+                'molak',
+                'pass',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider securedPageDataProvider
+     */
+    public function testSecuredPageAccess($securedPageUrl, $authUrl, $username, $password)
+    {
         # Unauthenticated users should have no access to secured resource:
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl);
         $data = json_decode($resp, true);
@@ -17,12 +68,13 @@ class JwtAuthTest extends TestCase
         $this->assertEquals(401, $info['http_code']);
 
         # Authentication:
-        $authData = $this->getAuthData();
+        $authData = [
+            'username' => $username,
+            'password' => $password,
+        ];
         $headers = [
             'Content-Type: application/x-www-form-urlencoded',
         ];
-        $authUrl = $this->getBasicUrl() . '/auth';
-
         list($resp, $info) = $this->getResponse('POST', $authUrl, $authData, $headers);
         $data = json_decode($resp, true);
 
@@ -43,13 +95,18 @@ class JwtAuthTest extends TestCase
         $this->assertEquals(401, $info['http_code']);
     }
 
-    public function testAuthFailure()
+    /**
+     * @dataProvider authDataProvider
+     */
+    public function testAuthFailure($url, $username, $password)
     {
-        $authData = $this->getAuthData();
+        $authData = [
+            'username' => $username,
+            'password' => $password,
+        ];
         $headers = [
             'Content-Type' => 'application/x-www-form-urlencoded',
         ];
-        $url = $this->getBasicUrl() . '/auth';
 
         $authData['username'] .= 'broken';
 
@@ -64,19 +121,29 @@ class JwtAuthTest extends TestCase
         # Invalid auth protocol:
         foreach (['GET', 'PUT', 'DELETE'] as $method) {
             list($resp, $info) = $this->getResponse($method, $url);
+            $data = json_decode($resp, true);
             $this->assertEquals(404, $info['http_code']);
+
+            # TODO: fully JSON app
+            # $this->assertNotNull($data);
         }
     }
 
-    public function testAuthSuccess()
+    /**
+     * @dataProvider authDataProvider
+     */
+    public function testAuthSuccess($url, $username, $password)
     {
-        $authData = $this->getAuthData();
-        $headers = [
-            'Content-Type' => 'application/x-www-form-urlencoded',
+        $authData = [
+            'username' => $username,
+            'password' => $password,
         ];
-        $url = $this->getBasicUrl() . '/auth';
+        $headers = [
+            'Content-Type: application/x-www-form-urlencoded',
+        ];
 
         list($resp, $info) = $this->getResponse('POST', $url, $authData, $headers);
+
 
         # Check if data has all the required elements:
         $data = json_decode($resp, true);
@@ -90,49 +157,5 @@ class JwtAuthTest extends TestCase
 
         $this->assertArrayHasKey('roles', $data['data']);
         $this->assertInternalType('array', $data['data']['roles']);
-    }
-
-    public function getResponse($method, $url, $data = [], $headers = null)
-    {
-        $ch = curl_init();
-
-        if ($headers !== null) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        }
-
-        curl_setopt($ch, CURLOPT_VERBOSE, false);
-
-        switch ($method) {
-            case 'POST':
-                $data = http_build_query($data);
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-                break;
-            case 'GET':
-                curl_setopt($ch, CURLOPT_HTTPGET, true);
-                break;
-        }
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $resp = curl_exec($ch);
-        $info = curl_getinfo($ch);
-        curl_close($ch);
-
-        return [$resp, $info];
-    }
-
-    public function getBasicUrl()
-    {
-        return 'http://localhost:8000/api';
-    }
-
-    public function getAuthData()
-    {
-        return [
-            'username' => 'molak',
-            'password' => 'pass',
-        ];
     }
 }
