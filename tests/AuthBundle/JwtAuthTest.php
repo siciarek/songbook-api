@@ -105,10 +105,10 @@ class JwtAuthTest extends TestCase
         foreach (['GET', 'PUT', 'DELETE'] as $method) {
             list($resp, $info) = $this->getResponse($method, $url);
             $data = json_decode($resp, true);
-            $this->assertEquals(404, $info['http_code']);
+            $this->assertNotNull($data);
+            $this->assertEquals(['code' => 404, 'message' => 'Not Found'], $data);
 
-            # TODO: set output fro entire application to JSON, now it returns html when some error occurs
-            # $this->assertNotNull($data);
+            $this->assertEquals(404, $info['http_code']);
         }
     }
 
@@ -133,10 +133,10 @@ class JwtAuthTest extends TestCase
         $this->assertArrayHasKey('token', $data);
         $this->assertRegExp('/^[\w+\-\.]+$/', $data['token']);
 
+        # If JWT token listeners are not implemented remove 5 following lines:
         $this->assertArrayHasKey('data', $data, $resp);
         $this->assertArrayHasKey('username', $data['data']);
         $this->assertNotNull($data['data']['username']);
-
         $this->assertArrayHasKey('roles', $data['data']);
         $this->assertInternalType('array', $data['data']['roles']);
     }
