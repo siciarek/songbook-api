@@ -3,7 +3,6 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
 
-    - { resource: raulfraile/ladybug-bundle.yml }
     - { resource: nelmio/cors-bundle.yml }
     - { resource: friendsofsymfony/user-bundle.yml }
     - { resource: friendsofsymfony/rest-bundle.yml }

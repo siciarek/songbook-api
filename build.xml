@@ -52,12 +52,6 @@
         <exec executable="${php}">
             <arg line="${console} assets:install --env=prod --symlink"/>
         </exec>
-        <exec executable="${php}">
-            <arg line="${console} assetic:dump --env=prod"/>
-        </exec>
-        <exec executable="${php}">
-            <arg line="${console} fos:js-routing:dump --env=prod"/>
-        </exec>
     </target>
 
     <target name="fix" description="Wprowadzenie danych domyślnych do bazy">
