@@ -36,4 +36,9 @@ class TestCase extends PHPUnitTestCase {
 
         return [$resp, $info];
     }
+
+    public static function getBasicUrl()
+    {
+        return 'http://localhost:8000/api';
+    }
 }

@@ -8,7 +8,7 @@ class JwtAuthTest extends TestCase
 {
     public static function authDataProvider()
     {
-        $authUrl = 'http://localhost:8000/api/auth';
+        $authUrl = self::getBasicUrl() . '/auth';
 
         return [
             [
@@ -31,29 +31,12 @@ class JwtAuthTest extends TestCase
 
     public static function securedPageDataProvider()
     {
-        $authUrl = 'http://localhost:8000/api/auth';
-        $securedPageUrl = 'http://localhost:8000/api/user/dashboard';
+        $securedPageUrl = self::getBasicUrl() . '/user/dashboard';
 
-        return [
-            [
-                $securedPageUrl,
-                $authUrl,
-                'jsiciarek',
-                'pass',
-            ],
-            [
-                $securedPageUrl,
-                $authUrl,
-                'colak',
-                'pass',
-            ],
-            [
-                $securedPageUrl,
-                $authUrl,
-                'molak',
-                'pass',
-            ],
-        ];
+        return array_map(function ($e) use ($securedPageUrl) {
+            array_unshift($e, $securedPageUrl);
+            return $e;
+        }, self::authDataProvider());
     }
 
     /**
