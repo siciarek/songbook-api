@@ -21,11 +21,11 @@ security:
             security: false
 
         login:
-            pattern:  ^/auth
+            pattern:  ^/auth$
             stateless: true
             anonymous: true
             form_login:
-                check_path: /auth
+                check_path: auth_check
                 require_previous_session: false
                 username_parameter: username
                 password_parameter: password
@@ -33,19 +33,20 @@ security:
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
         api_mutable:
-            pattern:   ^/
+            lexik_jwt: ~
+            pattern: ^/
             stateless: true
             methods:
                 - DELETE
                 - POST
                 - PUT
-            lexik_jwt: ~
+
         api_private:
-            pattern:   ^/user/(profile|dashboard)
+            lexik_jwt: ~
+            pattern: ^/user/profile$|^/user/dashboard$|^/author
             stateless: true
             methods:
                 - GET
-            lexik_jwt: ~
 
     access_control:
-        - { path: ^/auth, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/auth$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
