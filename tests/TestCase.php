@@ -30,12 +30,17 @@ class TestCase extends KernelTestCase implements ContainerAwareInterface {
 
         switch ($method) {
             case 'POST':
-                $data = http_build_query($data);
                 curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
                 break;
             case 'GET':
                 curl_setopt($ch, CURLOPT_HTTPGET, true);
+                break;
+            case 'PUT':
+                curl_setopt($ch, CURLOPT_PUT, true);
+                break;
+            case 'DELETE':
+                curl_setopt($ch,  CURLOPT_CUSTOMREQUEST, 'DELETE');
                 break;
         }
 
@@ -47,11 +52,6 @@ class TestCase extends KernelTestCase implements ContainerAwareInterface {
         curl_close($ch);
 
         return [$resp, $info];
-    }
-
-    public static function getBasicUrl()
-    {
-        return 'http://localhost:8000';
     }
 
     public function getContainer() {

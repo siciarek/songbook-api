@@ -8,21 +8,19 @@ class JwtAuthTest extends TestCase
 {
     public static function authDataProvider()
     {
-        $authUrl = 'auth_check';
-
         return [
             [
-                $authUrl,
+                'auth_check',
                 'jsiciarek',
                 'pass',
             ],
             [
-                $authUrl,
+                'auth_check',
                 'colak',
                 'pass',
             ],
             [
-                $authUrl,
+                'auth_check',
                 'molak',
                 'pass',
             ],
@@ -31,10 +29,8 @@ class JwtAuthTest extends TestCase
 
     public static function securedPageDataProvider()
     {
-        $securedPageUrl = 'user.dashboard';
-
-        return array_map(function ($e) use ($securedPageUrl) {
-            array_unshift($e, $securedPageUrl);
+        return array_map(function ($e) {
+            array_unshift($e, 'user.dashboard');
             return $e;
         }, self::authDataProvider());
     }
@@ -44,6 +40,13 @@ class JwtAuthTest extends TestCase
      */
     public function testSecuredPageAccess($securedPageRoute, $authRoute, $username, $password)
     {
+        $authData = [
+            'username' => $username,
+            'password' => $password,
+        ];
+
+        $prefix = 'Bearer';
+
         $router = $this->getContainer()->get('router');
         $securedPageUrl = $router->generate($securedPageRoute, [], $router::ABSOLUTE_URL);
         $authUrl = $router->generate($authRoute, [], $router::ABSOLUTE_URL);
@@ -55,20 +58,13 @@ class JwtAuthTest extends TestCase
         $this->assertEquals(401, $info['http_code']);
 
         # Authentication:
-        $authData = [
-            'username' => $username,
-            'password' => $password,
-        ];
-        $headers = [
-            'Content-Type: application/x-www-form-urlencoded',
-        ];
-        list($resp, $info) = $this->getResponse('POST', $authUrl, $authData, $headers);
+        list($resp, $info) = $this->getResponse('POST', $authUrl, $authData);
         $data = json_decode($resp, true);
 
         # Valid token:
         $token = $data['token'];
         $headers = [
-            sprintf('Authorization: Bearer %s', $token),
+            sprintf('Authorization: %s %s', $prefix, $token),
         ];
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl, null, $headers);
         $this->assertEquals(200, $info['http_code']);
@@ -76,7 +72,7 @@ class JwtAuthTest extends TestCase
         # Ivalid token:
         $token = str_replace('A', 'C', $data['token']);
         $headers = [
-            sprintf('Authorization: Bearer %s', $token),
+            sprintf('Authorization: %s %s', $prefix, $token),
         ];
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl, null, $headers);
         $this->assertEquals(401, $info['http_code']);
@@ -94,13 +90,10 @@ class JwtAuthTest extends TestCase
             'username' => $username,
             'password' => $password,
         ];
-        $headers = [
-            'Content-Type: application/x-www-form-urlencoded',
-        ];
 
         $authData['username'] .= 'broken';
 
-        list($resp, $info) = $this->getResponse('POST', $authUrl, $authData, $headers);
+        list($resp, $info) = $this->getResponse('POST', $authUrl, $authData);
         $data = json_decode($resp, true);
 
         # Invalid auth data:
@@ -131,23 +124,37 @@ class JwtAuthTest extends TestCase
             'username' => $username,
             'password' => $password,
         ];
-        $headers = [
-            'Content-Type: application/x-www-form-urlencoded',
-        ];
 
-        list($resp, $info) = $this->getResponse('POST', $authUrl, $authData, $headers);
+        # Test multiple form modes:
+        foreach (['multi', 'urlencoded'] as $mode) {
 
-        # Check if data has all the required elements:
-        $data = json_decode($resp, true);
-        $this->assertInternalType('array', $data);
-        $this->assertArrayHasKey('token', $data);
-        $this->assertRegExp('/^[\w+\-\.]+$/', $data['token']);
+            switch ($mode) {
+                case 'urlencoded':
+                    $headers = [
+                        'Content-Type: application/x-www-form-urlencoded',
+                    ];
+                    list($resp, $info) = $this->getResponse('POST', $authUrl, http_build_query($authData), $headers);
+                    break;
 
-        # If JWT token listeners are not implemented remove 5 following lines:
-        $this->assertArrayHasKey('data', $data, $resp);
-        $this->assertArrayHasKey('username', $data['data']);
-        $this->assertNotNull($data['data']['username']);
-        $this->assertArrayHasKey('roles', $data['data']);
-        $this->assertInternalType('array', $data['data']['roles']);
+                case 'multi':
+                    list($resp, $info) = $this->getResponse('POST', $authUrl, $authData);
+                    break;
+            }
+
+            $this->assertEquals(200, $info['http_code']);
+
+            # Check if data has all the required elements:
+            $data = json_decode($resp, true);
+            $this->assertInternalType('array', $data);
+            $this->assertArrayHasKey('token', $data);
+            $this->assertRegExp('/^[\w+\-\.]+$/', $data['token']);
+
+            # If JWT token listeners are not implemented remove 5 following lines:
+            $this->assertArrayHasKey('data', $data, $resp);
+            $this->assertArrayHasKey('username', $data['data']);
+            $this->assertNotNull($data['data']['username']);
+            $this->assertArrayHasKey('roles', $data['data']);
+            $this->assertInternalType('array', $data['data']['roles']);
+        }
     }
 }
