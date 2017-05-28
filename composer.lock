@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e955d573277c51c00d010ec64aad59a4",
-    "content-hash": "be5d170e00b3f4006d79a8e70fc300af",
+    "hash": "5d977609db52a89cad33c741449731f9",
+    "content-hash": "3ddcdf4de84b22dfa34b0361b5951b39",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3720,12 +3720,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/data-fixtures.git",
-                "reference": "ba467d980d4c403eb13a899c5b9a7b8875f003c2"
+                "reference": "c4c59a64e495e038992e63af683b9faefbea12c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/data-fixtures/zipball/ba467d980d4c403eb13a899c5b9a7b8875f003c2",
-                "reference": "ba467d980d4c403eb13a899c5b9a7b8875f003c2",
+                "url": "https://api.github.com/repos/doctrine/data-fixtures/zipball/c4c59a64e495e038992e63af683b9faefbea12c3",
+                "reference": "c4c59a64e495e038992e63af683b9faefbea12c3",
                 "shasum": ""
             },
             "require": {
@@ -3752,8 +3752,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Doctrine\\Common\\DataFixtures": "lib/"
+                "psr-4": {
+                    "Doctrine\\Common\\DataFixtures\\": "lib/Doctrine/Common/DataFixtures"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3771,7 +3771,7 @@
             "keywords": [
                 "database"
             ],
-            "time": "2017-05-03 08:28:59"
+            "time": "2017-05-28 02:49:26"
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
@@ -5577,20 +5577,23 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.2.4",
+            "version": "3.4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "996374975357b569ea319ec1c98c5ca0f7dda610"
+                "reference": "7920cb651dc039baf47c6da3e202be1d9f8b06b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/996374975357b569ea319ec1c98c5ca0f7dda610",
-                "reference": "996374975357b569ea319ec1c98c5ca0f7dda610",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/7920cb651dc039baf47c6da3e202be1d9f8b06b9",
+                "reference": "7920cb651dc039baf47c6da3e202be1d9f8b06b9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
+            },
+            "conflict": {
+                "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
             },
             "suggest": {
                 "ext-zip": "Zip support is required when using bin/simple-phpunit",
@@ -5602,7 +5605,7 @@
             "type": "symfony-bridge",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.2-dev"
+                    "dev-master": "3.4-dev"
                 }
             },
             "autoload": {
@@ -5632,7 +5635,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2017-01-21 17:06:35"
+            "time": "2017-05-24 11:37:21"
         },
         {
             "name": "theseer/tokenizer",
@@ -5791,7 +5794,8 @@
         "doctrine/data-fixtures": 20,
         "doctrine/doctrine-fixtures-bundle": 20,
         "raulfraile/ladybug-bundle": 20,
-        "willdurand/faker-bundle": 0
+        "willdurand/faker-bundle": 0,
+        "symfony/phpunit-bridge": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

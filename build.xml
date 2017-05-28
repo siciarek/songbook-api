@@ -72,6 +72,7 @@
             <fileset dir="var/cache/prod" includes="**/*" excludes=".gitkeep"/>
             <fileset dir="var/cache/test" includes="**/*" excludes=".gitkeep"/>
             <fileset dir="var/logs" includes="**/*" excludes=".gitkeep"/>
+            <fileset dir="var/sessions" includes="**/*" excludes=".gitkeep"/>
         </delete>
     </target>
 
@@ -81,6 +82,7 @@
             <fileset dir="var/cache/prod" includes="**/*" excludes=".gitkeep"/>
             <fileset dir="var/cache/test" includes="**/*" excludes=".gitkeep"/>
             <fileset dir="var/logs" includes="**/*" excludes=".gitkeep"/>
+            <fileset dir="var/sessions" includes="**/*" excludes=".gitkeep"/>
             <fileset dir="web/uploads/media" includes="**/*" excludes=".gitkeep"/>
         </delete>
     </target>

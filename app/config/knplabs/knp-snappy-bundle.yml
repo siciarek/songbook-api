@@ -8,5 +8,5 @@ knp_snappy:
         enabled:    true
         binary:     /usr/local/bin/wkhtmltoimage #"\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\"" for Windows users
         options:    []
-        
-    temporary_folder: %kernel.cache_dir%/snappy
+
+    temporary_folder: '%kernel.cache_dir%/snappy'

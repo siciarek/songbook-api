@@ -2,9 +2,21 @@
 
 namespace Tests;
 
-use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class TestCase extends PHPUnitTestCase {
+class TestCase extends KernelTestCase implements ContainerAwareInterface {
+
+    /**
+     * @var ContainerInterface $container
+     */
+    protected $container;
+
+    public function setUp() {
+        self::bootKernel();
+        $this->setContainer(static::$kernel->getContainer());
+    }
 
     public function getResponse($method, $url, $data = [], $headers = null)
     {
@@ -40,5 +52,14 @@ class TestCase extends PHPUnitTestCase {
     public static function getBasicUrl()
     {
         return 'http://localhost:8000';
+    }
+
+    public function getContainer() {
+        return $this->container;
+    }
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 }

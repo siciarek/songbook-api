@@ -5,7 +5,7 @@ parameters:
 
 services:
     auth.event.jwt_response_listener:
-        class: %auth.event.jwt_response_listener.class%
+        class: '%auth.event.jwt_response_listener.class%'
         tags:
             -
                 name: kernel.event_listener
@@ -13,7 +13,7 @@ services:
                 method: onAuthenticationSuccessResponse
 
     auth.event.jwt_created_listener:
-        class: %auth.event.jwt_created_listener.class%
+        class: '%auth.event.jwt_created_listener.class%'
         tags:
             -
                 name: kernel.event_listener
@@ -21,7 +21,7 @@ services:
                 method: onCreated
 
     auth.event.jwt_decoded_listener:
-        class: %auth.event.jwt_decoded_listener.class%
+        class: '%auth.event.jwt_decoded_listener.class%'
         tags:
             -
                 name: kernel.event_listener

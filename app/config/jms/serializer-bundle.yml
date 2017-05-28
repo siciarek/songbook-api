@@ -3,10 +3,10 @@ jms_serializer:
         directories:
             fosuser:
                 namespace_prefix: FOS\UserBundle\Model
-                path: %kernel.root_dir%/serializer/FOS/UserBundle/Model
+                path: '%kernel.root_dir%/serializer/FOS/UserBundle/Model'
             user:
                 namespace_prefix: UserBundle\Entity
-                path: %kernel.root_dir%/serializer/UserBundle/Entity
+                path: '%kernel.root_dir%/serializer/UserBundle/Entity'
             app:
                 namespace_prefix: AppBundle\Entity
-                path: %kernel.root_dir%/serializer/AppBundle/Entity
+                path: '%kernel.root_dir%/serializer/AppBundle/Entity'

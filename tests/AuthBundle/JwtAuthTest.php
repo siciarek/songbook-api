@@ -8,7 +8,7 @@ class JwtAuthTest extends TestCase
 {
     public static function authDataProvider()
     {
-        $authUrl = self::getBasicUrl() . '/auth';
+        $authUrl = 'auth_check';
 
         return [
             [
@@ -31,7 +31,7 @@ class JwtAuthTest extends TestCase
 
     public static function securedPageDataProvider()
     {
-        $securedPageUrl = self::getBasicUrl() . '/user/dashboard';
+        $securedPageUrl = 'user.dashboard';
 
         return array_map(function ($e) use ($securedPageUrl) {
             array_unshift($e, $securedPageUrl);
@@ -42,8 +42,12 @@ class JwtAuthTest extends TestCase
     /**
      * @dataProvider securedPageDataProvider
      */
-    public function testSecuredPageAccess($securedPageUrl, $authUrl, $username, $password)
+    public function testSecuredPageAccess($securedPageRoute, $authRoute, $username, $password)
     {
+        $router = $this->getContainer()->get('router');
+        $securedPageUrl = $router->generate($securedPageRoute, [], $router::ABSOLUTE_URL);
+        $authUrl = $router->generate($authRoute, [], $router::ABSOLUTE_URL);
+
         # Unauthenticated users should have no access to secured resource:
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl);
         $data = json_decode($resp, true);
@@ -81,8 +85,11 @@ class JwtAuthTest extends TestCase
     /**
      * @dataProvider authDataProvider
      */
-    public function testAuthFailure($url, $username, $password)
+    public function testAuthFailure($authRoute, $username, $password)
     {
+        $router = $this->getContainer()->get('router');
+        $authUrl = $router->generate($authRoute, [], $router::ABSOLUTE_URL);
+
         $authData = [
             'username' => $username,
             'password' => $password,
@@ -93,7 +100,7 @@ class JwtAuthTest extends TestCase
 
         $authData['username'] .= 'broken';
 
-        list($resp, $info) = $this->getResponse('POST', $url, $authData, $headers);
+        list($resp, $info) = $this->getResponse('POST', $authUrl, $authData, $headers);
         $data = json_decode($resp, true);
 
         # Invalid auth data:
@@ -103,7 +110,7 @@ class JwtAuthTest extends TestCase
 
         # Invalid auth protocol:
         foreach (['GET', 'PUT', 'DELETE'] as $method) {
-            list($resp, $info) = $this->getResponse($method, $url);
+            list($resp, $info) = $this->getResponse($method, $authUrl);
             $data = json_decode($resp, true);
             $this->assertNotNull($data);
             $this->assertEquals(['code' => 404, 'message' => 'Not Found'], $data);
@@ -115,8 +122,11 @@ class JwtAuthTest extends TestCase
     /**
      * @dataProvider authDataProvider
      */
-    public function testAuthSuccess($url, $username, $password)
+    public function testAuthSuccess($authRoute, $username, $password)
     {
+        $router = $this->getContainer()->get('router');
+        $authUrl = $router->generate($authRoute, [], $router::ABSOLUTE_URL);
+
         $authData = [
             'username' => $username,
             'password' => $password,
@@ -125,7 +135,7 @@ class JwtAuthTest extends TestCase
             'Content-Type: application/x-www-form-urlencoded',
         ];
 
-        list($resp, $info) = $this->getResponse('POST', $url, $authData, $headers);
+        list($resp, $info) = $this->getResponse('POST', $authUrl, $authData, $headers);
 
         # Check if data has all the required elements:
         $data = json_decode($resp, true);

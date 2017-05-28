@@ -52,7 +52,7 @@
         "willdurand/faker-bundle": "@stable",
 
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0"
+        "symfony/phpunit-bridge": "^3.3@dev"
     },
     "scripts": {
         "symfony-scripts": [

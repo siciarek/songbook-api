@@ -33,3 +33,7 @@ parameters:
     jwt_public_key_path:  '%kernel.root_dir%/../var/jwt/public.pem'  # ssh public key path
     jwt_key_pass_phrase:  '%secret%'                                 # ssh key pass phrase
     jwt_token_ttl:        3600
+
+    router.request_context.host: 'localhost:8000'
+    router.request_context.scheme: http
+    router.request_context.base_url: null
