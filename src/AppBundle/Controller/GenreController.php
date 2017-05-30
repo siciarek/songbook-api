@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Genre;
+use AppBundle\Entity\GenreCategory;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -104,6 +106,10 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
             'info' => function ($value) use ($item) {
                 $item->setInfo($value);
             },
+            'category' => function ($value) use ($item, $em) {
+                $category = $em->getRepository(GenreCategory::class)->find($value['id']);
+                $item->setCategory($category);
+            },
         ];
 
         foreach ($fields as $field => $func) {
@@ -129,6 +135,9 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
         $json = $request->getContent();
         $data = json_decode($json, true);
 
+        /**
+         * @var EntityManager $em
+         */
         $em = $this->get('doctrine.orm.entity_manager');
         $item = $em->getRepository(Genre::class)->find($id);
 
@@ -145,6 +154,10 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
             },
             'info' => function ($value) use ($item) {
                 $item->setInfo($value);
+            },
+            'category' => function ($value) use ($item, $em) {
+                $category = $em->getRepository(GenreCategory::class)->find($value['id']);
+                $item->setCategory($category);
             },
         ];
 
