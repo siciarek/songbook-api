@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+define('MOCK_HEAVY_LOAD', 0);
+
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\GenreCategory;
 use Doctrine\Common\Collections\Criteria;
@@ -54,6 +56,8 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
             $this->getParameter('paginator_limit', 10)
         );
 
+        sleep(MOCK_HEAVY_LOAD);
+
         return $paginator->getItems();
     }
 
@@ -76,6 +80,8 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
         if(false === ($item instanceof Genre) or true === $item->isDeleted()) {
             throw $this->createNotFoundException('Invalid id.');
         }
+
+        sleep(MOCK_HEAVY_LOAD);
 
         return $item;
     }
@@ -112,12 +118,16 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
             },
         ];
 
-        foreach ($fields as $field => $func) {
-            $func($data[$field]);
+        unset($data['id']);
+
+        foreach($data as $key => $value) {
+            $fields[$key]($value);
         }
 
         $em->persist($item);
         $em->flush();
+
+        sleep(MOCK_HEAVY_LOAD);
 
         return $item;
     }
@@ -161,12 +171,16 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
             },
         ];
 
+        unset($data['id']);
+
         foreach ($fields as $field => $func) {
             $func($data[$field]);
         }
 
         $em->persist($item);
         $em->flush();
+
+        sleep(MOCK_HEAVY_LOAD);
 
         return $item;
     }
@@ -187,5 +201,7 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
 
         $em->remove($item);
         $em->flush();
+
+        sleep(MOCK_HEAVY_LOAD);
     }
 }
