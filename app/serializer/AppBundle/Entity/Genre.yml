@@ -9,7 +9,5 @@ AppBundle\Entity\Genre:
             expose: true
         info:
             expose: true
-        deletedAt:
-            expose: true
         category:
             expose: true

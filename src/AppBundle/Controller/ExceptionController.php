@@ -11,6 +11,19 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
 class ExceptionController
 {
+    protected $twig;
+
+    /**
+     * @var bool Add esception trace stack content when debug mode is on
+     */
+    protected $debug;
+
+    public function __construct(\Twig_Environment $twig, $debug)
+    {
+        $this->twig = $twig;
+        $this->debug = $debug;
+    }
+
     /**
      * Converts an Exception to a Response.
      *
@@ -18,14 +31,14 @@ class ExceptionController
      * the exception page (when true). If it is not present, the "debug" value passed into the constructor will
      * be used.
      *
-     * @param Request              $request   The request
-     * @param FlattenException     $exception A FlattenException instance
-     * @param DebugLoggerInterface $logger    A DebugLoggerInterface instance
+     * @param Request $request The request
+     * @param FlattenException $exception A FlattenException instance
+     * @param DebugLoggerInterface $logger A DebugLoggerInterface instance
      *
      * @return Response
      *
      */
-    public function showExceptionAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null)
+    public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null)
     {
 
         $code = $exception->getStatusCode();
@@ -35,6 +48,10 @@ class ExceptionController
             'code' => $code,
             'message' => $message,
         );
+
+        if ($this->debug) {
+            $data['data'] = ['trace' => $exception->getTrace()];
+        }
 
         $headers = [
             'Content-Type' => 'application/json',
