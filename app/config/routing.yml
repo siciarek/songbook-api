@@ -3,6 +3,8 @@ api:
     resource: '@AppBundle/Controller/'
 
 user:
+    type: rest
+    prefix: /user
     resource: '@UserBundle/Controller/'
 
 auth:

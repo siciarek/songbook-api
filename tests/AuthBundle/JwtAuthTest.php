@@ -30,7 +30,7 @@ class JwtAuthTest extends TestCase
     public static function securedPageDataProvider()
     {
         return array_map(function ($e) {
-            array_unshift($e, 'user.dashboard');
+            array_unshift($e, 'get_dashboard');
             return $e;
         }, self::authDataProvider());
     }
@@ -54,6 +54,7 @@ class JwtAuthTest extends TestCase
         # Unauthenticated users should have no access to secured resource:
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl);
         $data = json_decode($resp, true);
+        unset($data['data']);
         $this->assertEquals($data, ['code' => 401, 'message' => 'Bad credentials']);
         $this->assertEquals(401, $info['http_code']);
 
@@ -98,6 +99,7 @@ class JwtAuthTest extends TestCase
 
         # Invalid auth data:
         $this->assertInternalType('array', $data);
+        unset($data['data']);
         $this->assertEquals(['code' => 401, 'message' => 'Bad credentials'], $data);
         $this->assertEquals(401, $info['http_code']);
 
@@ -106,6 +108,7 @@ class JwtAuthTest extends TestCase
             list($resp, $info) = $this->getResponse($method, $authUrl);
             $data = json_decode($resp, true);
             $this->assertNotNull($data);
+            unset($data['data']);
             $this->assertEquals(['code' => 404, 'message' => 'Not Found'], $data);
 
             $this->assertEquals(404, $info['http_code']);
