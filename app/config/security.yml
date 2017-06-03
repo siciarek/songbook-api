@@ -48,6 +48,10 @@ security:
             stateless: true
             methods:
                 - GET
+            lexik_jwt:
+                query_parameter:
+                    enabled: true
+                    name:    bearer
 
     access_control:
         - { path: ^/auth$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
