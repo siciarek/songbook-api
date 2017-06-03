@@ -41,17 +41,17 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
         $json = $request->getContent();
         $data = json_decode($json, true);
 
-        $em = $this->get('doctrine.orm.entity_manager');
-
         # TODO: change to fos user
         $criteria = ['username' => $this->getUser()->getUsername()];
+        $man = $this->get('fos_user.user_manager');
+        $user = $man->findUserBy($criteria);
 
-        return $json;
-
-        $user = $em->getRepository(User::class)->findOneBy($criteria);
+        $user->setFirstName($data['firstName']);
+        $user->setLastName($data['lastName']);
+        $user->setEmail($data['email']);
+        $user->setGender($data['gender']);
         $user->setLevel($data['level']);
-        $em->persists($em);
-        $em->flush();
+        $man->updateUser($user);
 
         $data = [
             'id' => $user->getId(),
