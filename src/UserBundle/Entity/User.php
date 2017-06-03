@@ -42,14 +42,14 @@ class User extends BaseUser
     protected $dateOfBirth;
 
     /**
-     * @ORM\Column(length=1, nullable=true)
+     * @ORM\Column(length=8, nullable=true)
      */
     protected $gender;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    protected $level = 50;
 
     /**
      * Set firstName
@@ -145,5 +145,29 @@ class User extends BaseUser
     public function getGender()
     {
         return $this->gender;
+    }
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     *
+     * @return User
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
     }
 }

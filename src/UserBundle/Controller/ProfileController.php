@@ -15,9 +15,10 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
 {
     public function getAction()
     {
-        # TODO: change to fos user
         $criteria = ['username' => $this->getUser()->getUsername()];
-        $user = $this->getDoctrine()
+
+        $user = $this
+            ->getDoctrine()
             ->getRepository(User::class)
             ->findOneBy($criteria)
             ;
@@ -27,44 +28,39 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
             'firstName' => $user->getFirstName(),
             'lastName' => $user->getLastName(),
             'email' => $user->getEmailCanonical(),
+            'gender' => $user->getGender(),
+            'dateOfBirth' => $user->getDateOfBirth(),
+            'level' => $user->getLevel(),
         ];
 
         return $data;
     }
 
-    public function postAction() {
+    public function putAction(Request $request)
+    {
+        $json = $request->getContent();
+        $data = json_decode($json, true);
+
+        $em = $this->get('doctrine.orm.entity_manager');
 
         # TODO: change to fos user
         $criteria = ['username' => $this->getUser()->getUsername()];
-        $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneBy($criteria)
-        ;
+
+        return $json;
+
+        $user = $em->getRepository(User::class)->findOneBy($criteria);
+        $user->setLevel($data['level']);
+        $em->persists($em);
+        $em->flush();
 
         $data = [
             'id' => $user->getId(),
             'firstName' => $user->getFirstName(),
             'lastName' => $user->getLastName(),
             'email' => $user->getEmailCanonical(),
-        ];
-
-        return $data;
-    }
-
-    public function putAction() {
-
-        # TODO: change to fos user
-        $criteria = ['username' => $this->getUser()->getUsername()];
-        $user = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneBy($criteria)
-        ;
-
-        $data = [
-            'id' => $user->getId(),
-            'firstName' => $user->getFirstName(),
-            'lastName' => $user->getLastName(),
-            'email' => $user->getEmailCanonical(),
+            'gender' => $user->getGender(),
+            'dateOfBirth' => $user->getDateOfBirth(),
+            'level' => $user->getLevel(),
         ];
 
         return $data;
