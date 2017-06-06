@@ -29,14 +29,16 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
             'lastName' => $user->getLastName(),
             'email' => $user->getEmailCanonical(),
             'gender' => $user->getGender(),
-            'dateOfBirth' => $user->getDateOfBirth(),
+            'dateOfBirth' => $user->getDateOfBirth()->format('c'),
             'level' => $user->getLevel(),
+            'profileVisibleToThePublic' => $user->getProfileVisibleToThePublic(),
+            'info' => $user->getInfo(),
         ];
 
         return $data;
     }
 
-    public function putAction(Request $request)
+    public function postAction(Request $request)
     {
         $json = $request->getContent();
         $data = json_decode($json, true);
@@ -48,21 +50,13 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
 
         $user->setFirstName($data['firstName']);
         $user->setLastName($data['lastName']);
+        $user->setDateOfBirth(new \DateTime($data['dateOfBirth']));
         $user->setEmail($data['email']);
         $user->setGender($data['gender']);
         $user->setLevel($data['level']);
+        $user->setProfileVisibleToThePublic($data['profileVisibleToThePublic']);
+        $user->setInfo($data['info']);
+
         $man->updateUser($user);
-
-        $data = [
-            'id' => $user->getId(),
-            'firstName' => $user->getFirstName(),
-            'lastName' => $user->getLastName(),
-            'email' => $user->getEmailCanonical(),
-            'gender' => $user->getGender(),
-            'dateOfBirth' => $user->getDateOfBirth(),
-            'level' => $user->getLevel(),
-        ];
-
-        return $data;
     }
 }

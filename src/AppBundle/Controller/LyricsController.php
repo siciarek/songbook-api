@@ -2,15 +2,15 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Artist;
-use AppBundle\Entity\Song;
+use FOS\RestBundle\Request\ParamFetcher;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use AppBundle\Entity\Song;
 
 /**
  * @RouteResource("Lyrics", pluralize=false)
@@ -35,13 +35,17 @@ class LyricsController extends FOSRestController implements ClassResourceInterfa
         return $paginator->getItems();
     }
 
-    public function getAction($id)
+    /**
+     * Returns data of the song identified by id.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns data of the song identified by id.",
+     * )
+     * @ParamConverter("item", class="AppBundle:Song")
+     */
+    public function getAction(Song $item)
     {
-        $item = $this
-            ->get('doctrine')
-            ->getRepository(Song::class)
-            ->findOneById($id);
-
         return $item;
     }
 }

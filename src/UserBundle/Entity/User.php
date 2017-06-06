@@ -52,6 +52,16 @@ class User extends BaseUser
     protected $level = 50;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $profileVisibleToThePublic = false;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $info;
+
+    /**
      * Set firstName
      *
      * @param string $firstName
@@ -169,5 +179,53 @@ class User extends BaseUser
     public function getLevel()
     {
         return $this->level;
+    }
+
+    /**
+     * Set profileVisibleToThePublic
+     *
+     * @param boolean $profileVisibleToThePublic
+     *
+     * @return User
+     */
+    public function setProfileVisibleToThePublic($profileVisibleToThePublic)
+    {
+        $this->profileVisibleToThePublic = $profileVisibleToThePublic;
+
+        return $this;
+    }
+
+    /**
+     * Get profileVisibleToThePublic
+     *
+     * @return boolean
+     */
+    public function getProfileVisibleToThePublic()
+    {
+        return $this->profileVisibleToThePublic;
+    }
+
+    /**
+     * Set info
+     *
+     * @param string $info
+     *
+     * @return User
+     */
+    public function setInfo($info)
+    {
+        $this->info = $info;
+
+        return $this;
+    }
+
+    /**
+     * Get info
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        return $this->info;
     }
 }

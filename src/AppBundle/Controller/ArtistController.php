@@ -8,6 +8,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -32,13 +33,17 @@ class ArtistController extends FOSRestController implements ClassResourceInterfa
         return $paginator->getItems();
     }
 
-    public function getAction($id)
+    /**
+     * Returns data of the artist identified by id.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns data of the artist identified by id.",
+     * )
+     * @ParamConverter("item", class="AppBundle:Artist")
+     */
+    public function getAction(Artist $item)
     {
-        $item = $this
-            ->get('doctrine')
-            ->getRepository(Artist::class)
-            ->findOneById($id);
-
         return $item;
     }
 }

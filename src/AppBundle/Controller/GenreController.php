@@ -14,6 +14,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -68,22 +69,11 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
      *  resource=true,
      *  description="Returns data of music genre identified by id.",
      * )
+     * @ParamConverter("genre", class="AppBundle:Genre")
      */
-    public function getAction($id)
+    public function getAction(Genre $genre)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
-
-        $item = $em
-            ->getRepository(Genre::class)
-            ->findOneBy(['id' => $id]);
-
-        if(false === ($item instanceof Genre) or true === $item->isDeleted()) {
-            throw $this->createNotFoundException('Invalid id.');
-        }
-
-        sleep(MOCK_HEAVY_LOAD);
-
-        return $item;
+        return $genre;
     }
 
     /**

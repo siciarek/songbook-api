@@ -7,6 +7,7 @@ use AppBundle\Entity\Video;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
@@ -47,17 +48,16 @@ class VideoController extends FOSRestController implements ClassResourceInterfac
     }
 
     /**
-     * @param $id
-     * @return mixed
+     * Returns data of the song identified by id.
+     *
+     * @ApiDoc(
+     *  resource=true,
+     *  description="Returns data of the song identified by id.",
+     * )
+     * @ParamConverter("item", class="AppBundle:Song")
      */
-    public function getAction($id)
+    public function getAction(Song $item)
     {
-        $item = $this
-            ->get('doctrine')
-            ->getRepository(Song::class)
-            ->find($id)
-        ;
-
         return $item->getVideos();
     }
 }
