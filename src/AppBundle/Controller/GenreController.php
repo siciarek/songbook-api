@@ -2,8 +2,6 @@
 
 namespace AppBundle\Controller;
 
-define('MOCK_HEAVY_LOAD', 0);
-
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\GenreCategory;
 use Doctrine\ORM\EntityManager;
