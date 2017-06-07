@@ -35,9 +35,7 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
         $temp = mb_convert_case($temp, MB_CASE_LOWER);
         $enabled = in_array($temp, ['1', 'true', 't']);
 
-        $em = $this->get('doctrine.orm.entity_manager');
-
-        $builder = $em
+        $builder = $this->getDoctrine()
             ->getRepository(Genre::class)
             ->createQueryBuilder('a')
             ->andWhere('a.deletedAt IS NULL')
@@ -52,8 +50,6 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
             $request->get('page', 1),
             $this->getParameter('paginator_limit', 10)
         );
-
-        sleep(MOCK_HEAVY_LOAD);
 
         return $paginator->getItems();
     }
