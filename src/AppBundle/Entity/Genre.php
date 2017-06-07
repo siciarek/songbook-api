@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * AppBundle\Entity\Country
@@ -31,7 +32,8 @@ class Genre {
     private $enabled = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GenreCategory", inversedBy="genres")
+     * @ORM\ManyToOne(targetEntity="GenreCategory", inversedBy="genres", cascade={"persist"})
+     * @Serializer\Type("AppBundle\Entity\GenreCategory")
      */
     private $category;
 
@@ -42,16 +44,19 @@ class Genre {
 
     /**
      * @ORM\Column()
+     * @Serializer\Type("string")
      */
     private $name;
 
     /**
      * @ORM\Column(length=512, nullable=true)
+     * @Serializer\Type("string")
      */
     private $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Serializer\Type("string")
      */
     private $info;
 

@@ -6,14 +6,12 @@ define('MOCK_HEAVY_LOAD', 0);
 
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\GenreCategory;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManager;
-use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -86,10 +84,17 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
      */
     public function postAction(Request $request)
     {
-        $json = $request->getContent();
-        $data = json_decode($json, true);
-
         $em = $this->get('doctrine.orm.entity_manager');
+        $serializer = SerializerBuilder::create()->build();
+
+        $json = $request->getContent();
+        $item = $serializer->deserialize($json, 'AppBundle\Entity\Genre', 'json');
+
+//        $em->persist($item);
+//        $em->flush();
+//        return $item;
+
+        $data = json_decode($json, true);
 
         $item = new Genre();
         $fields = [
@@ -116,8 +121,6 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
 
         $em->persist($item);
         $em->flush();
-
-        sleep(MOCK_HEAVY_LOAD);
 
         return $item;
     }
@@ -170,8 +173,6 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
         $em->persist($item);
         $em->flush();
 
-        sleep(MOCK_HEAVY_LOAD);
-
         return $item;
     }
 
@@ -183,15 +184,12 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
      *  resource=true,
      *  description="Removes music genre identified by id.",
      * )
+     * @ParamConverter("item", class="AppBundle:Genre")
      */
-    public function deleteAction($id)
+    public function deleteAction(Genre $item)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $item = $em->getRepository(Genre::class)->find($id);
-
+        $em = $this->getDoctrine()->getManager();
         $em->remove($item);
         $em->flush();
-
-        sleep(MOCK_HEAVY_LOAD);
     }
 }

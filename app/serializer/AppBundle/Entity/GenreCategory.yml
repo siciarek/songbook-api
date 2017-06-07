@@ -2,6 +2,8 @@ AppBundle\Entity\GenreCategory:
     exclusion_policy: all
     properties:
         id:
+            type: integer
             expose: true
         name:
+            type: string
             expose: true

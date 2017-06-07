@@ -4,6 +4,9 @@ namespace Tests\AuthBundle;
 
 use Tests\TestCase;
 
+/**
+ * @group auth
+ */
 class JwtAuthTest extends TestCase
 {
     public static function authDataProvider()

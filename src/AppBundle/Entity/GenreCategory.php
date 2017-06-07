@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * AppBundle\Entity\Country
@@ -17,6 +18,7 @@ class GenreCategory {
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Serializer\Type("integer")
      */
     private $id;
 
@@ -27,6 +29,7 @@ class GenreCategory {
 
     /**
      * @ORM\Column(unique=true)
+     * @Serializer\Type("string")
      */
     private $name;
 

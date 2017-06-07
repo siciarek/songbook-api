@@ -20,6 +20,7 @@ class TestCase extends KernelTestCase implements ContainerAwareInterface {
 
     public function getResponse($method, $url, $data = [], $headers = null)
     {
+        $method = strtoupper($method);
         $ch = curl_init();
 
         if ($headers !== null) {

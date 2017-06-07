@@ -3,5 +3,19 @@ UserBundle\Entity\User:
     properties:
         firstName:
             expose: true
+            serialized_name: firstName
         lastName:
+            expose: true
+            serialized_name: lastName
+        level:
+            expose: true
+        profileVisibleToThePublic:
+            expose: true
+            serialized_name: profileVisibleToThePublic
+        gender:
+            expose: true
+        dateOfBirth:
+            expose: true
+            serialized_name: dateOfBirth
+        id:
             expose: true

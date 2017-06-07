@@ -2,8 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use AppBundle\Controller\CommonController as Controller;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,7 +48,10 @@ class ExceptionController
         );
 
         if ($this->debug) {
-            $data['data'] = ['trace' => $exception->getTrace()];
+            $data['data'] = [
+                'message' => $exception->getMessage(),
+                'trace' => $exception->getTrace(),
+            ];
         }
 
         $headers = [

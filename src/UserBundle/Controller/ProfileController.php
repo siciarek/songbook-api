@@ -17,25 +17,13 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
     {
         $criteria = ['username' => $this->getUser()->getUsername()];
 
-        $user = $this
+        $item = $this
             ->getDoctrine()
             ->getRepository(User::class)
             ->findOneBy($criteria)
             ;
 
-        $data = [
-            'id' => $user->getId(),
-            'firstName' => $user->getFirstName(),
-            'lastName' => $user->getLastName(),
-            'email' => $user->getEmailCanonical(),
-            'gender' => $user->getGender(),
-            'dateOfBirth' => $user->getDateOfBirth()->format('c'),
-            'level' => $user->getLevel(),
-            'profileVisibleToThePublic' => $user->getProfileVisibleToThePublic(),
-            'info' => $user->getInfo(),
-        ];
-
-        return $data;
+        return $item;
     }
 
     public function postAction(Request $request)
