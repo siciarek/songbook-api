@@ -48,8 +48,6 @@ class JwtAuthTest extends TestCase
             'password' => $password,
         ];
 
-        $prefix = 'Bearer';
-
         $router = $this->getContainer()->get('router');
         $securedPageUrl = $router->generate($securedPageRoute, [], $router::ABSOLUTE_URL);
         $authUrl = $router->generate($authRoute, [], $router::ABSOLUTE_URL);
@@ -68,7 +66,7 @@ class JwtAuthTest extends TestCase
         # Valid token:
         $token = $data['token'];
         $headers = [
-            sprintf('Authorization: %s %s', $prefix, $token),
+            sprintf('Authorization: Bearer %s', $token),
         ];
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl, null, $headers);
         $this->assertEquals(200, $info['http_code']);
@@ -76,7 +74,7 @@ class JwtAuthTest extends TestCase
         # Ivalid token:
         $token = str_replace('A', 'C', $data['token']);
         $headers = [
-            sprintf('Authorization: %s %s', $prefix, $token),
+            sprintf('Authorization: Bearer %s', $token),
         ];
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl, null, $headers);
         $this->assertEquals(401, $info['http_code']);

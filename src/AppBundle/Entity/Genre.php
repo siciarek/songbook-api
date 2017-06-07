@@ -23,6 +23,7 @@ class Genre {
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Serializer\Type("integer")
      */
     private $id;
 

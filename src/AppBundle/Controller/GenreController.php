@@ -78,41 +78,15 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
      */
     public function postAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $serializer = SerializerBuilder::create()->build();
-
         $json = $request->getContent();
-        $new = $serializer->deserialize($json, Genre::class, 'json');
+        $serializer = SerializerBuilder::create()->build();
+        $item = $serializer->deserialize($json, Genre::class, 'json');
 
-//        TODO: use jms deserialize efficiently:
-//        $em->persist($item);
-//        $em->flush();
-//        return $item;
-
-        $item = new Genre();
-
-        $fields = [
-            'name' => function ($value) use ($item) {
-                $item->setName($value);
-            },
-            'description' => function ($value) use ($item) {
-                $item->setDescription($value);
-            },
-            'info' => function ($value) use ($item) {
-                $item->setInfo($value);
-            },
-            'category' => function ($value) use ($item, $em) {
-                $category = $em->getRepository(GenreCategory::class)->find($value['id']);
-                $item->setCategory($category);
-            },
-        ];
-
+        $em = $this->getDoctrine()->getManager();
+        # TODO: use jms deserialize more efficiently:
         $data = json_decode($json, true);
-        unset($data['id']);
-
-        foreach ($data as $key => $value) {
-            $fields[$key]($value);
-        }
+        $category = $em->getRepository(GenreCategory::class)->find($data['category']['id']);
+        $item->setCategory($category);
 
         $em->persist($item);
         $em->flush();
