@@ -32,7 +32,7 @@ class Genre {
     private $enabled = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity="GenreCategory", inversedBy="genres", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="GenreCategory", inversedBy="genres")
      * @Serializer\Type("AppBundle\Entity\GenreCategory")
      */
     private $category;

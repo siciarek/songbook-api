@@ -41,7 +41,7 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
             ->andWhere('a.deletedAt IS NULL')
             ->addOrderBy('a.name', 'ASC');
 
-        if($enabled === true) {
+        if ($enabled === true) {
             $builder->andWhere('a.enabled = true');
         }
 
@@ -78,19 +78,19 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
      */
     public function postAction(Request $request)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
+        $em = $this->getDoctrine()->getManager();
         $serializer = SerializerBuilder::create()->build();
 
         $json = $request->getContent();
-        $item = $serializer->deserialize($json, 'AppBundle\Entity\Genre', 'json');
+        $new = $serializer->deserialize($json, Genre::class, 'json');
 
+//        TODO: use jms deserialize efficiently:
 //        $em->persist($item);
 //        $em->flush();
 //        return $item;
 
-        $data = json_decode($json, true);
-
         $item = new Genre();
+
         $fields = [
             'name' => function ($value) use ($item) {
                 $item->setName($value);
@@ -107,9 +107,10 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
             },
         ];
 
+        $data = json_decode($json, true);
         unset($data['id']);
 
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             $fields[$key]($value);
         }
 
@@ -138,7 +139,7 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
         $em = $this->get('doctrine.orm.entity_manager');
         $item = $em->getRepository(Genre::class)->find($id);
 
-        if(!$item instanceof Genre) {
+        if (!$item instanceof Genre) {
             throw $this->createNotFoundException('Invalid id.');
         }
 

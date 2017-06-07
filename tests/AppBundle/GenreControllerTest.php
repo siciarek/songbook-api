@@ -41,6 +41,7 @@ class GenreControllerTest extends TestCase
         $authHeaders = $this->getAuthHeaders();
         list($resp, $info) = $this->getResponse('post', $url, json_encode($data), $authHeaders);
 
+//        $this->fail($resp);
 //        echo $url . PHP_EOL;
 //        echo json_encode($authHeaders) . PHP_EOL;
 //        echo json_encode($data) . PHP_EOL;
