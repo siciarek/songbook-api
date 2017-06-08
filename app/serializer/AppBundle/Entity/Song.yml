@@ -20,10 +20,14 @@ AppBundle\Entity\Song:
         videos:
             expose: true
             serialized_name: video
-        createdAt:
-            expose: true
-            serialized_name: createdAt
-            type: DateTime<'Y-m-d 00:00:00'>
+#        createdAt:
+#            access_type: public_method # defaults to property
+#            accessor: # access_type must be set to public_method
+#                getter: getCreatedAt
+#                setter: setCreatedAt
+#            expose: true
+#            serialized_name: createdAt
+#            type: DateTime<'c'>
     virtual_properties:
         getAudioCount:
             expose: true

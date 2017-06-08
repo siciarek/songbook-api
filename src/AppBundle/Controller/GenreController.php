@@ -78,14 +78,18 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
      */
     public function postAction(Request $request)
     {
+        ini_set('html_errors', false);
+
         $json = $request->getContent();
         $serializer = SerializerBuilder::create()->build();
         $item = $serializer->deserialize($json, Genre::class, 'json');
 
         $em = $this->getDoctrine()->getManager();
-        # TODO: use jms deserialize more efficiently:
-        $data = json_decode($json, true);
-        $category = $em->getRepository(GenreCategory::class)->find($data['category']['id']);
+
+        // TODO: use jms deserialize more efficiently:
+        $category = $em
+            ->getRepository(get_class($item->getCategory()))
+            ->find($item->getCategory()->getId());
         $item->setCategory($category);
 
         $em->persist($item);

@@ -44,7 +44,7 @@ LYRICS;
                     'videoCount' => 0,
                     'audio' => [],
                     'video' => null,
-                    'createdAt' => date('Y-m-d 00:00:00'),
+//                    'createdAt' => date('c', strtotime('2017-10-21 15:10:00')), // date('Y-m-d 00:00:00'),
                 ]
             ]
         ];
@@ -67,7 +67,7 @@ LYRICS;
         $this->assertGreaterThan(0, $rdata['id'], $resp);
 
         unset($rdata['id']);
-        $this->assertEquals($data, $rdata, $resp);
+        $this->assertEquals($data, $rdata);
     }
 
     public function getAuthHeaders() {

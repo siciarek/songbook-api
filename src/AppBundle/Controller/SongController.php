@@ -32,9 +32,11 @@ class SongController extends FOSRestController implements ClassResourceInterface
         $item = $serializer->deserialize($json, Song::class, 'json');
 
         $em = $this->getDoctrine()->getManager();
+
         # TODO: use jms deserialize more efficiently:
-        $data = json_decode($json, true);
-        $genre = $em->getRepository(Genre::class)->find($data['genre']['id']);
+        $genre = $em
+            ->getRepository(get_class($item->getGenre()))
+            ->find($item->getGenre()->getId());
         $item->setGenre($genre);
 
         $em->persist($item);
