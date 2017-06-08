@@ -21,11 +21,12 @@ class Song
         ORMBehaviors\SoftDeletable\SoftDeletable;
 
     public function getAudioCount() {
-        return $this->getAudio()->count();
+
+        return $this->getAudio() === null ? 0 : $this->getAudio()->count();
     }
 
     public function getVideoCount() {
-        return $this->getVideos()->count();
+        return $this->getVideos() === null ? 0 : $this->getVideos()->count();
     }
 
     public function __toString()
@@ -52,16 +53,19 @@ class Song
 
     /**
      * @ORM\OneToMany(targetEntity="Audio", mappedBy="song")
+     * @Serializer\Type("array<AppBundle\Entity\Audio>")
      */
     private $audio;
 
     /**
      * @ORM\OneToMany(targetEntity="Video", mappedBy="song")
+     * @Serializer\Type("array<AppBundle\Entity\Video>")
      */
     private $videos;
 
     /**
      * @ORM\ManyToOne(targetEntity="Genre", inversedBy="songs")
+     * @Serializer\Type("AppBundle\Entity\Genre")
      */
     private $genre;
 
@@ -77,21 +81,25 @@ class Song
 
     /**
      * @ORM\Column()
+     * @Serializer\Type("string")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Serializer\Type("string")
      */
     private $lyrics;
 
     /**
      * @ORM\Column(length=512, nullable=true)
+     * @Serializer\Type("string")
      */
     private $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Serializer\Type("string")
      */
     private $info;
 

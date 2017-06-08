@@ -7,6 +7,7 @@ use AppBundle\Entity\Song;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -27,28 +28,14 @@ class SongController extends FOSRestController implements ClassResourceInterface
     public function postAction(Request $request)
     {
         $json = $request->getContent();
+        $serializer = SerializerBuilder::create()->build();
+        $item = $serializer->deserialize($json, Song::class, 'json');
+
+        $em = $this->getDoctrine()->getManager();
+        # TODO: use jms deserialize more efficiently:
         $data = json_decode($json, true);
-
-        $em = $this->get('doctrine.orm.entity_manager');
-
-        $item = new Song();
-
-        $fields = [
-            'genre' => function($value) use ($item, $em) {
-                $value = $em->getRepository(Genre::class)->findOneById($value['id']);
-                $item->setGenre($value);
-            },
-            'title' => function ($value) use ($item) {
-                $item->setTitle($value);
-            },
-            'lyrics' => function ($value) use ($item) {
-                $item->setLyrics($value);
-            },
-        ];
-
-        foreach ($fields as $field => $func) {
-            $func($data[$field]);
-        }
+        $genre = $em->getRepository(Genre::class)->find($data['genre']['id']);
+        $item->setGenre($genre);
 
         $em->persist($item);
         $em->flush();

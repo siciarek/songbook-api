@@ -50,6 +50,8 @@ class ExceptionController
         if ($this->debug) {
             $data['data'] = [
                 'message' => $exception->getMessage(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
                 'trace' => $exception->getTrace(),
             ];
         }
