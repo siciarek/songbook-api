@@ -1,6 +1,21 @@
 UserBundle\Entity\User:
     exclusion_policy: all
+    accessor_order: custom
+    custom_accessor_order:
+        - id
+        - username
+        - email
+        - gender
+        - firstName
+        - lastName
+        - dateOfBirth
+        - level
+        - profileVisibleToThePublic
+        - description
+        - info
     properties:
+        id:
+            expose: true
         firstName:
             expose: true
             serialized_name: firstName
@@ -17,5 +32,7 @@ UserBundle\Entity\User:
         dateOfBirth:
             expose: true
             serialized_name: dateOfBirth
-        id:
+        description:
+            expose: true
+        info:
             expose: true

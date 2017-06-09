@@ -57,6 +57,11 @@ class User extends BaseUser
     protected $profileVisibleToThePublic = false;
 
     /**
+     * @ORM\Column(nullable=true)
+     */
+    protected $description;
+
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     protected $info;
@@ -227,5 +232,29 @@ class User extends BaseUser
     public function getInfo()
     {
         return $this->info;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return User
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

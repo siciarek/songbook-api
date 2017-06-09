@@ -15,15 +15,7 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
 {
     public function getAction()
     {
-        $criteria = ['username' => $this->getUser()->getUsername()];
-
-        $item = $this
-            ->getDoctrine()
-            ->getRepository(User::class)
-            ->findOneBy($criteria)
-            ;
-
-        return $item;
+        return $this->getUser();
     }
 
     public function postAction(Request $request)
@@ -31,10 +23,8 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
         $json = $request->getContent();
         $data = json_decode($json, true);
 
-        # TODO: change to fos user
-        $criteria = ['username' => $this->getUser()->getUsername()];
         $man = $this->get('fos_user.user_manager');
-        $user = $man->findUserBy($criteria);
+        $user = $this->getUser();
 
         $user->setFirstName($data['firstName']);
         $user->setLastName($data['lastName']);
