@@ -3,6 +3,7 @@
 namespace UserBundle\Controller;
 
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use JMS\Serializer\SerializerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
@@ -20,21 +21,22 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
 
     public function postAction(Request $request)
     {
-        $json = $request->getContent();
-        $data = json_decode($json, true);
+        $new = $this
+            ->get('jms_serializer')
+            ->deserialize($request->getContent(), User::class, 'json');
 
-        $man = $this->get('fos_user.user_manager');
         $user = $this->getUser();
+        $user->setUsername($new->getUsername());
+        $user->setFirstName($new->getFirstName());
+        $user->setLastName($new->getLastName());
+        $user->setDateOfBirth($new->getDateOfBirth());
+        $user->setEmail($new->getEmail());
+        $user->setGender($new->getGender());
+        $user->setLevel($new->getLevel());
+        $user->setProfileVisibleToThePublic($new->getProfileVisibleToThePublic());
+        $user->setInfo($new->getInfo());
+        $user->getDescription($new->getDescription());
 
-        $user->setFirstName($data['firstName']);
-        $user->setLastName($data['lastName']);
-        $user->setDateOfBirth(new \DateTime($data['dateOfBirth']));
-        $user->setEmail($data['email']);
-        $user->setGender($data['gender']);
-        $user->setLevel($data['level']);
-        $user->setProfileVisibleToThePublic($data['profileVisibleToThePublic']);
-        $user->setInfo($data['info']);
-
-        $man->updateUser($user);
+        $this->get('fos_user.user_manager')->updateUser($user);
     }
 }

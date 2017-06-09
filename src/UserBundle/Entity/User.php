@@ -4,6 +4,7 @@ namespace UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * UserBundle\Entity\User
@@ -23,46 +24,65 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Type("integer")
      */
     protected $id;
 
     /**
+     * @Serializer\Type("string")
+     */
+    protected $username;
+
+    /**
+     * @Serializer\Type("string")
+     */
+    protected $email;
+
+    /**
      * @ORM\Column(nullable=true)
+     * @Serializer\Type("string")
      */
     protected $firstName;
 
     /**
      * @ORM\Column(nullable=true)
+     * @Serializer\Type("string")
      */
     protected $lastName;
 
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Serializer\Type("DateTime")
      */
     protected $dateOfBirth;
 
     /**
      * @ORM\Column(length=8, nullable=true)
+     * @Serializer\Type("string")
      */
     protected $gender;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
+     * @Serializer\Type("integer")
      */
     protected $level = 50;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Serializer\Type("boolean")
      */
     protected $profileVisibleToThePublic = false;
 
     /**
      * @ORM\Column(nullable=true)
+     * @Serializer\Type("string")
      */
     protected $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Serializer\Type("string")
      */
     protected $info;
 

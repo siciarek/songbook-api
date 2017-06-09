@@ -78,8 +78,6 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
      */
     public function postAction(Request $request)
     {
-        ini_set('html_errors', false);
-
         $json = $request->getContent();
         $serializer = SerializerBuilder::create()->build();
         $item = $serializer->deserialize($json, Genre::class, 'json');
