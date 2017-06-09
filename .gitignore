@@ -5,6 +5,7 @@
 /temp
 /app/config/parameters.yml
 /build/
+/web/build
 /phpunit.xml
 /var/*
 !/var/cache
