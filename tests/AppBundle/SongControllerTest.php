@@ -2,7 +2,6 @@
 
 namespace Tests\AuthBundle;
 
-use AppBundle\Entity\Genre;
 use AppBundle\Entity\Song;
 use Tests\TestCase;
 

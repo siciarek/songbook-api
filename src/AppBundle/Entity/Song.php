@@ -4,7 +4,6 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
-use JMS\Serializer\Annotation as Serializer;
 
 /**
  * AppBundle\Entity\Song
@@ -53,19 +52,16 @@ class Song
 
     /**
      * @ORM\OneToMany(targetEntity="Audio", mappedBy="song")
-     * @Serializer\Type("array<AppBundle\Entity\Audio>")
      */
     private $audio;
 
     /**
      * @ORM\OneToMany(targetEntity="Video", mappedBy="song")
-     * @Serializer\Type("array<AppBundle\Entity\Video>")
      */
     private $videos;
 
     /**
      * @ORM\ManyToOne(targetEntity="Genre", inversedBy="songs")
-     * @Serializer\Type("AppBundle\Entity\Genre")
      */
     private $genre;
 
@@ -81,25 +77,21 @@ class Song
 
     /**
      * @ORM\Column()
-     * @Serializer\Type("string")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Serializer\Type("string")
      */
     private $lyrics;
 
     /**
      * @ORM\Column(length=512, nullable=true)
-     * @Serializer\Type("string")
      */
     private $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Serializer\Type("string")
      */
     private $info;
 

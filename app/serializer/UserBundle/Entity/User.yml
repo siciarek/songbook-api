@@ -28,9 +28,9 @@ UserBundle\Entity\User:
             serialized_name: profileVisibleToThePublic
         gender:
             expose: true
-#        dateOfBirth:
-#            expose: true
-#            serialized_name: dateOfBirth
+        dateOfBirth:
+            expose: true
+            serialized_name: dateOfBirth
         description:
             expose: true
         info:

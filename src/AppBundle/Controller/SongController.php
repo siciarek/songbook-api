@@ -7,7 +7,6 @@ use AppBundle\Entity\Song;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -27,9 +26,9 @@ class SongController extends FOSRestController implements ClassResourceInterface
      */
     public function postAction(Request $request)
     {
-        $json = $request->getContent();
-        $serializer = SerializerBuilder::create()->build();
-        $item = $serializer->deserialize($json, Song::class, 'json');
+        $item = $this
+            ->get('jms_serializer')
+            ->deserialize($request->getContent(), Song::class, 'json');
 
         $em = $this->getDoctrine()->getManager();
 

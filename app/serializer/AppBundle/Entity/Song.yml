@@ -21,13 +21,8 @@ AppBundle\Entity\Song:
             expose: true
             serialized_name: video
 #        createdAt:
-#            access_type: public_method # defaults to property
-#            accessor: # access_type must be set to public_method
-#                getter: getCreatedAt
-#                setter: setCreatedAt
 #            expose: true
 #            serialized_name: createdAt
-#            type: DateTime<'c'>
     virtual_properties:
         getAudioCount:
             expose: true

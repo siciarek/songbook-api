@@ -9,7 +9,6 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
-use JMS\Serializer\SerializerBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -78,11 +77,11 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
      */
     public function postAction(Request $request)
     {
-        $json = $request->getContent();
-        $serializer = SerializerBuilder::create()->build();
-        $item = $serializer->deserialize($json, Genre::class, 'json');
-
         $em = $this->getDoctrine()->getManager();
+
+        $item = $this
+            ->get('jms_serializer')
+            ->deserialize($request->getContent(), Genre::class, 'json');
 
         // TODO: use jms deserialize more efficiently:
         $category = $em

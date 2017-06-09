@@ -3,7 +3,6 @@
 namespace UserBundle\Controller;
 
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use JMS\Serializer\SerializerBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
