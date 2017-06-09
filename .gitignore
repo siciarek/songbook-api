@@ -1,4 +1,5 @@
 /phpunit
+/phpunit.phar
 /properties.conf
 .idea
 /temp

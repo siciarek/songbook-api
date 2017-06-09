@@ -43,7 +43,7 @@ LYRICS;
                     'videoCount' => 0,
                     'audio' => [],
                     'video' => null,
-//                    'createdAt' => date('c', strtotime('2017-10-21 15:10:00')), // date('Y-m-d 00:00:00'),
+                    'createdAt' => date('Y-m-d\\TH:i:sO', strtotime('1966-10-21')),
                 ]
             ]
         ];

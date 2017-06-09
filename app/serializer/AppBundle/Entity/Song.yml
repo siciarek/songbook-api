@@ -20,9 +20,9 @@ AppBundle\Entity\Song:
         videos:
             expose: true
             serialized_name: video
-#        createdAt:
-#            expose: true
-#            serialized_name: createdAt
+        createdAt:
+            expose: true
+            serialized_name: createdAt
     virtual_properties:
         getAudioCount:
             expose: true
