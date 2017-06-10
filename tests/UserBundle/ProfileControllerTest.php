@@ -46,6 +46,7 @@ class ProfileControllerTest extends TestCase
 
     /**
      * @dataProvider postDataProvider
+     * @group post
      */
     public function testPost($securedPageRoute, $authRoute, $username, $password)
     {
@@ -80,6 +81,14 @@ class ProfileControllerTest extends TestCase
         $new['id'] = $before['id'];
 
         do {
+            $new['description'] = $faker->sentence;
+        } while ($data['description'] === $new['description']);
+
+        do {
+            $new['info'] = implode("\n", $faker->sentences(6));
+        } while ($data['info'] === $new['info']);
+
+        do {
             $new['gender'] = rand(0, 1) ? 'male' : 'female';
         } while ($data['gender'] === $new['gender']);
 
@@ -90,18 +99,6 @@ class ProfileControllerTest extends TestCase
         do {
             $new['lastName'] = $new['gender'] === 'male' ? $faker->lastNameMale : $faker->lastNameFemale;
         } while ($data['lastName'] === $new['lastName']);
-
-        setlocale(LC_ALL, "pl_PL.utf8");
-
-        $first = mb_convert_case(iconv('UTF-8', 'ASCII//TRANSLIT', $new['firstName']), MB_CASE_LOWER);
-        $second = mb_convert_case(iconv('UTF-8', 'ASCII//TRANSLIT', $new['lastName']), MB_CASE_LOWER);
-        $dot = rand(1, 0) > 0 ? '.' : '';
-        $first = rand(1, 0) > 0 ? $first[0] : $first;
-
-        $new['email'] = sprintf('%s%s%s@%s',
-            $first, $dot, $second,
-            $faker->safeEmailDomain
-        );
 
         do {
             $new['level'] = rand(1, 100);
@@ -115,6 +112,17 @@ class ProfileControllerTest extends TestCase
             $new['profileVisibleToThePublic'] = rand(0, 1) > 0;
         } while ($data['profileVisibleToThePublic'] === $new['profileVisibleToThePublic']);
 
+        setlocale(LC_ALL, "pl_PL.utf8");
+        $first = mb_convert_case(iconv('UTF-8', 'ASCII//TRANSLIT', $new['firstName']), MB_CASE_LOWER);
+        $second = mb_convert_case(iconv('UTF-8', 'ASCII//TRANSLIT', $new['lastName']), MB_CASE_LOWER);
+        $dot = rand(1, 0) > 0 ? '.' : '';
+        $first = rand(1, 0) > 0 ? $first[0] : $first;
+
+        $new['email'] = sprintf('%s%s%s@%s',
+            $first, $dot, $second,
+            $faker->safeEmailDomain
+        );
+
         foreach ($new as $key => $val) {
             $data[$key] = $val;
         }
@@ -124,18 +132,11 @@ class ProfileControllerTest extends TestCase
 
         $em->refresh($temp);
 
-        $after = [
-            'id' => $temp->getId(),
-            'level' => $temp->getLevel(),
-            'gender' => $temp->getGender(),
-            'firstName' => $temp->getFirstName(),
-            'lastName' => $temp->getFirstName(),
-            'profileVisibleToThePublic' => $temp->getProfileVisibleToThePublic(),
-            'dateOfBirth' => $temp->getDateOfBirth(),
-            'email' => $temp->getEmail(),
-        ];
+        $temp = $this->getContainer()->get('jms_serializer')->serialize($temp, 'json');
+        $after = json_decode($temp, true);
 
         $this->assertEquals($before['id'], $after['id']);
+
         foreach ($before as $key => $val) {
             if ($key === 'id') {
                 continue;
