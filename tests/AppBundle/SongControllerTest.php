@@ -43,7 +43,7 @@ LYRICS;
                     'videoCount' => 0,
                     'audio' => [],
                     'video' => null,
-                    'createdAt' => '1966-10-21', # date('Y-m-d\\TH:i:sO', strtotime('1966-10-21')),
+                    'firstPublishedAt' => '1966-10-21',
                 ]
             ]
         ];

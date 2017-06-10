@@ -96,6 +96,11 @@ class Song
     private $info;
 
     /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $firstPublishedAt;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -213,6 +218,30 @@ class Song
     }
 
     /**
+     * Set firstPublishedAt
+     *
+     * @param \DateTime $firstPublishedAt
+     *
+     * @return Song
+     */
+    public function setFirstPublishedAt($firstPublishedAt)
+    {
+        $this->firstPublishedAt = $firstPublishedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get firstPublishedAt
+     *
+     * @return \DateTime
+     */
+    public function getFirstPublishedAt()
+    {
+        return $this->firstPublishedAt;
+    }
+
+    /**
      * Add audio
      *
      * @param \AppBundle\Entity\Audio $audio
@@ -221,7 +250,6 @@ class Song
      */
     public function addAudio(\AppBundle\Entity\Audio $audio)
     {
-        $audio->setSong($this);
         $this->audio[] = $audio;
 
         return $this;
@@ -256,7 +284,6 @@ class Song
      */
     public function addVideo(\AppBundle\Entity\Video $video)
     {
-        $video->setSong($this);
         $this->videos[] = $video;
 
         return $this;

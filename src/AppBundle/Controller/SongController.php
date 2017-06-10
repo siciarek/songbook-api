@@ -75,6 +75,9 @@ class SongController extends FOSRestController implements ClassResourceInterface
             'lyrics' => function ($value) use ($item) {
                 $item->setLyrics($value);
             },
+            'firstPublishedAt' => function ($value) use ($item) {
+                $item->setFirstPublishedAt(new \DateTime($value));
+            },
         ];
 
         foreach ($fields as $field => $func) {
