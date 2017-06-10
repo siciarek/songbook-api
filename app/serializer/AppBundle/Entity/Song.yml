@@ -23,6 +23,7 @@ AppBundle\Entity\Song:
         createdAt:
             expose: true
             serialized_name: createdAt
+            type: DateTime<'Y-m-d'>
     virtual_properties:
         getAudioCount:
             expose: true

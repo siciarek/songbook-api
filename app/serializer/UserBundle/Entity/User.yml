@@ -31,6 +31,7 @@ UserBundle\Entity\User:
         dateOfBirth:
             expose: true
             serialized_name: dateOfBirth
+            type: DateTime<'Y-m-d'>
         description:
             expose: true
         info:

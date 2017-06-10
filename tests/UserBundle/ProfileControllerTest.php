@@ -33,7 +33,7 @@ class ProfileControllerTest extends TestCase
     {
         $router = $this->getContainer()->get('router');
         $securedPageUrl = $router->generate($securedPageRoute, [], $router::ABSOLUTE_URL);
-        $headers = $this->getHeaders($authRoute, $username, $password);
+        $headers = $this->getHeaders($username, $password);
 
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl, null, $headers);
         $this->assertEquals(200, $info['http_code'], $resp);
@@ -53,7 +53,7 @@ class ProfileControllerTest extends TestCase
 
         $router = $this->getContainer()->get('router');
         $securedPageUrl = $router->generate($securedPageRoute, [], $router::ABSOLUTE_URL);
-        $headers = $this->getHeaders($authRoute, $username, $password);
+        $headers = $this->getHeaders($username, $password);
 
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl, null, $headers);
         $this->assertEquals(200, $info['http_code'], $resp);
@@ -72,6 +72,8 @@ class ProfileControllerTest extends TestCase
             'firstName' => $temp->getFirstName(),
             'lastName' => $temp->getFirstName(),
             'profileVisibleToThePublic' => $temp->getProfileVisibleToThePublic(),
+            'dateOfBirth' => $temp->getDateOfBirth(),
+            'email' => $temp->getEmail(),
         ];
 
         $new = array_flip(array_keys($before));
@@ -79,26 +81,41 @@ class ProfileControllerTest extends TestCase
 
         do {
             $new['gender'] = rand(0, 1) ? 'male' : 'female';
-        } while($data['gender'] === $new['gender']);
-
+        } while ($data['gender'] === $new['gender']);
 
         do {
             $new['firstName'] = $new['gender'] === 'male' ? $faker->firstNameMale : $faker->firstNameFemale;
-        } while($data['firstName'] === $new['firstName']);
+        } while ($data['firstName'] === $new['firstName']);
 
         do {
             $new['lastName'] = $new['gender'] === 'male' ? $faker->lastNameMale : $faker->lastNameFemale;
-        } while($data['lastName'] === $new['lastName']);
+        } while ($data['lastName'] === $new['lastName']);
+
+        setlocale(LC_ALL, "pl_PL.utf8");
+
+        $first = mb_convert_case(iconv('UTF-8', 'ASCII//TRANSLIT', $new['firstName']), MB_CASE_LOWER);
+        $second = mb_convert_case(iconv('UTF-8', 'ASCII//TRANSLIT', $new['lastName']), MB_CASE_LOWER);
+        $dot = rand(1, 0) > 0 ? '.' : '';
+        $first = rand(1, 0) > 0 ? $first[0] : $first;
+
+        $new['email'] = sprintf('%s%s%s@%s',
+            $first, $dot, $second,
+            $faker->safeEmailDomain
+        );
 
         do {
             $new['level'] = rand(1, 100);
-        } while($data['level'] === $new['level']);
+        } while ($data['level'] === $new['level']);
+
+        do {
+            $new['dateOfBirth'] = $faker->dateTimeBetween('-40 years', '-18 years')->format('Y-m-d');
+        } while ($data['dateOfBirth'] === $new['dateOfBirth']);
 
         do {
             $new['profileVisibleToThePublic'] = rand(0, 1) > 0;
-        } while($data['profileVisibleToThePublic'] === $new['profileVisibleToThePublic']);
+        } while ($data['profileVisibleToThePublic'] === $new['profileVisibleToThePublic']);
 
-        foreach($new as $key => $val) {
+        foreach ($new as $key => $val) {
             $data[$key] = $val;
         }
 
@@ -114,11 +131,13 @@ class ProfileControllerTest extends TestCase
             'firstName' => $temp->getFirstName(),
             'lastName' => $temp->getFirstName(),
             'profileVisibleToThePublic' => $temp->getProfileVisibleToThePublic(),
+            'dateOfBirth' => $temp->getDateOfBirth(),
+            'email' => $temp->getEmail(),
         ];
 
         $this->assertEquals($before['id'], $after['id']);
-        foreach($before as $key => $val) {
-            if($key === 'id') {
+        foreach ($before as $key => $val) {
+            if ($key === 'id') {
                 continue;
             }
             $this->assertNotEquals($before[$key], $after[$key], "Invalid value in field '$key'");
@@ -126,15 +145,12 @@ class ProfileControllerTest extends TestCase
         }
     }
 
-
     /**
-     * @param $securedPageRoute
-     * @param $authRoute
      * @param $username
      * @param $password
      * @return array
      */
-    public function getHeaders($authRoute, $username, $password): array
+    public function getHeaders($username, $password, $authRoute = 'auth_check'): array
     {
         $authData = [
             'username' => $username,

@@ -14,6 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
+    const GENDER_UNKNOWN = 'unknown';
+    const GENDER_MALE = 'male';
+    const GENDER_FEMALE = 'female';
+
     /**
      * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
      */
@@ -44,7 +48,7 @@ class User extends BaseUser
     /**
      * @ORM\Column(length=8, nullable=true)
      */
-    protected $gender;
+    protected $gender = self::GENDER_UNKNOWN;
 
     /**
      * @ORM\Column(type="integer", nullable=false)
