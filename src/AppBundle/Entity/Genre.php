@@ -18,6 +18,11 @@ class Genre {
         ORMBehaviors\Timestampable\Timestampable,
         ORMBehaviors\SoftDeletable\SoftDeletable;
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

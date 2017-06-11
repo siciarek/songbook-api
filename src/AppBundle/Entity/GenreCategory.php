@@ -13,6 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class GenreCategory {
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

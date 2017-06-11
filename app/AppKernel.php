@@ -9,6 +9,13 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles = [
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Pix\SortableBehaviorBundle\PixSortableBehaviorBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
+
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),

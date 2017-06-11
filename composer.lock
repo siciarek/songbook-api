@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "99ebe8c240431c898ea51b66d303e8e3",
-    "content-hash": "1a55198c61f6bb220f19c236974fc5fb",
+    "hash": "60c6cce4eb803d047e1c1d2cb3c59026",
+    "content-hash": "a8be0e0416785fd3db170feb28f28516",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2593,6 +2593,63 @@
                 "type"
             ],
             "time": "2015-07-25 16:39:46"
+        },
+        {
+            "name": "pixassociates/sortable-behavior-bundle",
+            "version": "v1.3",
+            "target-dir": "Pix/SortableBehaviorBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pix-digital/pixSortableBehaviorBundle.git",
+                "reference": "f9932a6b58bbf7965efa5ab1186e5d758ea47fdd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pix-digital/pixSortableBehaviorBundle/zipball/f9932a6b58bbf7965efa5ab1186e5d758ea47fdd",
+                "reference": "f9932a6b58bbf7965efa5ab1186e5d758ea47fdd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/form": ">=2.1",
+                "symfony/framework-bundle": ">=2.1"
+            },
+            "require-dev": {
+                "gedmo/doctrine-extensions": ">=2.2"
+            },
+            "suggest": {
+                "sonata-project/admin-bundle": "Can be easily integrated with Sonata Admin bundle",
+                "stof/doctrine-extensions-bundle": "1.1.*@dev"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Pix\\SortableBehaviorBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Ricci",
+                    "email": "nr@pix-digital.com"
+                }
+            ],
+            "description": "Provides a way to sort your admin listing",
+            "homepage": "https://github.com/pix-digital/pixSortableBehaviorBundle",
+            "keywords": [
+                "admin",
+                "sonata",
+                "sortable"
+            ],
+            "time": "2017-06-01 07:21:44"
         },
         {
             "name": "psr/cache",
@@ -6656,12 +6713,12 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "lexik/jwt-authentication-bundle": 20,
         "friendsofsymfony/rest-bundle": 20,
         "friendsofsymfony/user-bundle": 20,
+        "knplabs/doctrine-behaviors": 20,
         "knplabs/knp-paginator-bundle": 20,
         "knplabs/knp-snappy-bundle": 20,
-        "knplabs/doctrine-behaviors": 20,
+        "lexik/jwt-authentication-bundle": 20,
         "doctrine/doctrine-fixtures-bundle": 20,
         "nelmio/api-doc-bundle": 20,
         "raulfraile/ladybug-bundle": 20,

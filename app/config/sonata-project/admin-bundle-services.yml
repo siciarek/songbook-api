@@ -1,0 +1,31 @@
+services:
+
+    admin.genre:
+        class: AppBundle\Admin\GenreAdmin
+        arguments:
+            - ~
+            - AppBundle\Entity\Genre
+            - ~
+        tags:
+            -
+                name: sonata.admin
+                manager_type: orm
+                label: Genre
+                group: Genre
+                icon: '<i class="fa fa-star-o"></i>'
+                label_catalogue: messages
+
+    admin.genrecategory:
+        class: AppBundle\Admin\GenreCategoryAdmin
+        arguments:
+            - ~
+            - AppBundle\Entity\GenreCategory
+            - ~
+        tags:
+            -
+                name: sonata.admin
+                manager_type: orm
+                label: Genre category
+                icon: '<i class="fa fa-star-o"></i>'
+                group: Genre
+                label_catalogue: messages
