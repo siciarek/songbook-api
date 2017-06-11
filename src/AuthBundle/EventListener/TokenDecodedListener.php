@@ -5,6 +5,7 @@ namespace AuthBundle\EventListener;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTDecodedEvent;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * JWTDecodedListener
@@ -27,10 +28,12 @@ class TokenDecodedListener implements ContainerAwareInterface
     {
         $payload = $event->getPayload();
 
-        # TODO - pobrać prawdziwe IP
-        $ip = '127.0.0.1';
+        /**
+         * @var Request $request
+         */
+        $request = $this->getContainer()->get('request_stack')->getCurrentRequest();
 
-        if (!isset($payload['ip']) || $payload['ip'] !== $ip) {
+        if (!isset($payload['ip']) || $payload['ip'] !== $request->getClientIp()) {
             $event->markAsInvalid();
         }
     }

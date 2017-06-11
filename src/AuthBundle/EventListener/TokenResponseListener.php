@@ -3,6 +3,7 @@
 namespace AuthBundle\EventListener;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -33,10 +34,7 @@ class TokenResponseListener implements ContainerAwareInterface
             return;
         }
 
-        $data['data'] = array(
-            'username' => $user->getUsername(),
-            'roles'    => $user->getRoles()
-        );
+        $data['data'] = json_decode($this->getContainer()->get('jms_serializer')->serialize($user, 'json'));
 
         $event->setData($data);
     }

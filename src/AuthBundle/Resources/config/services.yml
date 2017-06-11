@@ -6,6 +6,7 @@ parameters:
 services:
     auth.event.jwt_response_listener:
         class: '%auth.event.jwt_response_listener.class%'
+        arguments: ['@service_container']
         tags:
             -
                 name: kernel.event_listener
@@ -14,6 +15,7 @@ services:
 
     auth.event.jwt_created_listener:
         class: '%auth.event.jwt_created_listener.class%'
+        arguments: ['@service_container']
         tags:
             -
                 name: kernel.event_listener
@@ -22,6 +24,7 @@ services:
 
     auth.event.jwt_decoded_listener:
         class: '%auth.event.jwt_decoded_listener.class%'
+        arguments: ['@service_container']
         tags:
             -
                 name: kernel.event_listener

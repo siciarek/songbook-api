@@ -36,6 +36,7 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
         $user->setInfo($new->getInfo());
         $user->setDescription($new->getDescription());
 
+
         $this->get('fos_user.user_manager')->updateUser($user);
     }
 }

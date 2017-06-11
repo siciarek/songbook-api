@@ -9,7 +9,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 
 /**
  * @RouteResource("Song", pluralize=false)
@@ -19,10 +19,6 @@ class SongController extends FOSRestController implements ClassResourceInterface
     /**
      * Adds new song.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Adds new song.",
-     * )
      */
     public function postAction(Request $request)
     {
@@ -47,10 +43,6 @@ class SongController extends FOSRestController implements ClassResourceInterface
     /**
      * Modifies data of song identified by id.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Modifies data of song identified by id.",
-     * )
      */
     public function putAction(Request $request, $id)
     {
@@ -94,10 +86,6 @@ class SongController extends FOSRestController implements ClassResourceInterface
     /**
      * Removes song identified by id.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Removes song identified by id.",
-     * )
      * @ParamConverter("item", class="AppBundle:Song")
      */
     public function deleteAction(Song $item)

@@ -10,19 +10,25 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * @RouteResource("Author", pluralize=false)
  */
 class AuthorController extends FOSRestController implements ClassResourceInterface
 {
+    /**
+     * Returns page of the list of Authors
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function cgetAction(Request $request)
     {
         $builder = $this
-            ->get('doctrine')
+            ->getDoctrine()
+            ->getManager()
             ->getRepository(Author::class)
-            ->createQueryBuilder('a');
+            ->createQueryBuilder('o');
 
         $paginator = $this->get('knp_paginator')->paginate(
             $builder,
@@ -36,10 +42,6 @@ class AuthorController extends FOSRestController implements ClassResourceInterfa
     /**
      * Returns data of the author identified by id.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns data of the author identified by id.",
-     * )
      * @ParamConverter("item", class="AppBundle:Author")
      */
     public function getAction(Author $item)

@@ -5,6 +5,7 @@ namespace AuthBundle\EventListener;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * JWTCreatedListener
@@ -25,16 +26,17 @@ class TokenCreatedListener implements ContainerAwareInterface
      */
     public function onCreated(JWTCreatedEvent $event)
     {
-        # TODO - wydobyć prawdziwe IP
-        $ip = '127.0.0.1';
+        $payload = $event->getData();
 
-        if (!($request = $event->getData())) {
+        if (!$payload) {
             return;
         }
 
-        $payload       = $event->getData();
-
-        $payload['ip'] = $ip;
+        /**
+         * @var Request $request
+         */
+        $request = $this->getContainer()->get('request_stack')->getCurrentRequest();
+        $payload['ip'] = $request->getClientIp();
 
         $event->setData($payload);
     }

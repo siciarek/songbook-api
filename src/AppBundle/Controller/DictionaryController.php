@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 
 /**
  * @RouteResource("Dictionary", pluralize=false)

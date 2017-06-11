@@ -1,15 +1,15 @@
 api:
-    type: rest
     resource: '@AppBundle/Controller/'
+    type: rest
 
 user:
-    type: rest
-    prefix: /user
     resource: '@UserBundle/Controller/'
+    prefix: /user
+    type: rest
 
 auth:
     resource: "@AuthBundle/Resources/config/routing.yml"
 
 NelmioApiDocBundle:
-    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    resource: "@NelmioApiDocBundle/Resources/config/routing/swaggerui.xml"
     prefix: /doc

@@ -3,15 +3,17 @@ UserBundle\Entity\User:
     accessor_order: custom
     custom_accessor_order:
         - id
+        - username
         - email
         - gender
         - firstName
         - lastName
         - dateOfBirth
-        - level
-        - profileVisibleToThePublic
         - description
         - info
+        - level
+        - profileVisibleToThePublic
+        - roles
     properties:
         id:
             expose: true

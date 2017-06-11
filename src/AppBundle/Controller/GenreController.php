@@ -11,7 +11,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 
 /**
  * @RouteResource("Genre", pluralize=false)
@@ -22,11 +22,6 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
      * Returns a list of available music genres.
      *
      * @QueryParam(name="page", nullable=true, requirements="[1-9]\d*")
-     *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns a list of available music genres.",
-     * )
      */
     public function cgetAction(Request $request)
     {
@@ -56,10 +51,6 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
     /**
      * Returns data of music genre identified by id.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns data of music genre identified by id.",
-     * )
      * @ParamConverter("genre", class="AppBundle:Genre")
      */
     public function getAction(Genre $genre)
@@ -70,10 +61,6 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
     /**
      * Creates new music genre.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Creates new music genre.",
-     * )
      */
     public function postAction(Request $request)
     {
@@ -98,10 +85,6 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
     /**
      * Modifies data of music genre identified by id.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Modifies data of music genre identified by id.",
-     * )
      */
     public function putAction(Request $request, $id)
     {
@@ -150,10 +133,6 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
     /**
      * Removes music genre identified by id.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Removes music genre identified by id.",
-     * )
      * @ParamConverter("item", class="AppBundle:Genre")
      */
     public function deleteAction(Genre $item)

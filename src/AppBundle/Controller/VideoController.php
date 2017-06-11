@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 
 /**
  * @RouteResource("Video", pluralize=false)
@@ -50,10 +50,6 @@ class VideoController extends FOSRestController implements ClassResourceInterfac
     /**
      * Returns data of the song identified by id.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns data of the song identified by id.",
-     * )
      * @ParamConverter("item", class="AppBundle:Song")
      */
     public function getAction(Song $item)

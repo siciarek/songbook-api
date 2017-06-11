@@ -5,4 +5,7 @@ FOS\UserBundle\Model\User:
             expose: true
         username:
             expose: true
-
+    virtual_properties:
+        getRoles:
+            expose: true
+            serialized_name: roles

@@ -9,7 +9,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 use AppBundle\Entity\Song;
 
 /**
@@ -38,10 +38,6 @@ class LyricsController extends FOSRestController implements ClassResourceInterfa
     /**
      * Returns data of the song identified by id.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns data of the song identified by id.",
-     * )
      * @ParamConverter("item", class="AppBundle:Song")
      */
     public function getAction(Song $item)

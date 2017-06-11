@@ -10,7 +10,6 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * @RouteResource("Artist", pluralize=false)
@@ -20,9 +19,10 @@ class ArtistController extends FOSRestController implements ClassResourceInterfa
     public function cgetAction(Request $request)
     {
         $builder = $this
-            ->get('doctrine')
+            ->getDoctrine()
+            ->getManager()
             ->getRepository(Artist::class)
-            ->createQueryBuilder('a');
+            ->createQueryBuilder('o');
 
         $paginator = $this->get('knp_paginator')->paginate(
             $builder,
@@ -36,10 +36,6 @@ class ArtistController extends FOSRestController implements ClassResourceInterfa
     /**
      * Returns data of the artist identified by id.
      *
-     * @ApiDoc(
-     *  resource=true,
-     *  description="Returns data of the artist identified by id.",
-     * )
      * @ParamConverter("item", class="AppBundle:Artist")
      */
     public function getAction(Artist $item)
