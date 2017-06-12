@@ -18,6 +18,10 @@ class User extends BaseUser
     const GENDER_MALE = 'male';
     const GENDER_FEMALE = 'female';
 
+    public function __toString() {
+        return $this->getUsername()?:'New user';
+    }
+
     /**
      * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
      */

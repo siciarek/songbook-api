@@ -3,6 +3,7 @@ namespace UserBundle\Admin;
 
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 
 class UserAdmin extends Admin
 {
@@ -16,7 +17,8 @@ class UserAdmin extends Admin
             ])
             ->addIdentifier('firstName')
             ->addIdentifier('lastName')
-            ->addIdentifier('email')
+            ->add('roles')
+            ->add('groups')
             ->add('description')
             ->add('_action', 'actions', [
                 'actions' => [
@@ -31,13 +33,64 @@ class UserAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('enabled')
-            ->add('firstName')
-            ->add('lastName')
-            ->add('username')
-            ->add('email')
-            ->add('description')
-            ->add('info')
+            ->tab('General')
+                ->with('')
+                    ->add('enabled')
+                    ->add('username')
+                    ->add('email')
+                    ->add('firstName')
+                    ->add('lastName')
+                    ->add('dateOfBirth', 'sonata_type_date_picker')
+                ->end()
+            ->end()
+            ->tab('Credentials')
+                ->with('')
+                    ->add('groups')
+                ->end()
+            ->end()
+            ->tab('Additional')
+                ->with('')
+                    ->add('description')
+                    ->add('info')
+                    ->add('level')
+                    ->add('profileVisibleToThePublic')
+                ->end()
+            ->end()
+        ;
+    }
+
+    protected function configureShowFields(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->tab('General')
+                ->with('')
+                    ->add('id')
+                    ->add('enabled')
+                    ->add('username')
+                ->end()
+            ->end()
+            ->tab('Extended')
+                ->with('')
+                    ->add('firstName')
+                    ->add('lastName')
+                    ->add('dateOfBirth')
+                    ->add('email')
+                ->end()
+            ->end()
+            ->tab('Credentials')
+                ->with('')
+                    ->add('groups')
+                    ->add('roles')
+                ->end()
+            ->end()
+            ->tab('Additional')
+                ->with('')
+                    ->add('description')
+                    ->add('info')
+                    ->add('level')
+                    ->add('profileVisibleToThePublic')
+                ->end()
+            ->end()
         ;
     }
 }

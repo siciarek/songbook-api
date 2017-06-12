@@ -14,6 +14,10 @@ use FOS\UserBundle\Model\Group as BaseGroup;
  */
 class Group extends BaseGroup
 {
+    public function __toString() {
+        return $this->getName()?:'New group';
+    }
+
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="groups")
      */
