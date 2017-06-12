@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "408074bfed28a1bc7f4d8c3ca88c458d",
-    "content-hash": "09343f5d5b025283ebed823d0d74d705",
+    "hash": "bcf3c913c3ea54d47e90bd0f414e4eb0",
+    "content-hash": "1acf2384bf744947cdad86b76112bfd8",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2037,16 +2037,16 @@
         },
         {
             "name": "lexik/jwt-authentication-bundle",
-            "version": "dev-master",
+            "version": "v2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/lexik/LexikJWTAuthenticationBundle.git",
-                "reference": "e30bde8a52c60e692b1d70dd0b4748d247a3ce7b"
+                "reference": "b0d64729f57a76fd0bce2100a487af2e0aa99936"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/e30bde8a52c60e692b1d70dd0b4748d247a3ce7b",
-                "reference": "e30bde8a52c60e692b1d70dd0b4748d247a3ce7b",
+                "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/b0d64729f57a76fd0bce2100a487af2e0aa99936",
+                "reference": "b0d64729f57a76fd0bce2100a487af2e0aa99936",
                 "shasum": ""
             },
             "require": {
@@ -2130,7 +2130,7 @@
                 "rest",
                 "symfony"
             ],
-            "time": "2017-06-09 15:27:51"
+            "time": "2017-05-08 10:16:54"
         },
         {
             "name": "monolog/monolog",
@@ -4526,16 +4526,16 @@
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
-            "version": "dev-master",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineFixturesBundle.git",
-                "reference": "561fb64d1d3b47673bdb13a0ac76f0003cf0eeef"
+                "reference": "0f1a2f91b349e10f5c343f75ab71d23aace5b029"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/561fb64d1d3b47673bdb13a0ac76f0003cf0eeef",
-                "reference": "561fb64d1d3b47673bdb13a0ac76f0003cf0eeef",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/0f1a2f91b349e10f5c343f75ab71d23aace5b029",
+                "reference": "0f1a2f91b349e10f5c343f75ab71d23aace5b029",
                 "shasum": ""
             },
             "require": {
@@ -4579,7 +4579,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2017-05-23 11:55:00"
+            "time": "2015-11-04 21:23:23"
         },
         {
             "name": "exsyst/swagger",
@@ -5608,7 +5608,7 @@
         },
         {
             "name": "raulfraile/ladybug-bundle",
-            "version": "dev-master",
+            "version": "v1.0.6",
             "target-dir": "RaulFraile/Bundle/LadybugBundle",
             "source": {
                 "type": "git",
@@ -6712,11 +6712,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "lexik/jwt-authentication-bundle": 20,
-        "doctrine/doctrine-fixtures-bundle": 20,
         "nelmio/api-doc-bundle": 20,
-        "raulfraile/ladybug-bundle": 20,
-        "willdurand/faker-bundle": 0,
         "symfony/phpunit-bridge": 20
     },
     "prefer-stable": false,
