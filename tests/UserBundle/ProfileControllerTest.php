@@ -115,11 +115,11 @@ class ProfileControllerTest extends TestCase
         setlocale(LC_ALL, "pl_PL.utf8");
         $first = mb_convert_case(iconv('UTF-8', 'ASCII//TRANSLIT', $new['firstName']), MB_CASE_LOWER);
         $second = mb_convert_case(iconv('UTF-8', 'ASCII//TRANSLIT', $new['lastName']), MB_CASE_LOWER);
-        $dot = rand(1, 0) > 0 ? '.' : '';
+        $sep = rand(1, 0) > 0 ? '.' : (rand(1, 0) ? '-' : '');
         $first = rand(1, 0) > 0 ? $first[0] : $first;
 
         $new['email'] = sprintf('%s%s%s@%s',
-            $first, $dot, $second,
+            $first, $sep, $second,
             $faker->safeEmailDomain
         );
 

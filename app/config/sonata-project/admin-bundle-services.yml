@@ -10,7 +10,7 @@ services:
             -
                 name: sonata.admin
                 manager_type: orm
-                label: Genre
+                label: Genres
                 group: Genre
                 icon: '<i class="fa fa-star-o"></i>'
                 label_catalogue: messages
@@ -25,7 +25,22 @@ services:
             -
                 name: sonata.admin
                 manager_type: orm
-                label: Genre category
+                label: Categories
                 icon: '<i class="fa fa-star-o"></i>'
                 group: Genre
+                label_catalogue: messages
+
+    admin.user:
+        class: UserBundle\Admin\UserAdmin
+        arguments:
+            - ~
+            - UserBundle\Entity\User
+            - ~
+        tags:
+            -
+                name: sonata.admin
+                manager_type: orm
+                label: Users
+                icon: '<i class="fa fa-user"></i>'
+                group: User management
                 label_catalogue: messages
