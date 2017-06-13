@@ -31,11 +31,11 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
         $user->setDateOfBirth($new->getDateOfBirth());
         $user->setEmail($new->getEmail());
         $user->setGender($new->getGender());
-        $user->setLevel($new->getLevel());
-        $user->setProfileVisibleToThePublic($new->getProfileVisibleToThePublic());
-        $user->setInfo($new->getInfo());
-        $user->setDescription($new->getDescription());
 
+//        $user->setLevel($new->getLevel());
+//        $user->setProfileVisibleToThePublic($new->getProfileVisibleToThePublic());
+//        $user->setInfo($new->getInfo());
+//        $user->setDescription($new->getDescription());
 
         $this->get('fos_user.user_manager')->updateUser($user);
     }

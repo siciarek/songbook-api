@@ -5,8 +5,8 @@ jms_serializer:
                 namespace_prefix: FOS\UserBundle\Model
                 path: '%kernel.root_dir%/serializer/FOS/UserBundle/Model'
             user:
-                namespace_prefix: UserBundle\Entity
-                path: '%kernel.root_dir%/serializer/UserBundle/Entity'
+                namespace_prefix: Sonata\UserBundle\Model
+                path: '%kernel.root_dir%/serializer/Sonata/UserBundle/Model'
             app:
                 namespace_prefix: AppBundle\Entity
                 path: '%kernel.root_dir%/serializer/AppBundle/Entity'

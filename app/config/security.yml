@@ -16,6 +16,18 @@ security:
             pattern:  ^/(_(profiler|wdt|doc))/
             security: false
 
+        login:
+            pattern:  ^/auth$
+            stateless: true
+            anonymous: true
+            form_login:
+                check_path: auth_check
+                require_previous_session: false
+                username_parameter: username
+                password_parameter: password
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
         admin:
             pattern:            /admin(.*)
             context:            user
@@ -29,18 +41,6 @@ security:
                 path:           /admin/logout
                 target:         /admin/login
             anonymous:          true
-
-        login:
-            pattern:  ^/auth$
-            stateless: true
-            anonymous: true
-            form_login:
-                check_path: auth_check
-                require_previous_session: false
-                username_parameter: username
-                password_parameter: password
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
         api_mutable:
             lexik_jwt: ~

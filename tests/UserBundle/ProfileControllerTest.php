@@ -68,49 +68,49 @@ class ProfileControllerTest extends TestCase
 
         $before = [
             'id' => $temp->getId(),
-            'level' => $temp->getLevel(),
             'gender' => $temp->getGender(),
             'firstName' => $temp->getFirstName(),
             'lastName' => $temp->getFirstName(),
-            'profileVisibleToThePublic' => $temp->getProfileVisibleToThePublic(),
             'dateOfBirth' => $temp->getDateOfBirth(),
             'email' => $temp->getEmail(),
+//            'descriptionn' => $temp->getDescription(),
+//            'level' => $temp->getLevel(),
+//            'profileVisibleToThePublic' => $temp->getProfileVisibleToThePublic(),
         ];
 
         $new = array_flip(array_keys($before));
         $new['id'] = $before['id'];
 
         do {
-            $new['description'] = $faker->sentence;
-        } while ($data['description'] === $new['description']);
-
-        do {
-            $new['info'] = implode("\n", $faker->sentences(6));
-        } while ($data['info'] === $new['info']);
-
-        do {
-            $new['gender'] = rand(0, 1) ? 'male' : 'female';
+            $new['gender'] = rand(0, 1) ? User::GENDER_MALE : User::GENDER_FEMALE;
         } while ($data['gender'] === $new['gender']);
 
         do {
-            $new['firstName'] = $new['gender'] === 'male' ? $faker->firstNameMale : $faker->firstNameFemale;
+            $new['firstName'] = $new['gender'] === User::GENDER_MALE ? $faker->firstNameMale : $faker->firstNameFemale;
         } while ($data['firstName'] === $new['firstName']);
 
         do {
-            $new['lastName'] = $new['gender'] === 'male' ? $faker->lastNameMale : $faker->lastNameFemale;
+            $new['lastName'] = $new['gender'] === User::GENDER_MALE ? $faker->lastNameMale : $faker->lastNameFemale;
         } while ($data['lastName'] === $new['lastName']);
-
-        do {
-            $new['level'] = rand(1, 100);
-        } while ($data['level'] === $new['level']);
 
         do {
             $new['dateOfBirth'] = $faker->dateTimeBetween('-40 years', '-18 years')->format('Y-m-d');
         } while ($data['dateOfBirth'] === $new['dateOfBirth']);
 
-        do {
-            $new['profileVisibleToThePublic'] = rand(0, 1) > 0;
-        } while ($data['profileVisibleToThePublic'] === $new['profileVisibleToThePublic']);
+//        do {
+//            $new['level'] = rand(1, 100);
+//        } while ($data['level'] === $new['level']);
+//
+//        do {
+//            $new['profileVisibleToThePublic'] = rand(0, 1) > 0;
+//        } while ($data['profileVisibleToThePublic'] === $new['profileVisibleToThePublic']);
+//        do {
+//            $new['description'] = $faker->sentence;
+//        } while ($data['description'] === $new['description']);
+//
+//        do {
+//            $new['info'] = implode("\n", $faker->sentences(6));
+//        } while ($data['info'] === $new['info']);
 
         setlocale(LC_ALL, "pl_PL.utf8");
         $first = mb_convert_case(iconv('UTF-8', 'ASCII//TRANSLIT', $new['firstName']), MB_CASE_LOWER);
