@@ -3,7 +3,7 @@
 namespace Tests\AuthBundle;
 
 use Tests\TestCase;
-use UserBundle\Entity\User;
+use Application\Sonata\UserBundle\Entity\User;
 
 /**
  * @group user
