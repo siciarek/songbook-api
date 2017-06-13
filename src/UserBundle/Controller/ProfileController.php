@@ -6,7 +6,6 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
-use Application\Sonata\UserBundle\Entity\User;
 
 /**
  * @RouteResource("Profile", pluralize=false)
@@ -20,18 +19,18 @@ class ProfileController extends FOSRestController implements ClassResourceInterf
 
     public function postAction(Request $request)
     {
+        $user = $this->getUser();
+
         $new = $this
             ->get('jms_serializer')
-            ->deserialize($request->getContent(), User::class, 'json');
+            ->deserialize($request->getContent(), get_class($user), 'json');
 
-        $user = $this->getUser();
         $user->setUsername($new->getUsername());
         $user->setFirstName($new->getFirstName());
         $user->setLastName($new->getLastName());
         $user->setDateOfBirth($new->getDateOfBirth());
         $user->setEmail($new->getEmail());
         $user->setGender($new->getGender());
-
         $user->setLevel($new->getLevel());
         $user->setInfo($new->getInfo());
         $user->setDescription($new->getDescription());
