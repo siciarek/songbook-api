@@ -3,13 +3,13 @@ jms_serializer:
         directories:
             fos_user:
                 namespace_prefix: FOS\UserBundle\Model
-                path: '%kernel.root_dir%/serializer/FOS/UserBundle/Model'
+                path: '%kernel.root_dir%/serializer'
             sonata_user:
                 namespace_prefix: Sonata\UserBundle\Model
-                path: '%kernel.root_dir%/serializer/Sonata/UserBundle/Model'
-            app_user:
+                path: '%kernel.root_dir%/serializer'
+            app_sonata_user:
                 namespace_prefix: Application\Sonata\UserBundle\Entity
-                path: '%kernel.root_dir%/serializer/Application/Sonata/UserBundle/Entity'
+                path: '%kernel.root_dir%/serializer'
             app:
                 namespace_prefix: AppBundle\Entity
-                path: '%kernel.root_dir%/serializer/AppBundle/Entity'
+                path: '%kernel.root_dir%/serializer'

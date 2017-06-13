@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7262771a16caf93a672bbbaedd1c4d6c",
-    "content-hash": "9badda4c98e4939a7021d9a426534c63",
+    "hash": "ce8f5b1f052853a19723acdd58d03ec9",
+    "content-hash": "668d90dd8263415a1f9d7075170ea4e1",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -3549,12 +3549,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataUserBundle.git",
-                "reference": "1b01310379f0555f7b3a959135b3151ebab2afca"
+                "reference": "30347ab6bfd35b2566a12827ff2b4d20b294c305"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/1b01310379f0555f7b3a959135b3151ebab2afca",
-                "reference": "1b01310379f0555f7b3a959135b3151ebab2afca",
+                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/30347ab6bfd35b2566a12827ff2b4d20b294c305",
+                "reference": "30347ab6bfd35b2566a12827ff2b4d20b294c305",
                 "shasum": ""
             },
             "require": {
@@ -3637,7 +3637,7 @@
                 "sonata",
                 "user"
             ],
-            "time": "2017-06-12 06:49:28"
+            "time": "2017-06-13 11:19:28"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5577,16 +5577,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.2.1",
+            "version": "6.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "16999a1e9a8a25d68f0ab8cc8ab818b043ad5374"
+                "reference": "f2786490399836d2a544a34785c4a8d3ab32cf0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/16999a1e9a8a25d68f0ab8cc8ab818b043ad5374",
-                "reference": "16999a1e9a8a25d68f0ab8cc8ab818b043ad5374",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/f2786490399836d2a544a34785c4a8d3ab32cf0e",
+                "reference": "f2786490399836d2a544a34785c4a8d3ab32cf0e",
                 "shasum": ""
             },
             "require": {
@@ -5657,7 +5657,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-06-02 12:24:37"
+            "time": "2017-06-13 14:07:07"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -6671,16 +6671,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "3.4.x-dev",
+            "version": "v3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "5a6688a6e86e47f9daa3243b5e4c68708cc3ea0a"
+                "reference": "acae7416018ebe5a7a2d79b4221203b2b8aca5d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/5a6688a6e86e47f9daa3243b5e4c68708cc3ea0a",
-                "reference": "5a6688a6e86e47f9daa3243b5e4c68708cc3ea0a",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/acae7416018ebe5a7a2d79b4221203b2b8aca5d3",
+                "reference": "acae7416018ebe5a7a2d79b4221203b2b8aca5d3",
                 "shasum": ""
             },
             "require": {
@@ -6699,7 +6699,7 @@
             "type": "symfony-bridge",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.4-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -6729,7 +6729,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2017-06-12 16:03:21"
+            "time": "2017-06-01 14:45:22"
         },
         {
             "name": "theseer/tokenizer",
@@ -6877,8 +6877,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "sonata-project/user-bundle": 20,
-        "symfony/phpunit-bridge": 20
+        "sonata-project/user-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
