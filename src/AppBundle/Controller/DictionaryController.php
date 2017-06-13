@@ -26,15 +26,15 @@ class DictionaryController extends FOSRestController implements ClassResourceInt
             'gender' => [
                 [
                     'name' => 'Unknown',
-                    'value' => 'unknown',
+                    'value' => 'u',
                 ],
                 [
                     'name' => 'Female',
-                    'value' => 'female',
+                    'value' => 'f',
                 ],
                 [
                     'name' => 'Male',
-                    'value' => 'male',
+                    'value' => 'm',
                 ],
             ],
         ];

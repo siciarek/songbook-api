@@ -29,18 +29,3 @@ services:
                 icon: '<i class="fa fa-star-o"></i>'
                 group: Genre
                 label_catalogue: messages
-
-    admin.user:
-        class: UserBundle\Admin\UserAdmin
-        arguments:
-            - ~
-            - UserBundle\Entity\User
-            - ~
-        tags:
-            -
-                name: sonata.admin
-                manager_type: orm
-                label: Users
-                icon: '<i class="fa fa-user"></i>'
-                group: User management
-                label_catalogue: messages

@@ -40,6 +40,7 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "sonata-project/admin-bundle": "^3.1",
         "sonata-project/doctrine-orm-admin-bundle": "^3.1",
+        "sonata-project/user-bundle": "dev-master",
         "symfony/monolog-bundle": "^3.0.2",
         "symfony/polyfill-apcu": "^1.0",
         "symfony/swiftmailer-bundle": "^2.3.10",
@@ -47,7 +48,7 @@
         "twig/twig": "1.30.0"
     },
     "require-dev": {
-        "nelmio/api-doc-bundle": "dev-master",
+        "nelmio/api-doc-bundle": "^2.4",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "phpunit/phpunit": "^6.2",
         "raulfraile/ladybug-bundle": "^1.0",

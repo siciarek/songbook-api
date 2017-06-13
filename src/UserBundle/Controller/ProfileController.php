@@ -6,7 +6,7 @@ use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
-use UserBundle\Entity\User;
+use Application\Sonata\UserBundle\Entity\User;
 
 /**
  * @RouteResource("Profile", pluralize=false)

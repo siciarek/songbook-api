@@ -5,7 +5,7 @@ User:
         firstname: Użytkownik
         lastname: Systemowy
         dob: null
-        gender: unknown
+        gender: u
         password: d0815cbf4a08ab9c9a0024ded959bd65
         email: siciarek@hotmail.com
         groups: []
@@ -15,7 +15,7 @@ User:
         firstname: Jacek
         lastname: Siciarek
         dob: '1966-10-21'
-        gender: male
+        gender: m
         password: pass
         email: siciarek@gmail.com
         groups: [Superadmins]
@@ -25,7 +25,7 @@ User:
         firstname: Czesław
         lastname: Olak
         dob: '1985-04-11'
-        gender: male
+        gender: m
         password: pass
         email: colak@gmail.com
         groups: [Admins]
@@ -35,7 +35,7 @@ User:
         firstname: Marianna
         lastname: Olak
         dob: '1989-11-05'
-        gender: female
+        gender: f
         password: pass
         email: molak@gmail.com
         groups: [Users]
