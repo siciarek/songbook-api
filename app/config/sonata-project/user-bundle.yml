@@ -1,8 +1,9 @@
 parameters:
+    sonata.user.admin.user.class: Application\Sonata\UserBundle\Admin\UserAdmin
     twig.form.resources:
         - SonataUserBundle:Form:form_admin_fields.html.twig
 
 sonata_user:
     class:
-        user:               Application\Sonata\UserBundle\Entity\User
-        group:              Application\Sonata\UserBundle\Entity\Group
+        user: Application\Sonata\UserBundle\Entity\User
+        group: Application\Sonata\UserBundle\Entity\Group
