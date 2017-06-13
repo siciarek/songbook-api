@@ -10,6 +10,11 @@
             <generator strategy="AUTO" />
         </id>
 
+        <field name="level" column="level" type="integer"/>
+        <field name="description" column="description" type="string" nullable="true"/>
+        <field name="info" column="info" type="text" nullable="true"/>
+        <field name="profileVisibleToThePublic" column="profile_visible_to_the_public" type="boolean"/>
+
     </entity>
 
 </doctrine-mapping>

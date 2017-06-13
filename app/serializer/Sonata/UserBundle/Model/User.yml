@@ -1,24 +1,8 @@
 Sonata\UserBundle\Model\User:
     exclusion_policy: all
-    accessor_order: custom
-    custom_accessor_order:
-        - id
-        - username
-        - email
-        - gender
-        - firstname
-        - lastname
-        - dateOfBirth
-        - description
-        - info
-        - level
-        - profileVisibleToThePublic
-        - roles
     properties:
         gender:
             type: string
-            expose: true
-        id:
             expose: true
         firstname:
             type: string
@@ -28,14 +12,7 @@ Sonata\UserBundle\Model\User:
             type: string
             expose: true
             serialized_name: lastName
-#        level:
-#            expose: true
-#        profileVisibleToThePublic:
-#            expose: true
-#            serialized_name: profileVisibleToThePublic
         dateOfBirth:
             expose: true
             serialized_name: dateOfBirth
             type: DateTime<'Y-m-d'>
-        description:
-            expose: true

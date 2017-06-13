@@ -1,12 +1,15 @@
 jms_serializer:
     metadata:
         directories:
-            fosuser:
+            fos_user:
                 namespace_prefix: FOS\UserBundle\Model
                 path: '%kernel.root_dir%/serializer/FOS/UserBundle/Model'
-            user:
+            sonata_user:
                 namespace_prefix: Sonata\UserBundle\Model
                 path: '%kernel.root_dir%/serializer/Sonata/UserBundle/Model'
+            app_user:
+                namespace_prefix: Application\Sonata\UserBundle\Entity
+                path: '%kernel.root_dir%/serializer/Application/Sonata/UserBundle/Entity'
             app:
                 namespace_prefix: AppBundle\Entity
                 path: '%kernel.root_dir%/serializer/AppBundle/Entity'

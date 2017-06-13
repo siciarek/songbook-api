@@ -44,7 +44,7 @@
             <arg line="${console} doctrine:generate:entities AppBundle --no-backup"/>
         </exec>
         <exec executable="${php}">
-            <arg line="${console} doctrine:generate:entities UserBundle --no-backup"/>
+            <arg line="${console} doctrine:generate:entities ApplicationSonataUserBundle --no-backup"/>
         </exec>
     </target>
 
@@ -59,6 +59,8 @@
             <arg line="${console} doctrine:fixtures:load --no-interaction --verbose"/>
         </exec>
     </target>
+
+    <target name="dbx" depends="db, fix" description="Reset i wprowadzenie danych domyślnych do bazy"/>
 
     <target name="cc" description="Czyszczenie katalogu cache">
         <delete includeemptydirs="true" verbose="true" quiet="true">

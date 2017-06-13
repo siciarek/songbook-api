@@ -31,6 +31,26 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var integer
+     */
+    private $level = 0;
+
+    /**
+     * @var string
+     */
+    private $description;
+
+    /**
+     * @var string
+     */
+    private $info;
+
+    /**
+     * @var boolean
+     */
+    private $profileVisibleToThePublic = true;
+
+    /**
      * Get id
      *
      * @return int $id
@@ -38,5 +58,101 @@ class User extends BaseUser
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     *
+     * @return User
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return User
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set info
+     *
+     * @param string $info
+     *
+     * @return User
+     */
+    public function setInfo($info)
+    {
+        $this->info = $info;
+
+        return $this;
+    }
+
+    /**
+     * Get info
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        return $this->info;
+    }
+
+    /**
+     * Set profileVisibleToThePublic
+     *
+     * @param boolean $profileVisibleToThePublic
+     *
+     * @return User
+     */
+    public function setProfileVisibleToThePublic($profileVisibleToThePublic)
+    {
+        $this->profileVisibleToThePublic = $profileVisibleToThePublic;
+
+        return $this;
+    }
+
+    /**
+     * Get profileVisibleToThePublic
+     *
+     * @return boolean
+     */
+    public function getProfileVisibleToThePublic()
+    {
+        return $this->profileVisibleToThePublic;
     }
 }

@@ -73,9 +73,9 @@ class ProfileControllerTest extends TestCase
             'lastName' => $temp->getFirstName(),
             'dateOfBirth' => $temp->getDateOfBirth(),
             'email' => $temp->getEmail(),
-//            'descriptionn' => $temp->getDescription(),
-//            'level' => $temp->getLevel(),
-//            'profileVisibleToThePublic' => $temp->getProfileVisibleToThePublic(),
+            'description' => $temp->getDescription(),
+            'level' => $temp->getLevel(),
+            'profileVisibleToThePublic' => $temp->getProfileVisibleToThePublic(),
         ];
 
         $new = array_flip(array_keys($before));
@@ -97,20 +97,21 @@ class ProfileControllerTest extends TestCase
             $new['dateOfBirth'] = $faker->dateTimeBetween('-40 years', '-18 years')->format('Y-m-d');
         } while ($data['dateOfBirth'] === $new['dateOfBirth']);
 
-//        do {
-//            $new['level'] = rand(1, 100);
-//        } while ($data['level'] === $new['level']);
-//
-//        do {
-//            $new['profileVisibleToThePublic'] = rand(0, 1) > 0;
-//        } while ($data['profileVisibleToThePublic'] === $new['profileVisibleToThePublic']);
-//        do {
-//            $new['description'] = $faker->sentence;
-//        } while ($data['description'] === $new['description']);
-//
-//        do {
-//            $new['info'] = implode("\n", $faker->sentences(6));
-//        } while ($data['info'] === $new['info']);
+        do {
+            $new['level'] = rand(1, 100);
+        } while ($data['level'] === $new['level']);
+
+        do {
+            $new['description'] = $faker->sentence;
+        } while ($data['description'] === $new['description']);
+
+        do {
+            $new['info'] = implode("\n", $faker->sentences(6));
+        } while ($data['info'] === $new['info']);
+
+        do {
+            $new['profileVisibleToThePublic'] = rand(0, 1) > 0;
+        } while ($data['profileVisibleToThePublic'] === $new['profileVisibleToThePublic']);
 
         setlocale(LC_ALL, "pl_PL.utf8");
         $first = mb_convert_case(iconv('UTF-8', 'ASCII//TRANSLIT', $new['firstName']), MB_CASE_LOWER);
