@@ -13,6 +13,10 @@ class DefaultController extends Controller
      */
     public function resetAction(Request $request)
     {
+        if($this->get('kernel')->getEnvironment() === 'prod') {
+            throw $this->createNotFoundException();
+        }
+
         $projectDir = realpath(implode(DIRECTORY_SEPARATOR, [
             $this->get('kernel')->getRootDir(),
             '..',
