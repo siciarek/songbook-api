@@ -21,7 +21,9 @@ class ArtistController extends RestController implements ClassResourceInterface
             ->getDoctrine()
             ->getManager()
             ->getRepository(Artist::class)
-            ->createQueryBuilder('o');
+            ->createQueryBuilder('o')
+            ->addOrderBy('o.sort', 'ASC')
+        ;
 
         $paginator = $this->get('knp_paginator')->paginate(
             $builder,
