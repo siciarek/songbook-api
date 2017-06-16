@@ -51,23 +51,6 @@ class ArtistController extends RestController implements ClassResourceInterface
      */
     public function putAction(Artist $item, Request $request)
     {
-        $targetId = (int) $request->get('swap', 0);
-
-        if ($targetId > 0 and $item->getId() !== $targetId) {
-            $em = $this->getDoctrine()->getManager();
-            $target = $em->getRepository(get_class($item))->find($targetId);
-
-            $from = $item->getSort();
-            $to = is_a($target, get_class($item)) ? $target->getSort() : 0;
-
-            if ($to > 0) {
-                $item->setSort($to);
-                $target->setSort($from);
-
-                $em->persist($item);
-                $em->persist($target);
-                $em->flush();
-            }
-        }
+        $this->swapObjects($item, $request->get('swap', 0));
     }
 }
