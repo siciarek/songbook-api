@@ -2,20 +2,20 @@
 
 namespace Tests\AuthBundle;
 
-use AppBundle\Entity\Artist;
+use AppBundle\Entity\Author;
 use Tests\TestCase;
 
 /**
- * @group artist
+ * @group author
  */
-class ArtistControllerTest extends TestCase
+class AuthorControllerTest extends TestCase
 {
     public function testPutAction()
     {
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $router = $this->getContainer()->get('router');
 
-        $repo = $em->getRepository(Artist::class);
+        $repo = $em->getRepository(Author::class);
         $set = $repo->createQueryBuilder('o')
             ->setMaxResults(10)
             ->getQuery()
@@ -43,7 +43,7 @@ class ArtistControllerTest extends TestCase
 
         # Swap
 
-        $url = $router->generate('put_artist', array_combine(['item', 'swap'], $ids), $router::ABSOLUTE_URL);
+        $url = $router->generate('put_author', array_combine(['item', 'swap'], $ids), $router::ABSOLUTE_URL);
         list($resp, $info) = $this->getResponse('PUT', $url, [], $this->getAuthHeaders());
         $this->assertEquals(204, $info['http_code'], $resp);
 
@@ -64,7 +64,7 @@ class ArtistControllerTest extends TestCase
 
         # Revert swap
 
-        $url = $router->generate('put_artist', array_combine(['item', 'swap'], array_reverse($ids)), $router::ABSOLUTE_URL);
+        $url = $router->generate('put_author', array_combine(['item', 'swap'], array_reverse($ids)), $router::ABSOLUTE_URL);
         list($resp, $info) = $this->getResponse('PUT', $url, [], $this->getAuthHeaders());
         $this->assertEquals(204, $info['http_code'], $resp);
 
