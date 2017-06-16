@@ -42,6 +42,9 @@ class LoadSongData extends BasicFixture
         $audio = [];
         $videos = [];
 
+        $aux = 1;
+        $arx = 1;
+
         foreach ($data as $o) {
 
             if (!array_key_exists($o['genre'], $genres)) {
@@ -60,6 +63,7 @@ class LoadSongData extends BasicFixture
             $manager->persist($s);
             $manager->flush();
 
+
             foreach ($o['authors'] as $oa) {
                 if (!array_key_exists($oa['id'], $authors)) {
                     $a = new Author();
@@ -77,6 +81,7 @@ class LoadSongData extends BasicFixture
 //                        $a->setName($oa['description']);
                     }
                     $a->setInfo($oa['info']);
+                    $a->setSort($aux++);
 
                     $manager->persist($a);
                     $manager->flush();
@@ -105,6 +110,7 @@ class LoadSongData extends BasicFixture
                         $a->setName($oa['description']);
                     }
                     $a->setInfo($oa['info']);
+                    $a->setSort($arx++);
 
                     $manager->persist($a);
                     $manager->flush();
@@ -141,6 +147,7 @@ class LoadSongData extends BasicFixture
                                 $a->setName($oa['description']);
                             }
                             $a->setInfo($oa['info']);
+                            $a->setSort($arx++);
 
                             $manager->persist($a);
                             $manager->flush();
