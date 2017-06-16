@@ -41,8 +41,10 @@ class ArtistControllerTest extends TestCase
 
         $before = [$set[0]->getSort(), $set[1]->getSort()];
 
-        $url = $router->generate('put_artist', array_combine(['item', 'swap'], $ids), $router::ABSOLUTE_URL);
 
+        # Swap
+
+        $url = $router->generate('put_artist', array_combine(['item', 'swap'], $ids), $router::ABSOLUTE_URL);
         list($resp, $info) = $this->getResponse('PUT', $url, [], $this->getAuthHeaders());
         $this->assertEquals(204, $info['http_code'], $resp);
 
@@ -60,6 +62,25 @@ class ArtistControllerTest extends TestCase
 
         $this->assertNotEquals($before, $after);
         $this->assertEquals($before, array_reverse($after));
+
+        # Revert swap
+
+        $url = $router->generate('put_artist', array_combine(['item', 'swap'], array_reverse($ids)), $router::ABSOLUTE_URL);
+        list($resp, $info) = $this->getResponse('PUT', $url, [], $this->getAuthHeaders());
+        $this->assertEquals(204, $info['http_code'], $resp);
+
+        $set = $repo->createQueryBuilder('o')
+            ->andWhere('o.id IN (:ids)')
+            ->setParameters([
+                'ids' => $ids,
+            ])
+            ->orderBy('o.sort', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $after = [$set[0]->getSort(), $set[1]->getSort()];
+        $this->assertEquals($before, $after);
    }
 
     public function getAuthHeaders()
