@@ -53,7 +53,7 @@ security:
 
         api_private:
             lexik_jwt: ~
-            pattern: ^/user/profile$|^/user/dashboard$
+            pattern: ^/ping|^/user/profile$|^/user/dashboard$
             stateless: true
             methods:
                 - GET

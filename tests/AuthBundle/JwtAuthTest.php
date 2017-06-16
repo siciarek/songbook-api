@@ -32,16 +32,25 @@ class JwtAuthTest extends TestCase
 
     public static function securedPageDataProvider()
     {
-        return array_map(function ($e) {
-            array_unshift($e, 'get_dashboard');
-            return $e;
-        }, self::authDataProvider());
+        $ret = [];
+
+        foreach(['get_dashboard', 'get_profile', 'ping'] as $route) {
+            $temp = array_map(function ($e) use ($route) {
+                array_unshift($e, $route);
+                array_push($e, $route === 'ping' ? 204 : 200);
+                return $e;
+            }, self::authDataProvider());
+
+            $ret = array_merge($ret, $temp);
+        }
+
+        return $ret;
     }
 
     /**
      * @dataProvider securedPageDataProvider
      */
-    public function testSecuredPageAccess($securedPageRoute, $authRoute, $username, $password)
+    public function testSecuredPageAccess($securedPageRoute, $authRoute, $username, $password, $ret)
     {
         $authData = [
             'username' => $username,
@@ -69,7 +78,7 @@ class JwtAuthTest extends TestCase
             sprintf('Authorization: Bearer %s', $token),
         ];
         list($resp, $info) = $this->getResponse('GET', $securedPageUrl, null, $headers);
-        $this->assertEquals(200, $info['http_code']);
+        $this->assertEquals($ret, $info['http_code']);
 
         # Ivalid token:
         $token = str_replace('A', 'C', $data['token']);
