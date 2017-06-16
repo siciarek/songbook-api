@@ -53,7 +53,7 @@ class ArtistController extends RestController implements ClassResourceInterface
     {
         $targetId = (int) $request->get('swap', 0);
 
-        if ($targetId > 0) {
+        if ($targetId > 0 and $item->getId() !== $targetId) {
             $em = $this->getDoctrine()->getManager();
             $target = $em->getRepository(get_class($item))->find($targetId);
 
