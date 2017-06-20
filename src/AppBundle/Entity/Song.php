@@ -250,6 +250,7 @@ class Song
      */
     public function addAudio(\AppBundle\Entity\Audio $audio)
     {
+        $audio->setSong($this);
         $this->audio[] = $audio;
 
         return $this;
@@ -284,6 +285,7 @@ class Song
      */
     public function addVideo(\AppBundle\Entity\Video $video)
     {
+        $video->setSong($this);
         $this->videos[] = $video;
 
         return $this;

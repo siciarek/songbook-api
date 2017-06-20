@@ -47,6 +47,7 @@ class LoadSongData extends BasicFixture
 
         foreach ($data as $o) {
 
+
             if (!array_key_exists($o['genre'], $genres)) {
 
                 $g = $manager->getRepository(Genre::class)->find($o['genre']);
@@ -62,7 +63,6 @@ class LoadSongData extends BasicFixture
 
             $manager->persist($s);
             $manager->flush();
-
 
             foreach ($o['authors'] as $oa) {
                 if (!array_key_exists($oa['id'], $authors)) {

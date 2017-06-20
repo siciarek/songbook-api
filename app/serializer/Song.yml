@@ -1,8 +1,14 @@
 AppBundle\Entity\Song:
     exclusion_policy: all
+    accessor_order: custom
+    custom_accessor_order:
+        - id
+        - title
+        - description
+        - lyrics
+        - info
+        - genre
     properties:
-        prop:
-            expose: true
         id:
             expose: true
         title:
@@ -20,6 +26,8 @@ AppBundle\Entity\Song:
         videos:
             expose: true
             serialized_name: video
+        prop:
+            expose: true
         firstPublishedAt:
             expose: true
             serialized_name: firstPublishedAt

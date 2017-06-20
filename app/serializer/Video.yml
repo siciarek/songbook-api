@@ -1,0 +1,25 @@
+AppBundle\Entity\Video:
+    inclusion_policy: all
+    exclusion_policy: all
+    accessor_order: custom
+    custom_accessor_order:
+        - id
+        - path
+        - title
+        - description
+        - info
+    properties:
+        id:
+            expose: true
+        path:
+            expose: true
+        title:
+            expose: true
+        description:
+            expose: true
+        info:
+            expose: true
+        song:
+            expose: true
+        artists:
+            expose: true

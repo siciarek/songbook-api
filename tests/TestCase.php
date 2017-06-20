@@ -18,6 +18,28 @@ class TestCase extends KernelTestCase implements ContainerAwareInterface {
         $this->setContainer(static::$kernel->getContainer());
     }
 
+
+    public function getAuthHeaders()
+    {
+        $router = $this->getContainer()->get('router');
+        $authUrl = $router->generate('auth_check', [], $router::ABSOLUTE_URL);
+        $authData = [
+            'username' => 'colak',
+            'password' => 'pass',
+        ];
+        $headers = [
+            'Content-Type: application/x-www-form-urlencoded',
+        ];
+
+        list($resp, $info) = $this->getResponse('POST', $authUrl, http_build_query($authData), $headers);
+
+        $data = json_decode($resp, true);
+
+        return [
+            sprintf('Authorization: Bearer %s', $data['token']),
+        ];
+    }
+
     public function getResponse($method, $url, $data = [], $headers = null)
     {
         $method = strtoupper($method);
