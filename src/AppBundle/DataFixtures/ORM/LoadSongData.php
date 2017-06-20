@@ -44,6 +44,8 @@ class LoadSongData extends BasicFixture
 
         $aux = 1;
         $arx = 1;
+        $vx = 1;
+        $ax = 1;
 
         foreach ($data as $o) {
 
@@ -128,6 +130,7 @@ class LoadSongData extends BasicFixture
                     $v->setSource($i['source']);
                     $v->setPath($i['url']);
                     $v->setDescription($i['info']);
+                    $v->setSort($vx++);
 
                     foreach ($i['artists'] as $oa) {
                         if (!array_key_exists($oa['id'], $artists)) {
@@ -177,6 +180,7 @@ class LoadSongData extends BasicFixture
                         $v->setSource($i['source']);
                         $v->setPath($i['url']);
                         $v->setDescription($i['info']);
+                        $v->setSort($ax++);
 
                         foreach ($i['artists'] as $oa) {
                             if (!array_key_exists($oa['id'], $artists)) {

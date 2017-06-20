@@ -15,7 +15,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 /**
  * @RouteResource("Audio", pluralize=false)
  */
-class AudioController extends FOSRestController implements ClassResourceInterface
+class AudioController extends RestController
 {
     /**
      * @param Request $request
@@ -54,5 +54,15 @@ class AudioController extends FOSRestController implements ClassResourceInterfac
     public function getAction(Song $item)
     {
         return $item->getAudio();
+    }
+
+    /**
+     * Midifies data of the artist identified by id.
+     *
+     * @ParamConverter("item", class="AppBundle:Audio")
+     */
+    public function putAction(Audio $item, Request $request)
+    {
+        $this->swapObjects($item, $request->get('swap', 0));
     }
 }
