@@ -21,19 +21,7 @@ class Author {
 
     public function __toString()
     {
-        $string = '?';
-
-        $parts = array_filter([
-            $this->getFirstName(),
-            $this->getLastName(),
-            $this->getName(),
-        ]);
-
-        if(count($parts) > 0) {
-            $string = implode(' ', $parts);
-        }
-
-        return $string;
+        return $this->getDescription()?:'-';
     }
 
     /**

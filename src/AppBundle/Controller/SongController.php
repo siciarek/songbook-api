@@ -59,7 +59,7 @@ class SongController extends RestController
 
         $this->swapObjects($item, $request->get('swap', 0));
 
-        if($data !== null) {
+        if ($data !== null) {
 
             $fields = [
                 'genre' => function ($value) use ($item, $em) {
@@ -94,8 +94,7 @@ class SongController extends RestController
      *
      * @ParamConverter("item", class="AppBundle:Song")
      */
-    public
-    function deleteAction(Song $item)
+    public function deleteAction(Song $item)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($item);

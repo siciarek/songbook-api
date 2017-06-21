@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Admin\AbstractAdmin;
 abstract class Admin extends AbstractAdmin
 {
     protected $exportDateFormat = 'Y-m-d H:i';
-    protected $maxPerPage = 25;
+    protected $maxPerPage = 5;
     protected $maxPageLinks = 16;
     protected $supportsPreviewMode = false;
 

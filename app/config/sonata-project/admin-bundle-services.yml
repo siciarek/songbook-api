@@ -1,4 +1,79 @@
 services:
+    admin.audio:
+        class: AppBundle\Admin\AudioAdmin
+        arguments:
+            - ~
+            - AppBundle\Entity\Audio
+            - ~
+        tags:
+            -
+                name: sonata.admin
+                manager_type: orm
+                label: Audio
+                group: Media
+                icon: '<i class="fa fa-volume-up"></i>'
+                label_catalogue: messages
+
+    admin.video:
+        class: AppBundle\Admin\VideoAdmin
+        arguments:
+            - ~
+            - AppBundle\Entity\Video
+            - ~
+        tags:
+            -
+                name: sonata.admin
+                manager_type: orm
+                label: Video
+                group: Media
+                icon: '<i class="fa fa-volume-up"></i>'
+                label_catalogue: messages
+
+    admin.song:
+        class: AppBundle\Admin\SongAdmin
+        arguments:
+            - ~
+            - AppBundle\Entity\Song
+            - ~
+        tags:
+            -
+                name: sonata.admin
+                manager_type: orm
+                label: Songs
+                group: Songs
+                icon: '<i class="fa fa-star"></i>'
+                label_catalogue: messages
+
+    admin.author:
+        class: AppBundle\Admin\AuthorAdmin
+        arguments:
+            - ~
+            - AppBundle\Entity\Author
+            - ~
+        tags:
+            -
+                name: sonata.admin
+                manager_type: orm
+                label: Authors
+                group: Songs
+                icon: '<i class="fa fa-user"></i>'
+                label_catalogue: messages
+
+
+    admin.artist:
+        class: AppBundle\Admin\ArtistAdmin
+        arguments:
+            - ~
+            - AppBundle\Entity\Artist
+            - ~
+        tags:
+            -
+                name: sonata.admin
+                manager_type: orm
+                label: Artists
+                group: Songs
+                icon: '<i class="fa fa-user"></i>'
+                label_catalogue: messages
 
     admin.genre:
         class: AppBundle\Admin\GenreAdmin
@@ -11,7 +86,7 @@ services:
                 name: sonata.admin
                 manager_type: orm
                 label: Genres
-                group: Genre
+                group: Genres
                 icon: '<i class="fa fa-star-o"></i>'
                 label_catalogue: messages
 
@@ -27,5 +102,5 @@ services:
                 manager_type: orm
                 label: Categories
                 icon: '<i class="fa fa-star-o"></i>'
-                group: Genre
+                group: Genres
                 label_catalogue: messages
