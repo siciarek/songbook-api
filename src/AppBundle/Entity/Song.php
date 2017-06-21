@@ -15,7 +15,8 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 class Song
 {
 
-    use ORMBehaviors\Blameable\Blameable,
+    use ORMBehaviors\Sortable\Sortable,
+        ORMBehaviors\Blameable\Blameable,
         ORMBehaviors\Timestampable\Timestampable,
         ORMBehaviors\SoftDeletable\SoftDeletable;
 

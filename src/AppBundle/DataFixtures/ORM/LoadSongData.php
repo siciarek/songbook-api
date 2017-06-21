@@ -42,13 +42,13 @@ class LoadSongData extends BasicFixture
         $audio = [];
         $videos = [];
 
+        $sx = 1;
         $aux = 1;
         $arx = 1;
         $vx = 1;
         $ax = 1;
 
         foreach ($data as $o) {
-
 
             if (!array_key_exists($o['genre'], $genres)) {
 
@@ -62,6 +62,7 @@ class LoadSongData extends BasicFixture
             $s->setGenre($genre);
             $s->setTitle($o['title']);
             $s->setLyrics($o['lyrics']);
+            $s->setSort($sx++);
 
             $manager->persist($s);
             $manager->flush();

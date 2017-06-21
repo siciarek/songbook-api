@@ -10,77 +10,30 @@ use Tests\TestCase;
  */
 class ArtistControllerTest extends TestCase
 {
-    public function testPutAction()
+    public function testCgetAction()
     {
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $router = $this->getContainer()->get('router');
+        $url = $router->generate('cget_artist', [], $router::ABSOLUTE_URL);
+        $this->assertNotNull($url);
 
-        $repo = $em->getRepository(Artist::class);
-        $set = $repo->createQueryBuilder('o')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        list($resp, $info) = $this->getResponse('GET', $url);
+        $data = json_decode($resp, true);
 
-        $ids = [];
-        do {
-            $ids[] = $set[array_rand($set)]->getId();
-            $ids = array_unique($ids);
-        } while(count($ids) < 2);
+        $this->assertTrue(is_array($data), $resp);
 
-        $set = $repo->createQueryBuilder('o')
-            ->andWhere('o.id IN (:ids)')
-            ->setParameters([
-                'ids' => $ids,
-            ])
-            ->orderBy('o.sort', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-
-        $before = [$set[0]->getSort(), $set[1]->getSort()];
-
-
-        # Swap
-
-        $url = $router->generate('put_artist', array_combine(['item', 'swap'], $ids), $router::ABSOLUTE_URL);
-        list($resp, $info) = $this->getResponse('PUT', $url, [], $this->getAuthHeaders());
-        $this->assertEquals(204, $info['http_code'], $resp);
-
-        $set = $repo->createQueryBuilder('o')
-            ->andWhere('o.id IN (:ids)')
-            ->setParameters([
-                'ids' => $ids,
-            ])
-            ->orderBy('o.sort', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-
-        $after = [$set[0]->getSort(), $set[1]->getSort()];
-
-        $this->assertNotEquals($before, $after);
-        $this->assertEquals($before, array_reverse($after));
-
-        # Revert swap
-
-        $url = $router->generate('put_artist', array_combine(['item', 'swap'], array_reverse($ids)), $router::ABSOLUTE_URL);
-        list($resp, $info) = $this->getResponse('PUT', $url, [], $this->getAuthHeaders());
-        $this->assertEquals(204, $info['http_code'], $resp);
-
-        $set = $repo->createQueryBuilder('o')
-            ->andWhere('o.id IN (:ids)')
-            ->setParameters([
-                'ids' => $ids,
-            ])
-            ->orderBy('o.sort', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-
-        $after = [$set[0]->getSort(), $set[1]->getSort()];
-        $this->assertEquals($before, $after);
-   }
+        if (count($data) > 0) {
+            foreach ($data as $rec) {
+                $this->assertTrue(is_array($rec), $rec);
+                foreach (['id', 'name', 'firstName', 'lastName'] as $key) {
+                    $this->assertArrayHasKey($key, $rec);
+                    if (in_array($key, ['songs', 'videos', 'audios'])) {
+                        $this->assertTrue(is_array($rec[$key]), $key);
+                    }
+                }
+            }
+        }
+        return $data;
+    }
 
     public function getAuthHeaders()
     {
