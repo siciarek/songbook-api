@@ -31,8 +31,8 @@ abstract class RestController extends FOSRestController
                 $em->persist($target);
                 $em->flush();
             }
-
-            return $item;
         }
+
+        return $item;
     }
 }

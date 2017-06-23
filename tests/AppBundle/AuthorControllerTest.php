@@ -2,7 +2,6 @@
 
 namespace Tests\AuthBundle;
 
-use AppBundle\Entity\Author;
 use Tests\TestCase;
 
 /**
@@ -10,101 +9,29 @@ use Tests\TestCase;
  */
 class AuthorControllerTest extends TestCase
 {
-    public function testPutAction()
-    {
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $router = $this->getContainer()->get('router');
-
-        $repo = $em->getRepository(Author::class);
-        $set = $repo->createQueryBuilder('o')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-
-        $ids = [];
-        do {
-            $ids[] = $set[array_rand($set)]->getId();
-            $ids = array_unique($ids);
-        } while(count($ids) < 2);
-
-        $set = $repo->createQueryBuilder('o')
-            ->andWhere('o.id IN (:ids)')
-            ->setParameters([
-                'ids' => $ids,
-            ])
-            ->orderBy('o.sort', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-
-        $before = [$set[0]->getSort(), $set[1]->getSort()];
-
-
-        # Swap
-
-        $url = $router->generate('put_author', array_combine(['item', 'swap'], $ids), $router::ABSOLUTE_URL);
-        list($resp, $info) = $this->getResponse('PUT', $url, [], $this->getAuthHeaders());
-        $this->assertEquals(204, $info['http_code'], $resp);
-
-        $set = $repo->createQueryBuilder('o')
-            ->andWhere('o.id IN (:ids)')
-            ->setParameters([
-                'ids' => $ids,
-            ])
-            ->orderBy('o.sort', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-
-        $after = [$set[0]->getSort(), $set[1]->getSort()];
-
-        $this->assertNotEquals($before, $after);
-        $this->assertEquals($before, array_reverse($after));
-
-        # Revert swap
-
-        $url = $router->generate('put_author', array_combine(['item', 'swap'], array_reverse($ids)), $router::ABSOLUTE_URL);
-        list($resp, $info) = $this->getResponse('PUT', $url, [], $this->getAuthHeaders());
-        $this->assertEquals(204, $info['http_code'], $resp);
-
-        $set = $repo->createQueryBuilder('o')
-            ->andWhere('o.id IN (:ids)')
-            ->setParameters([
-                'ids' => $ids,
-            ])
-            ->orderBy('o.sort', 'ASC')
-            ->getQuery()
-            ->getResult()
-        ;
-
-        $after = [$set[0]->getSort(), $set[1]->getSort()];
-        $this->assertEquals($before, $after);
-   }
-
-    public function getAuthHeaders()
+    public function testCgetAction($route = 'cget_author')
     {
         $router = $this->getContainer()->get('router');
-        $authUrl = $router->generate('auth_check', [], $router::ABSOLUTE_URL);
-        $authData = [
-            'username' => 'colak',
-            'password' => 'pass',
-        ];
-        $headers = [
-            'Content-Type: application/x-www-form-urlencoded',
-        ];
+        $url = $router->generate($route, [], $router::ABSOLUTE_URL);
+        $this->assertNotNull($url);
 
-        list($resp, $info) = $this->getResponse('POST', $authUrl, http_build_query($authData), $headers);
+        $client = self::createClient();
+        $client->request('GET', $url);
+        $data = json_decode($client->getResponse()->getContent(), true);
 
-        $data = json_decode($resp, true);
+        $this->assertTrue(is_array($data));
 
-        return [
-            sprintf('Authorization: Bearer %s', $data['token']),
-        ];
-    }
-
-    public function setUp()
-    {
-        parent::setUp();
+        if (count($data) > 0) {
+            foreach ($data as $rec) {
+                $this->assertTrue(is_array($rec), $rec);
+                foreach (['id', 'name', 'firstName', 'lastName'] as $key) {
+                    $this->assertArrayHasKey($key, $rec);
+                    if (in_array($key, ['songs', 'videos', 'audios'])) {
+                        $this->assertTrue(is_array($rec[$key]), $key);
+                    }
+                }
+            }
+        }
+        return $data;
     }
 }

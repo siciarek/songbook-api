@@ -2,22 +2,49 @@
 
 namespace Tests;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase as KernelTestCase;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BasicTestCase;
+use Symfony\Component\DependencyInjection\Container;
 
-class TestCase extends KernelTestCase implements ContainerAwareInterface {
+class TestCase extends BasicTestCase {
 
     /**
-     * @var ContainerInterface $container
+     * @return Container
      */
-    protected $container;
-
-    public function setUp() {
-        self::bootKernel();
-        $this->setContainer(static::$kernel->getContainer());
+    public function getContainer() {
+        return self::createClient()->getContainer();
     }
 
+    /**
+     * Create a client with a default Authorization header.
+     *
+     * @param string $username
+     * @param string $password
+     *
+     * @return \Symfony\Bundle\FrameworkBundle\Client
+     */
+    protected function createAuthenticatedClient($username = 'colak', $password = 'pass')
+    {
+        $router = $this->getContainer()->get('router');
+        $authUrl = $router->generate('auth_check', [], $router::ABSOLUTE_URL);
+
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            $authUrl,
+            [
+                'username' => $username,
+                'password' => $password,
+            ]
+        );
+
+        $data = json_decode($client->getResponse()->getContent(), true);
+
+        $client = static::createClient();
+        $client->setServerParameter('HTTP_Authorization', sprintf('Bearer %s', $data['token']));
+
+        return $client;
+    }
 
     public function getAuthHeaders()
     {
@@ -75,14 +102,5 @@ class TestCase extends KernelTestCase implements ContainerAwareInterface {
         curl_close($ch);
 
         return [$resp, $info];
-    }
-
-    public function getContainer() {
-        return $this->container;
-    }
-
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
     }
 }
