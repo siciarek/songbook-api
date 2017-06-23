@@ -1,3 +1,4 @@
+/.web-server-pid
 /phpunit
 /phpunit.phar
 /properties.conf
