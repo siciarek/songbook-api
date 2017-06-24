@@ -62,7 +62,6 @@ class LoadSongData extends BasicFixture
             $s->setGenre($genre);
             $s->setTitle($o['title']);
             $s->setLyrics($o['lyrics']);
-            $s->setSort($sx++);
 
             $manager->persist($s);
             $manager->flush();
@@ -84,7 +83,6 @@ class LoadSongData extends BasicFixture
 //                        $a->setName($oa['description']);
                     }
                     $a->setInfo($oa['info']);
-                    $a->setSort($aux++);
 
                     $manager->persist($a);
                     $manager->flush();
@@ -113,7 +111,6 @@ class LoadSongData extends BasicFixture
                         $a->setName($oa['description']);
                     }
                     $a->setInfo($oa['info']);
-                    $a->setSort($arx++);
 
                     $manager->persist($a);
                     $manager->flush();
@@ -131,7 +128,6 @@ class LoadSongData extends BasicFixture
                     $v->setSource($i['source']);
                     $v->setPath($i['url']);
                     $v->setDescription($i['info']);
-                    $v->setSort($vx++);
 
                     foreach ($i['artists'] as $oa) {
                         if (!array_key_exists($oa['id'], $artists)) {
@@ -151,7 +147,6 @@ class LoadSongData extends BasicFixture
                                 $a->setName($oa['description']);
                             }
                             $a->setInfo($oa['info']);
-                            $a->setSort($arx++);
 
                             $manager->persist($a);
                             $manager->flush();
@@ -181,7 +176,6 @@ class LoadSongData extends BasicFixture
                         $v->setSource($i['source']);
                         $v->setPath($i['url']);
                         $v->setDescription($i['info']);
-                        $v->setSort($ax++);
 
                         foreach ($i['artists'] as $oa) {
                             if (!array_key_exists($oa['id'], $artists)) {

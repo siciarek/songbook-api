@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 
 /**
- * AppBundle\Entity\Country
+ * AppBundle\Entity\Artist
  *
  * @ORM\Entity
  * @ORM\Table(name="artist")

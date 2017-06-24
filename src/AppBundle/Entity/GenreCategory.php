@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AppBundle\Entity\Country
+ * AppBundle\Entity\GenreCategory
  *
  * @ORM\Entity
  * @ORM\Table(name="genre_category")

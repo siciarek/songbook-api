@@ -5,14 +5,38 @@ namespace Tests;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase as KernelTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BasicTestCase;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class TestCase extends BasicTestCase {
+
+
+    /**
+     * @var Container
+     */
+    protected $container;
 
     /**
      * @return Container
      */
     public function getContainer() {
-        return self::createClient()->getContainer();
+
+        if(false === $this->container instanceof Container) {
+            $this->container = self::createClient()->getContainer();
+        }
+        return $this->container;
+    }
+
+
+    /**
+     * @param $username
+     */
+    public function logInUser($username)
+    {
+        $user = $this->getContainer()->get('fos_user.user_manager')->findOneBy(['username' => $username]);
+        $token = new UsernamePasswordToken($user, $user->getPassword(), 'main', $user->getRoles());
+        $this->getContainer()
+            ->get('security.token_storage')
+            ->setToken($token);
     }
 
     /**
