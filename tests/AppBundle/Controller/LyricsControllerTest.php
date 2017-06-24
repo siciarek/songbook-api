@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\AuthBundle;
+namespace Tests\AppBundle\Controller;
 
 use Tests\TestCase;
 

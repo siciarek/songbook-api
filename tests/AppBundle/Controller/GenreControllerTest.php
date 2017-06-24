@@ -1,49 +1,30 @@
 <?php
 
-namespace Tests\AuthBundle;
+namespace Tests\AppBundle\Controller;
 
-use AppBundle\Entity\Song;
+use AppBundle\Entity\Genre;
 use Tests\TestCase;
 
 /**
- * @group song
+ * @group genre
  */
-class SongControllerTest extends TestCase
+class GenreControllerTest extends TestCase
 {
-    const DUMMY_SONG_TITLE = 'Dummy Song';
+    const DUMMY_GENRE_NAME = 'Dummy Genre';
 
     public static function postActionDataProvider()
     {
-        $lyrics =<<<LYRICS
-Była sobie mała caca.
-Miała lalkę i pajaca.
-Ten pajacyk miał sprężynkę
-A laleczka smutną minkę.
-LYRICS;
-
         return [
             [
-                'post_song',
+                'post_genre',
                 [
-                    'genre' => [
-                        'id' => 691,
-                        'name' => 'Rock',
-                        'description' => null,
-                        'info' => null,
-                        'category' => [
-                            'id' => 18,
-                            'name' => 'Rock',
-                        ]
+                    'category' => [
+                        'id' => 1,
+                        'name' => 'African'
                     ],
-                    'title' => self::DUMMY_SONG_TITLE,
-                    'lyrics' => $lyrics,
-                    'description' => self::DUMMY_SONG_TITLE . ' description.',
-                    'info' => self::DUMMY_SONG_TITLE . ' info.',
-                    'audioCount' => 0,
-                    'videoCount' => 0,
-                    'audio' => [],
-                    'video' => null,
-                    'firstPublishedAt' => '1966-10-21',
+                    'name' => self::DUMMY_GENRE_NAME,
+                    'description' => self::DUMMY_GENRE_NAME . ' description.',
+                    'info' => self::DUMMY_GENRE_NAME . ' info.'
                 ]
             ]
         ];
@@ -61,12 +42,13 @@ LYRICS;
         list($resp, $info) = $this->getResponse('post', $url, json_encode($data), $authHeaders);
         $rdata = json_decode($resp, true);
 
+        $this->assertNotNull($rdata, $resp);
         $this->assertArrayHasKey('id', $rdata, $resp);
         $this->assertNotNull($rdata['id'], $resp);
         $this->assertGreaterThan(0, $rdata['id'], $resp);
 
         unset($rdata['id']);
-        $this->assertEquals($data, $rdata);
+        $this->assertEquals($data, $rdata, $resp);
     }
 
     public function getAuthHeaders() {
@@ -94,10 +76,10 @@ LYRICS;
         parent::setUp();
 
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $qb = $em->getRepository(Song::class)->createQueryBuilder('o')
+        $qb = $em->getRepository(Genre::class)->createQueryBuilder('o')
             ->delete()
-            ->andWhere('o.title = :title')
-            ->setParameters(['title' => self::DUMMY_SONG_TITLE])
+            ->andWhere('o.name = :name')
+            ->setParameters(['name' => self::DUMMY_GENRE_NAME])
         ;
         $qb->getQuery()->execute();
     }

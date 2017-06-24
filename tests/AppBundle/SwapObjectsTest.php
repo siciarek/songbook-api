@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\AuthBundle;
+namespace Tests\AppBundle;
 
 use Tests\TestCase;
 use AppBundle\Entity as E;

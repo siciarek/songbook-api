@@ -12,6 +12,7 @@ class SortableSubscriber implements EventSubscriber
     {
         return [
             'prePersist',
+            'preRemove',
         ];
     }
 
@@ -19,17 +20,38 @@ class SortableSubscriber implements EventSubscriber
     {
         $entity = $args->getEntity();
 
-        if(in_array(Sortable::class, class_uses($entity))) {
+        if (in_array(Sortable::class, class_uses($entity))) {
 
-            $sort = 1 + (int) $args->getEntityManager()
-                ->getRepository(get_class($entity))
-                ->createQueryBuilder('o')
-                ->select('MAX(o.sort)')
-                ->getQuery()
-                ->getSingleScalarResult()
-            ;
+            $sort = 1 + (int)$args->getEntityManager()
+                    ->getRepository(get_class($entity))
+                    ->createQueryBuilder('o')
+                    ->select('MAX(o.sort)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
 
             $entity->setSort($sort);
+        }
+    }
+
+    public function preRemove(LifecycleEventArgs $args)
+    {
+        $entity = $args->getEntity();
+
+        if (in_array(Sortable::class, class_uses($entity))) {
+
+            $sort = $entity->getSort();
+
+            $items = $args->getEntityManager()
+                ->getRepository(get_class($entity))
+                ->createQueryBuilder('o')
+                ->andWhere('o.sort > :sort')
+                ->getQuery()
+                ->execute(['sort' => $sort]);
+
+            foreach($items as $item) {
+                $item->setSort($item->getSort() - 1);
+                $args->getEntityManager()->persist($item);
+            }
         }
     }
 }

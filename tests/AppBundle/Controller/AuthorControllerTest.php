@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\AuthBundle;
+namespace Tests\AppBundle\Controller;
 
 use Tests\TestCase;
 
 /**
- * @group artist
+ * @group author
  */
-class ArtistControllerTest extends TestCase
+class AuthorControllerTest extends TestCase
 {
-    public function testCgetAction($route = 'cget_artist')
+    public function testCgetAction($route = 'cget_author')
     {
         $router = $this->getContainer()->get('router');
         $url = $router->generate($route, [], $router::ABSOLUTE_URL);

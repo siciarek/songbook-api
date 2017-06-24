@@ -1,8 +1,9 @@
 <?php
 
-namespace Tests\AuthBundle;
+namespace Tests\UserBundle\Controller;
 
 use Tests\TestCase;
+use Tests\AuthBundle\JwtAuthTest;
 use Application\Sonata\UserBundle\Entity\User;
 
 /**
