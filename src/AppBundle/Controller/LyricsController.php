@@ -24,7 +24,9 @@ class LyricsController extends FOSRestController implements ClassResourceInterfa
             ->getRepository(Song::class)
             ->createQueryBuilder('o')
             ->andWhere('o.deletedAt is NULL')
+            ->addOrderBy('o.sort', 'ASC')
         ;
+
 
         $paginator = $this->get('knp_paginator')->paginate(
             $builder,

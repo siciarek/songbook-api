@@ -27,6 +27,7 @@ class AudioController extends RestController
             ->get('doctrine')
             ->getRepository(Song::class)
             ->createQueryBuilder('o')
+            ->addOrderBy('o.sort', 'ASC')
         ;
 
         $paginator = $this->get('knp_paginator')->paginate(
