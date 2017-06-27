@@ -1,5 +1,5 @@
 /public
-/docker
+/docker*
 /.web-server-pid
 /phpunit
 /phpunit.phar
