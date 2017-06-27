@@ -1,5 +1,6 @@
 imports:
     - { resource: config.yml }
+    - { resource: nelmio/api-doc-bundle.yml }
 #    - { resource: raulfraile/ladybug-bundle.yml }
 
 framework:

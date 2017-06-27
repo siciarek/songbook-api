@@ -4,7 +4,6 @@ imports:
     - { resource: services.yml }
 
     - { resource: nelmio/cors-bundle.yml }
-    - { resource: nelmio/api-doc-bundle.yml }
     - { resource: friendsofsymfony/user-bundle.yml }
     - { resource: friendsofsymfony/rest-bundle.yml }
     - { resource: jms/serializer-bundle.yml }
