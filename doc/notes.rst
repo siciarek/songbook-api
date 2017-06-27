@@ -4,6 +4,14 @@ Zagadnienia
 Spis interesujących zagadnień związanych z nowoczesnym rozwojem aplikacji PHP.
 
 
+Zrzut tylko danych:
+===================
+
+..code-block:: bash
+
+    $ mysqldump -h0.0.0.0 -uroot -proot --no-create-info songbook > dump.sql
+
+
 Docker
 ======
 
