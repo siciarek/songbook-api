@@ -72,6 +72,12 @@ class SongController extends RestController
                 'lyrics' => function ($value) use ($item) {
                     $item->setLyrics($value);
                 },
+                'description' => function ($value) use ($item) {
+                    $item->setDescription($value);
+                },
+                'info' => function ($value) use ($item) {
+                    $item->setInfo($value);
+                },
                 'firstPublishedAt' => function ($value) use ($item) {
                     $item->setFirstPublishedAt(new \DateTime($value));
                 },

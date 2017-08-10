@@ -15,6 +15,12 @@ Zrzut tylko danych:
 Docker
 ======
 
+    $ docker pull fromsmash/php7-fpm-symfony3
+    $ docker images fromsmash/php7-fpm-symfony3
+    $ docker run -i -t fromsmash/php7-fpm-symfony3:latest /bin/bash
+
+    -w . - working directory
+
     * http://laradock.io/
 
 sudo usermod -aG docker siciarek
