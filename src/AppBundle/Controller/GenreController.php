@@ -48,7 +48,7 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
          */
         $paginator = $this->get('knp_paginator')->paginate(
             $builder,
-            $request->get('page', 1),
+            $request->query->getInt('page', 1),
             $paginatorLimit
         );
 
@@ -56,6 +56,7 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
         $totalPages = ceil($totalItemCount / $paginatorLimit);
         $metaData = json_encode(['totalItemCount' => $totalItemCount, 'totalPages' => $totalPages]);
 
+        header('Access-Control-Expose-Headers: X-Meta-Data');
         header("X-Meta-Data: {$metaData}");
 
         return $paginator->getItems();
