@@ -12,12 +12,8 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
  */
 class DashboardController extends FOSRestController implements ClassResourceInterface
 {
-    public function getAction(Request $request)
+    public function getAction()
     {
-        $data = [
-            'message' => 'User dashboard',
-        ];
-
-        return $data;
+        return $this->getUser();
     }
 }

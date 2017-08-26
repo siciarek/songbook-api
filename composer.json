@@ -52,7 +52,6 @@
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "nelmio/api-doc-bundle": "^2.4",
         "phpunit/phpunit": "^6.2",
-        "raulfraile/ladybug-bundle": "dev-master",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.3",
         "willdurand/faker-bundle": "^1.3"

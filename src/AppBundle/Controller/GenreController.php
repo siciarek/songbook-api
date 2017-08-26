@@ -9,6 +9,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -39,11 +40,16 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
             $builder->andWhere('a.enabled = true');
         }
 
+        /**
+         * @var Paginator $paginator
+         */
         $paginator = $this->get('knp_paginator')->paginate(
             $builder,
             $request->get('page', 1),
             $this->getParameter('paginator_limit', 10)
         );
+
+        header("X-Total-Item-Count: {$paginator->getTotalItemCount()}");
 
         return $paginator->getItems();
     }
