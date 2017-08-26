@@ -54,9 +54,9 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
 
         $totalItemCount = $paginator->getTotalItemCount();
         $totalPages = ceil($totalItemCount / $paginatorLimit);
+        $metaData = json_encode(['totalItemCount' => $totalItemCount, 'totalPages' => $totalPages]);
 
-        header("X-Total-Item-Count: {$totalItemCount}");
-        header("X-Total-Pages: {$totalPages}");
+        header("X-Meta-Data: {$metaData}");
 
         return $paginator->getItems();
     }
