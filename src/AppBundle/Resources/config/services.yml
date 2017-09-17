@@ -4,6 +4,11 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
+    app.acme:
+        class: AppBundle\Common\Acme
+        calls:
+            - [ setContainer, [ '@service_container' ] ]
+
     app.exception_controller:
         class: AppBundle\Controller\ExceptionController
         arguments:

@@ -16,6 +16,9 @@ class SortableSubscriber implements EventSubscriber
         ];
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
@@ -48,8 +51,12 @@ class SortableSubscriber implements EventSubscriber
                 ->getQuery()
                 ->execute(['sort' => $sort]);
 
-            foreach($items as $item) {
-                $item->setSort($item->getSort() - 1);
+            /**
+             * @var Sortable $item
+             */
+            foreach ($items as $item) {
+                $newSort = (int) $item->getSort() - 1;
+                $item->setSort($newSort);
                 $args->getEntityManager()->persist($item);
             }
         }

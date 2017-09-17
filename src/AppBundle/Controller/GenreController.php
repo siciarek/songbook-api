@@ -46,11 +46,8 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
         /**
          * @var SlidingPagination $paginator
          */
-        $paginator = $this->get('knp_paginator')->paginate(
-            $builder,
-            $request->query->getInt('page', 1),
-            $paginatorLimit
-        );
+        $paginator = $this->getPager($builder, $request->query->getInt('page', 1));
+
 
         $totalItemCount = $paginator->getTotalItemCount();
         $totalPages = ceil($totalItemCount / $paginatorLimit);

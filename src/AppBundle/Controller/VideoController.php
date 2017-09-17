@@ -31,11 +31,7 @@ class VideoController extends RestController
             ->addOrderBy('o.sort', 'ASC')
         ;
 
-        $paginator = $this->get('knp_paginator')->paginate(
-            $builder,
-            $request->get('page', 1),
-            $this->getParameter('paginator_limit', 10)
-        );
+        $paginator = $this->getPager($builder, $request->query->getInt('page', 1));
 
         $items = $paginator->getItems();
 

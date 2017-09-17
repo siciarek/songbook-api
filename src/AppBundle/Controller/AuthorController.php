@@ -29,11 +29,7 @@ class AuthorController extends RestController implements ClassResourceInterface
             ->addOrderBy('o.sort', 'ASC')
         ;
 
-        $paginator = $this->get('knp_paginator')->paginate(
-            $builder,
-            $request->get('page', 1),
-            $this->getParameter('paginator_limit', 10)
-        );
+        $paginator = $this->getPager($builder, $request->query->getInt('page', 1));
 
         return $paginator->getItems();
     }
@@ -49,7 +45,7 @@ class AuthorController extends RestController implements ClassResourceInterface
     }
 
     /**
-     * Midifies data of the author identified by id.
+     * Modify data of the author identified by id.
      *
      * @ParamConverter("item", class="AppBundle:Author")
      */

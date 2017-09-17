@@ -2,10 +2,22 @@
 
 namespace AppBundle\Controller;
 
+use Doctrine\ORM\QueryBuilder;
 use FOS\RestBundle\Controller\FOSRestController;
 
 abstract class RestController extends FOSRestController
 {
+
+    protected function getPager(QueryBuilder $qb, $page = 1) {
+
+        $result = $this->get('knp_paginator')->paginate(
+            $qb,
+            $page,
+            $this->getParameter('paginator_limit', 10)
+        );
+
+        return $result;
+    }
 
     /**
      * @param object $item current object
