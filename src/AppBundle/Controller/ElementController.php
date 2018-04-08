@@ -3,15 +3,14 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Element;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use FOS\RestBundle\Request\ParamFetcher;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Knp\Component\Pager\Pagination\AbstractPagination;
 use Symfony\Component\HttpFoundation\Request;
-use JMS\Serializer\SerializerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use FOS\RestBundle\Controller\Annotations\RouteResource;
 
 /**
  * @RouteResource("Element", pluralize=false)
@@ -46,6 +45,9 @@ class ElementController extends RestController implements ClassResourceInterface
 
         $item = $this->unserializeItem($request->getContent(), Element::class);
 
+        /**
+         * Check if id given in url is the same as in data.
+         */
         if($id !== $item->getId()) {
             throw $this->createNotFoundException('Invalid input data.');
         }
@@ -78,7 +80,7 @@ class ElementController extends RestController implements ClassResourceInterface
     }
 
     /**
-     * Returns data of the element identified by id.
+     * Returns data of the single item.
      *
      * @ParamConverter("item", class="AppBundle:Element")
      */
@@ -87,6 +89,9 @@ class ElementController extends RestController implements ClassResourceInterface
         return $item;
     }
 
+    /**
+     * Returns list of items.
+     */
     public function cgetAction(Request $request)
     {
         /**
@@ -96,8 +101,11 @@ class ElementController extends RestController implements ClassResourceInterface
             ->get('doctrine.orm.entity_manager')
             ->getRepository(Element::class)
             ->createQueryBuilder('e')
-            ->addOrderBy('e.id', 'DESC');
+            ->addOrderBy('e.id', Criteria::DESC);
 
+        /**
+         * @var AbstractPagination $paginator
+         */
         $paginator = $this->getPager($qb, $request->query->getInt('page', 1));
 
         return $paginator->getItems();
@@ -106,8 +114,8 @@ class ElementController extends RestController implements ClassResourceInterface
     /**
      * Unserialize item.
      *
-     * @param $content
-     * @param $class
+     * @param $content - JSON string
+     * @param $class - Class name
      * @return mixed
      */
     protected function unserializeItem($content, $class)
