@@ -1,0 +1,14 @@
+AppBundle\Entity\Element:
+    exclusion_policy: all
+    accessor_order: custom
+    custom_accessor_order:
+        - id
+        - name
+        - description
+    properties:
+        id:
+            expose: true
+        name:
+            expose: true
+        description:
+            expose: true
