@@ -18,7 +18,22 @@ use JMS\Serializer\SerializerInterface;
  */
 class ElementController extends RestController implements ClassResourceInterface
 {
+    const FORMAT_JSON = 'json';
 
+    /**
+     * Remove single element.
+     *
+     * @ParamConverter("item", class="AppBundle:Element")
+     */
+    public function deleteAction(Element $item)
+    {
+        /**
+         * @var EntityManagerInterface $em
+         */
+        $em = $this->get('doctrine.orm.entity_manager');
+        $em->remove($item);
+        $em->flush();
+    }
 
     /**
      * Update single element.
@@ -27,20 +42,22 @@ class ElementController extends RestController implements ClassResourceInterface
      */
     public function putAction(Element $item, Request $request)
     {
+        $id = $item->getId();
+
+        $item = $this->unserializeItem($request->getContent(), Element::class);
+
+        if($id !== $item->getId()) {
+            throw $this->createNotFoundException('Invalid input data.');
+        }
+
         /**
          * @var EntityManagerInterface $em
          */
         $em = $this->get('doctrine.orm.entity_manager');
-        /**
-         * @var SerializerInterface $serializer
-         */
-        $serializer = $this->get('jms_serializer');
-        $updatedItem = $serializer->deserialize($request->getContent(), Element::class, 'json');
-
-        $em->persist($updatedItem);
+        $em->persist($item);
         $em->flush();
 
-        return $updatedItem;
+        return $item;
     }
 
     /**
@@ -48,16 +65,12 @@ class ElementController extends RestController implements ClassResourceInterface
      */
     public function postAction(Request $request)
     {
+        $item = $this->unserializeItem($request->getContent(), Element::class);
+
         /**
          * @var EntityManagerInterface $em
          */
         $em = $this->get('doctrine.orm.entity_manager');
-        /**
-         * @var SerializerInterface $serializer
-         */
-        $serializer = $this->get('jms_serializer');
-        $item = $serializer->deserialize($request->getContent(), Element::class, 'json');
-
         $em->persist($item);
         $em->flush();
 
@@ -88,5 +101,18 @@ class ElementController extends RestController implements ClassResourceInterface
         $paginator = $this->getPager($qb, $request->query->getInt('page', 1));
 
         return $paginator->getItems();
+    }
+
+    /**
+     * Unserialize item.
+     *
+     * @param $content
+     * @param $class
+     * @return mixed
+     */
+    protected function unserializeItem($content, $class)
+    {
+        return $this->get('jms_serializer')
+            ->deserialize($content, $class, self::FORMAT_JSON);
     }
 }

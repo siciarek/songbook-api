@@ -36,4 +36,10 @@ and all the account settings like profile visibility etc.
 
 Authentication is implemented with JWT (JASON Web Tokens).
 
+### Create keys for JWT auth
 
+```bash
+mkdir -p var/jwt
+openssl genrsa -out var/jwt/private.pem -aes256 4096
+openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
+```

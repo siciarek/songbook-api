@@ -15,14 +15,11 @@ use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 class Element
 {
 
-    use ORMBehaviors\Sortable\Sortable,
-        ORMBehaviors\Blameable\Blameable,
-        ORMBehaviors\Timestampable\Timestampable,
-        ORMBehaviors\SoftDeletable\SoftDeletable;
+    use ORMBehaviors\Timestampable\Timestampable;
 
     public function __toString()
     {
-        return $this->getName()?:'-';
+        return $this->getName() ?: '-';
     }
 
     /**
