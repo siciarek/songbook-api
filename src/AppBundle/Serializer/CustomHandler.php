@@ -31,13 +31,11 @@ class CustomHandler
         DeserializationContext $context
     ) {
 
-        $action = function ($object) {
-            /**
-             * @var Genre $object
-             */
-            $object->setInfo(rand(1, 4444444));
+        $action = function (array $data) {
 
-            return $object;
+            $data['info'] = 'Siekiera ' . rand(1, 509);
+
+            return $data;
         };
 
         return $this->deserialize($action, $visitor, $data, $type, $context);
@@ -62,6 +60,12 @@ class CustomHandler
         array $type,
         DeserializationContext $context
     ) {
+
+        /**
+         * Enhance data before the serialization.
+         */
+        $data = $action($data);
+
         /**
          * @var ClassMetadata $classMetadata
          * @var PropertyMetadata $metadata
@@ -74,13 +78,10 @@ class CustomHandler
         }
         $deserialized = $visitor->endVisitingObject($classMetadata, $data, $type, $context);
 
-        /**
-         * update $deserialized object.
-         */
-        return $action($deserialized);
+        return $deserialized;
     }
 
-    public function serialize(callable $action, VisitorInterface $visitor, Genre $data, array $type, Context $context)
+    public function serialize(callable $action, VisitorInterface $visitor, $data, array $type, Context $context)
     {
         /**
          * @var ClassMetadata $classMetadata
@@ -95,7 +96,7 @@ class CustomHandler
         $serialized = $visitor->endVisitingObject($classMetadata, $data, $type, $context);
 
         /**
-         * enhance $serialized data array.
+         * Enhance $serialized data array.
          */
         return $action($serialized);
     }
