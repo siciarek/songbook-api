@@ -1,5 +1,24 @@
 services:
 
+    app.serialization.handler:
+        class: AppBundle\Serializer\CustomHandler
+        arguments:
+            -
+                '@jms_serializer'
+        tags:
+            -
+                format: json
+                name: jms_serializer.handler
+                direction: deserialization
+                type: AppBundle\Entity\Genre
+                method: deserializeGenre
+            -
+                format: json
+                name: jms_serializer.handler
+                direction: serialization
+                type: AppBundle\Entity\Genre
+                method: serializeGenre
+
     AppBundle\EventListener\SortableSubscriber:
         tags:
             - { name: doctrine.event_subscriber, connection: default }

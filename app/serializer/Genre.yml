@@ -1,5 +1,12 @@
 AppBundle\Entity\Genre:
     exclusion_policy: all
+    accessor_order: custom
+    custom_accessor_order:
+        - id
+        - name
+        - info
+        - description
+        - category
     properties:
         id:
             expose: true

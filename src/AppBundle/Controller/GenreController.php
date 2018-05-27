@@ -5,12 +5,11 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Genre;
 use AppBundle\Entity\GenreCategory;
 use Doctrine\ORM\EntityManager;
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\Routing\ClassResourceInterface;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RouteResource;
+use JMS\Serializer\EventDispatcher\EventDispatcher;
+use JMS\Serializer\EventDispatcher\PreSerializeEvent;
 use Knp\Component\Pager\Pagination\SlidingPagination;
-use Knp\Component\Pager\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @RouteResource("Genre", pluralize=false)
  */
-class GenreController extends FOSRestController implements ClassResourceInterface
+class GenreController extends RestController
 {
     /**
      * Returns a list of available music genres.
@@ -80,12 +79,6 @@ class GenreController extends FOSRestController implements ClassResourceInterfac
         $item = $this
             ->get('jms_serializer')
             ->deserialize($request->getContent(), Genre::class, 'json');
-
-        // TODO: use jms deserialize more efficiently:
-        $category = $em
-            ->getRepository(get_class($item->getCategory()))
-            ->find($item->getCategory()->getId());
-        $item->setCategory($category);
 
         $em->persist($item);
         $em->flush();

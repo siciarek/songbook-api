@@ -44,7 +44,7 @@ security:
 
         api_mutable:
             lexik_jwt: ~
-            pattern: ^/
+            pattern: ^/x
             stateless: true
             methods:
                 - DELETE
