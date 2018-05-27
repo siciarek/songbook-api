@@ -1,23 +1,44 @@
 services:
 
-    app.serialization.handler:
-        class: AppBundle\Serializer\CustomHandler
-        arguments:
-            -
-                '@jms_serializer'
-        tags:
-            -
-                format: json
-                name: jms_serializer.handler
-                direction: deserialization
-                type: AppBundle\Entity\Genre
-                method: deserializeGenre
-            -
-                format: json
-                name: jms_serializer.handler
-                direction: serialization
-                type: AppBundle\Entity\Genre
-                method: serializeGenre
+#    app.genre.serialization.subsciber:
+#        class: AppBundle\Serializer\GenreEventSubscriber
+#        tags:
+#            -
+#                name: jms_serializer.event_subscriber
+
+#    app.genre.serialization.listener:
+#        class: AppBundle\Serializer\GenreEventListener
+#        tags:
+#            -
+#                name: jms_serializer.event_listener
+#                event: serializer.pre_serialize
+#                method: onPreSerialize
+#                class: AppBundle\Entity\Genre
+#                format: json
+#                priority: 0
+#            -
+#                name: jms_serializer.event_listener
+#                event: serializer.post_serialize
+#                method: onPostSerialize
+#                class: AppBundle\Entity\Genre
+#                format: json
+#                priority: 0
+
+#    app.serialization.handler:
+#        class: AppBundle\Serializer\CustomHandler
+#        tags:
+#            -
+#                format: json
+#                name: jms_serializer.handler
+#                direction: deserialization
+#                type: AppBundle\Entity\Genre
+#                method: deserializeGenre
+#            -
+#                format: json
+#                name: jms_serializer.handler
+#                direction: serialization
+#                type: AppBundle\Entity\Genre
+#                method: serializeGenre
 
     AppBundle\EventListener\SortableSubscriber:
         tags:

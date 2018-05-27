@@ -14,16 +14,6 @@ use JMS\Serializer\VisitorInterface;
 class CustomHandler
 {
 
-    /**
-     * @var Serializer
-     */
-    private $serializer;
-
-    public function __construct(Serializer $serializer)
-    {
-        $this->serializer = $serializer;
-    }
-
     public function deserializeGenre(
         JsonDeserializationVisitor $visitor,
         array $data,
@@ -32,8 +22,6 @@ class CustomHandler
     ) {
 
         $action = function (array $data) {
-
-            $data['info'] = 'Siekiera ' . rand(1, 509);
 
             return $data;
         };
@@ -44,8 +32,6 @@ class CustomHandler
     public function serializeGenre(VisitorInterface $visitor, Genre $data, array $type, Context $context)
     {
         $action = function (array $data) {
-
-            $data['cieszynki'] = rand(1, 999);
 
             return $data;
         };
